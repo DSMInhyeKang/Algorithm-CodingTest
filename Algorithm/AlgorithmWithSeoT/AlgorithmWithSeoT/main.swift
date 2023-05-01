@@ -1,5 +1,6 @@
 import Foundation
 
+//23/04/24
 //#10814 나이순 정렬
 //let n = Int(readLine()!)!
 //
@@ -29,7 +30,8 @@ import Foundation
 //let cnt = Int(readLine()!)!
 //var tmpArr = [Int]()
 //
-//for _ in 1...cnt {0
+//for _ in 1...cnt {
+//    tmpArr.append(Int(readLine()!)!)
 //}
 //
 //tmpArr.sort() //tmpArr.sort(by: <)
@@ -112,19 +114,54 @@ final class FileIO {
 //    // Fallback in earlier versions
 //}
 
-if #available(OSX 10.15.4, *) {
-    let fIO = FileIO()
-    let n: Int = fIO.readInt()
-    var tmpArr = [Int]()
-    
-    for _ in 1...n {
-        tmpArr.append(fIO.readInt())
-    }
-    tmpArr.sort()
+//if #available(OSX 10.15.4, *) {
+//    let fIO = FileIO()
+//    let n: Int = fIO.readInt()
+//    var tmpArr = [Int]()
+//
+//    for _ in 1...n {
+//        tmpArr.append(fIO.readInt())
+//    }
+//    tmpArr.sort()
+//
+//    for i in 0..<n {
+//        print(tmpArr[i])
+//    }
+//} else {
+//    // Fallback in earlier versions
+//}
 
-    for i in 0..<n {
-        print(tmpArr[i])
-    }
-} else {
-    // Fallback in earlier versions
-}
+
+
+
+//23/05/01
+////카드(11652)
+//
+//let N = Int(readLine()!)!
+//var tmpArr = [Int]()
+//var cnt = 1
+//var res_cnt = 1
+//
+//for _ in 1...N {
+//    tmpArr.append(Int(readLine()!)!)
+//}
+//
+//tmpArr.sort()
+//var result = tmpArr[0]
+//
+//for i in 1..<N {
+//    if tmpArr[i] == tmpArr[i-1] {
+//        cnt += 1
+//    } else {
+//        cnt = 1
+//    }
+//
+//    if res_cnt < cnt {
+//        res_cnt = cnt
+//        result = tmpArr[i]
+//    }
+//}
+//
+//print(result)
+
+
