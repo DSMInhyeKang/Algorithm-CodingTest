@@ -165,3 +165,86 @@ final class FileIO {
 //print(result)
 
 
+
+//var arr = Array(repeating: Array(repeating: 0, count: 10), count: 10)
+//
+//let nAndM = (readLine()?.split(separator: " "))!
+//
+//let n = Int(nAndM[0])
+//let m = Int(nAndM[1])
+
+
+
+//var A = [[Int]]()
+//
+//let nAndM = (readLine()?.split(separator: " "))!
+//
+//let n = Int(nAndM[0])!
+//let m = Int(nAndM[1])!
+//
+//for i in 1...m {
+//    let input = (readLine()?.split(separator: " "))!.map { Int($0)! }
+//    let N = input[0], M = input[1]
+//
+//}
+
+// 인접행렬
+//var a: [[Int]] = []
+//
+//if let input = readLine() {
+//    let inputs = input.split(separator: " ").map { Int($0)! }
+//    let n = inputs[0]
+//    let m = inputs[1]
+//
+//    a = Array(repeating: [], count: n + 1)
+//
+//    print(a)
+//
+//    for i in 1...n {
+//        a[i] = []
+//    }
+//
+//    for _ in 0..<m {
+//        if let input = readLine() {
+//            let inputs = input.split(separator: " ").map { Int($0)! }
+//            let u = inputs[0]
+//            let v = inputs[1]
+//
+//            a[u].append(v)
+//            a[v].append(u)
+//        }
+//    }
+//
+//    for i in 1...n {
+//        print("a[\(i)]", terminator: " ")
+//        for j in 0..<a[i].count {
+//            print(a[i][j], terminator: " ")
+//        }
+//        print()
+//    }
+//}
+
+
+
+//인접 리스트
+let input = readLine()!.split(separator: " ").map { Int($0)! }
+let n = input[0]
+let m = input[1]
+
+var a = [[Int]](repeating: [], count: n + 1)
+
+for _ in 0..<m {
+    let edge = readLine()!.split(separator: " ").map { Int($0)! }
+    let u = edge[0]
+    let v = edge[1]
+    a[u].append(v)
+    a[v].append(u)
+}
+
+for i in 1...n {
+    print("a[\(i)]", terminator: " ")
+    for j in 0..<a[i].count {
+        print(a[i][j], terminator: " ")
+    }
+    print()
+}
