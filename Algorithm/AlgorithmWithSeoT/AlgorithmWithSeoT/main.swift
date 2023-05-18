@@ -227,24 +227,43 @@ final class FileIO {
 
 
 //인접 리스트
-let input = readLine()!.split(separator: " ").map { Int($0)! }
-let n = input[0]
-let m = input[1]
+//let input = readLine()!.split(separator: " ").map { Int($0)! }
+//let n = input[0]
+//let m = input[1]
+//
+//var a = [[Int]](repeating: [], count: n + 1)
+//
+//for _ in 0..<m {
+//    let edge = readLine()!.split(separator: " ").map { Int($0)! }
+//    let u = edge[0]
+//    let v = edge[1]
+//    a[u].append(v)
+//    a[v].append(u)
+//}
+//
+//for i in 1...n {
+//    print("a[\(i)]", terminator: " ")
+//    for j in 0..<a[i].count {
+//        print(a[i][j], terminator: " ")
+//    }
+//    print()
+//}
 
-var a = [[Int]](repeating: [], count: n + 1)
 
-for _ in 0..<m {
-    let edge = readLine()!.split(separator: " ").map { Int($0)! }
-    let u = edge[0]
-    let v = edge[1]
-    a[u].append(v)
-    a[v].append(u)
-}
-
-for i in 1...n {
-    print("a[\(i)]", terminator: " ")
-    for j in 0..<a[i].count {
-        print(a[i][j], terminator: " ")
+func dfs(_ x: Int) {
+    var check = [Bool](repeating: false, count: a.count)
+    check[x] = true
+    print("\(x) ", terminator: "")
+    
+    for i in 0..<a[x].count {
+        let y = a[x][i]
+        if !check[y] {
+            dfs(y)
+        }
     }
-    print()
 }
+
+// Usage example:
+var a: [[Int]] = [] // Assuming `a` is already initialized with appropriate values
+
+dfs(0) // Call dfs with the starting node
