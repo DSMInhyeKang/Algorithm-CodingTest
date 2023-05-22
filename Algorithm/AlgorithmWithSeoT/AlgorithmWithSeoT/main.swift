@@ -250,20 +250,93 @@ final class FileIO {
 //}
 
 
-func dfs(_ x: Int) {
-    var check = [Bool](repeating: false, count: a.count)
-    check[x] = true
-    print("\(x) ", terminator: "")
+//func dfs(_ x: Int) {
+//    var check = [Bool](repeating: false, count: a.count)
+//    check[x] = true
+//    print("\(x) ", terminator: "")
+//
+//    for i in 0..<a[x].count {
+//        let y = a[x][i]
+//        if !check[y] {
+//            dfs(y)
+//        }
+//    }
+//}
+//
+//var a: [[Int]] = []
+//
+//dfs(0)
+
+
+// #1260 DFS와 BFS
+var graph: [[Int]] = []
+var check: [Bool] = []
+
+func dfs(_ node: Int) {
+    var s: [(Int, Int)] = []
+    s.append((node, 0))
+    check[node] = true
+    print("\(node) ", terminator: "")
     
-    for i in 0..<a[x].count {
-        let y = a[x][i]
-        if !check[y] {
-            dfs(y)
+    while !s.isEmpty {
+        let node = s.last!.0
+        let start = s.last!.1
+        s.removeLast()
+        
+        for i in start..<graph[node].count {
+            let next = graph[node][i]
+            if !check[next] {
+                print("\(next) ", terminator: "")
+                check[next] = true
+                s.append((node, i + 1))
+                s.append((next, 0))
+                break
+            }
+        }
+    }
+}
+
+func bfs(_ start: Int) {
+    var q = [Int]()
+    check = [Bool](repeating: false, count: graph.count)
+    check[start] = true
+    q.append(start)
+    
+    while !q.isEmpty {
+        let node = q.removeFirst()
+        print("\(node) ", terminator: "")
+        
+        for next in graph[node] {
+            if !check[next] {
+                check[next] = true
+                q.append(next)
+            }
         }
     }
 }
 
 // Usage example:
-var a: [[Int]] = [] // Assuming `a` is already initialized with appropriate values
+let input = readLine()!.split(separator: " ").map { Int($0)! }
+let n = input[0]
+let m = input[1]
+let start = input[2]
 
-dfs(0) // Call dfs with the starting node
+graph = [[Int]](repeating: [], count: n + 1)
+check = [Bool](repeating: false, count: n + 1)
+
+for _ in 0..<m {
+    let edge = readLine()!.split(separator: " ").map { Int($0)! }
+    let u = edge[0]
+    let v = edge[1]
+    graph[u].append(v)
+    graph[v].append(u)
+}
+
+for i in 1...n {
+    graph[i].sort()
+}
+
+dfs(start)
+print()
+bfs(start)
+print()
