@@ -268,75 +268,268 @@ final class FileIO {
 //dfs(0)
 
 
-// #1260 DFS와 BFS
-var graph: [[Int]] = []
-var check: [Bool] = []
+//// #1260 DFS와 BFS
+//var graph: [[Int]] = []
+//var check: [Bool] = []
+//
+//func dfs(_ node: Int) {
+//    var s: [(Int, Int)] = []
+//    s.append((node, 0))
+//    check[node] = true
+//    print("\(node) ", terminator: "")
+//
+//    while !s.isEmpty {
+//        let node = s.last!.0
+//        let start = s.last!.1
+//        s.removeLast()
+//
+//        for i in start..<graph[node].count {
+//            let next = graph[node][i]
+//            if !check[next] {
+//                print("\(next) ", terminator: "")
+//                check[next] = true
+//                s.append((node, i + 1))
+//                s.append((next, 0))
+//                break
+//            }
+//        }
+//    }
+//}
+//
+//func bfs(_ start: Int) {
+//    var q = [Int]()
+//    check = [Bool](repeating: false, count: graph.count)
+//    check[start] = true
+//    q.append(start)
+//
+//    while !q.isEmpty {
+//        let node = q.removeFirst()
+//        print("\(node) ", terminator: "")
+//
+//        for next in graph[node] {
+//            if !check[next] {
+//                check[next] = true
+//                q.append(next)
+//            }
+//        }
+//    }
+//}
+//
+//// Usage example:
+//let input = readLine()!.split(separator: " ").map { Int($0)! }
+//let n = input[0]
+//let m = input[1]
+//let start = input[2]
+//
+//graph = [[Int]](repeating: [], count: n + 1)
+//check = [Bool](repeating: false, count: n + 1)
+//
+//for _ in 0..<m {
+//    let edge = readLine()!.split(separator: " ").map { Int($0)! }
+//    let u = edge[0]
+//    let v = edge[1]
+//    graph[u].append(v)
+//    graph[v].append(u)
+//}
+//
+//for i in 1...n {
+//    graph[i].sort()
+//}
+//
+//dfs(start)
+//print()
+//bfs(start)
+//print()
 
-func dfs(_ node: Int) {
-    var s: [(Int, Int)] = []
-    s.append((node, 0))
-    check[node] = true
-    print("\(node) ", terminator: "")
-    
-    while !s.isEmpty {
-        let node = s.last!.0
-        let start = s.last!.1
-        s.removeLast()
-        
-        for i in start..<graph[node].count {
-            let next = graph[node][i]
-            if !check[next] {
-                print("\(next) ", terminator: "")
-                check[next] = true
-                s.append((node, i + 1))
-                s.append((next, 0))
-                break
-            }
-        }
-    }
-}
 
-func bfs(_ start: Int) {
-    var q = [Int]()
-    check = [Bool](repeating: false, count: graph.count)
-    check[start] = true
-    q.append(start)
-    
-    while !q.isEmpty {
-        let node = q.removeFirst()
-        print("\(node) ", terminator: "")
-        
-        for next in graph[node] {
-            if !check[next] {
-                check[next] = true
-                q.append(next)
-            }
-        }
-    }
-}
+//// #11724 연결 요소의 개수
+//let input = readLine()!.split(separator: " ").map { Int($0)! }
+//let n = input[0]
+//let m = input[1]
+//
+//var graph = Array(repeating: [], count: n + 1)
+//var visited = Array(repeating: false, count: n + 1)
+//
+//var result = 0
+//var depth = 0
+//
+//for _ in 0..<m {
+//    let uAndV = readLine()!.split(separator: " ").map { Int($0)! }
+//    let u = uAndV[0]
+//    let v = uAndV[1]
+//
+//    graph[u].append(v)
+//    graph[v].append(u)
+//}
+//
+//func dfs(_ start: Int, _ depth: Int) {
+//    visited[start] = true
+//
+//    for i in 0..<graph[start].count {
+//        let next = graph[start][i]
+//
+//        if visited[next as! Int] == false {
+//            dfs(next as! Int, depth + 1)
+//        }
+//    }
+//}
+//
+//for j in 1..<n + 1 {
+//    if !visited[j] {
+//        if graph[j].isEmpty {
+//            result += 1
+//            visited[j] = true
+//        } else {
+//            dfs(j, 0)
+//            result += 1
+//        }
+//    }
+//}
+//
+//print(result)
 
-// Usage example:
+
+
+////#1707 이분 그래프
+//func dfs(_ a: inout [[Int]], _ color: inout [Int], _ x: Int, _ c: Int) {
+//    color[x] = c
+//
+//    for y in a[x] {
+//        if color[y] == 0 {
+//            dfs(&a, &color, y, 3 - c)
+//        }
+//    }
+//}
+//
+//let t = Int(readLine()!)!
+//
+//for _ in 0..<t {
+//    let input = readLine()!.split(separator: " ").map { Int($0)! }
+//    let n = input[0]
+//    let m = input[1]
+//
+//    var a: [[Int]] = Array(repeating: [], count: n + 1)
+//
+//    for i in 1...n {
+//        a[i] = [Int]()
+//    }
+//
+//    for _ in 0..<m {
+//        let edge = readLine()!.split(separator: " ").map { Int($0)! }
+//        let u = edge[0]
+//        let v = edge[1]
+//        a[u].append(v)
+//        a[v].append(u)
+//    }
+//
+//    var color: [Int] = Array(repeating: 0, count: n + 1)
+//    var ok = true
+//
+//    for i in 1...n {
+//        if color[i] == 0 {
+//            dfs(&a, &color, i, 1)
+//        }
+//    }
+//
+//    for i in 1...n {
+//        for j in a[i] {
+//            if color[i] == color[j] {
+//                ok = false
+//            }
+//        }
+//    }
+//
+//    if ok {
+//        print("YES")
+//    } else {
+//        print("NO")
+//    }
+//}
+
+
+
+//// #10451 순열 사이클
+//let T = Int(readLine()!)!
+//var graph = [Int]()
+//var visited = [Bool]()
+//
+//func dfs(start: Int) {
+//    var index = 0
+//    var queue = [start]
+//
+//    while index < queue.count {
+//        let node = queue[index]
+//
+//        if !visited[node] {
+//            visited[node] = true
+//            queue.append(graph[node])
+//        }
+//
+//        index += 1
+//    }
+//}
+//
+//for _ in 0..<T {
+//    let N = Int(readLine()!)!
+//    let nums = readLine()!.split(separator: " ").map { Int($0)! }
+//
+//    graph = Array(repeating: 0, count: N+1)
+//    visited = Array(repeating: false, count: N+1)
+//    var result = 0
+//
+//    for j in 0..<nums.count {
+//        graph[j+1] = nums[j]
+//    }
+//
+//    for i in 1...N {
+//        if !visited[i] {
+//            dfs(start: i)
+//            result += 1
+//        }
+//    }
+//
+//    print(result)
+//}
+
+
+
+// #2331 반복수열
 let input = readLine()!.split(separator: " ").map { Int($0)! }
-let n = input[0]
-let m = input[1]
-let start = input[2]
+let A = input[0]
+let P = input[1]
 
-graph = [[Int]](repeating: [], count: n + 1)
-check = [Bool](repeating: false, count: n + 1)
+var arr = Array(repeating: 0, count: 300000)
+var D = [Int]()
 
-for _ in 0..<m {
-    let edge = readLine()!.split(separator: " ").map { Int($0)! }
-    let u = edge[0]
-    let v = edge[1]
-    graph[u].append(v)
-    graph[v].append(u)
+func splitNums(_ A: Int, _ P: Int) -> Int {
+    var tmp = 1
+    for _ in 0..<P {
+        tmp *= A
+    }
+    return tmp
 }
 
-for i in 1...n {
-    graph[i].sort()
+func getResult(_ a: Int, _ p: Int) -> Int {
+    var result = 0
+    var tempA = a
+    
+    while(a > 0) {
+        result += splitNums(tempA%10, p)
+        tempA /= 10
+    }
+    return result
 }
 
-dfs(start)
-print()
-bfs(start)
-print()
+var i = 1
+arr[A] = 1
+
+while(true) {
+    var tmp = getResult(A, P)
+    
+    if arr[tmp] == 0 {
+        arr[tmp] = i
+        i += 1
+    } else {
+        print(arr[tmp]-1)
+    }
+}
