@@ -187,18 +187,7 @@ import Foundation
 
 // 추억 점수(176963)
 func solution(_ name:[String], _ yearning:[Int], _ photo:[[String]]) -> [Int] {
-    var result: [Int] = []
-    var info = Dictionary(uniqueKeysWithValues: zip(name, yearning))
+    let score: [String: Int] = Dictionary(uniqueKeysWithValues: zip(name, yearning))
     
-    for people in photo {
-        var score = 0
-        
-        for person in people {
-            score += info[person] ?? 0
-        }
-        
-        result.append(score)
-    }
-    
-    return result
+    return photo.map { $0.reduce(0) { $0 + (score[$1] ?? 0) } }
 }
