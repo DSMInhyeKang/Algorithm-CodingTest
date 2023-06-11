@@ -162,23 +162,43 @@ import Foundation
 
 
 // 달리기 경주(178871)
-func solution(_ players:[String], _ callings:[String]) -> [String] {
-    var players = players
-    var callings = callings
-    var dict = [String:Int]()
+//func solution(_ players:[String], _ callings:[String]) -> [String] {
+//    var players = players
+//    var callings = callings
+//    var dict = [String:Int]()
+//
+//    for i in 0..<players.count {
+//        dict[players[i]] = i
+//    }
+//
+//    for j in 0..<callings.count {
+//        var rank = dict[callings[j]]!
+//        let name  = players[rank - 1]
+//        players[rank - 1] = callings[j]
+//        players[rank] = name
+//        dict[callings[j]]! -= 1
+//        dict[players[rank]]! += 1
+//    }
+//
+//    return players
+//}
+
+
+
+// 추억 점수(176963)
+func solution(_ name:[String], _ yearning:[Int], _ photo:[[String]]) -> [Int] {
+    var result: [Int] = []
+    var info = Dictionary(uniqueKeysWithValues: zip(name, yearning))
     
-    for i in 0..<players.count {
-        dict[players[i]] = i
+    for people in photo {
+        var score = 0
+        
+        for person in people {
+            score += info[person] ?? 0
+        }
+        
+        result.append(score)
     }
     
-    for j in 0..<callings.count {
-        var rank = dict[callings[j]]!
-        let name  = players[rank - 1]
-        players[rank - 1] = callings[j]
-        players[rank] = name
-        dict[callings[j]]! -= 1
-        dict[players[rank]]! += 1
-    }
-    
-    return players
+    return result
 }
