@@ -493,43 +493,109 @@ final class FileIO {
 
 
 
-// #2331 반복수열
-let input = readLine()!.split(separator: " ").map { Int($0)! }
-let A = input[0]
-let P = input[1]
+//// #2331 반복수열
+//let input = readLine()!.split(separator: " ").map { Int($0)! }
+//let A = input[0]
+//let P = input[1]
+//
+//var arr = Array(repeating: 0, count: 300000)
+//var D = [Int]()
+//
+//func splitNums(_ A: Int, _ P: Int) -> Int {
+//    var tmp = 1
+//    for _ in 0..<P {
+//        tmp *= A
+//    }
+//    return tmp
+//}
+//
+//func getResult(_ a: Int, _ p: Int) -> Int {
+//    var result = 0
+//    var tempA = a
+//
+//    while(a > 0) {
+//        result += splitNums(tempA%10, p)
+//        tempA /= 10
+//    }
+//    return result
+//}
+//
+//var i = 1
+//arr[A] = 1
+//
+//while(true) {
+//    var tmp = getResult(A, P)
+//
+//    if arr[tmp] == 0 {
+//        arr[tmp] = i
+//        i += 1
+//    } else {
+//        print(arr[tmp]-1)
+//    }
+//}
 
-var arr = Array(repeating: 0, count: 300000)
-var D = [Int]()
 
-func splitNums(_ A: Int, _ P: Int) -> Int {
-    var tmp = 1
-    for _ in 0..<P {
-        tmp *= A
-    }
-    return tmp
-}
 
-func getResult(_ a: Int, _ p: Int) -> Int {
-    var result = 0
-    var tempA = a
-    
-    while(a > 0) {
-        result += splitNums(tempA%10, p)
-        tempA /= 10
-    }
-    return result
-}
+// 트리 순회(1991)
+//let count = Int(readLine()!)!
+//var results: [String] = ["", "", ""]
+//var tree: [String:[String]] = [:]
+//
+//for _ in 0..<count {
+//    let input = readLine()!.split { $0 == " " }.map { String($0) }
+//    tree.updateValue([input[1], input[2]], forKey: input[0])
+//}
+//
+//func dfs(_ node: String) {
+//    if node == "." {
+//        return
+//    }
+//
+//    results[0] += node
+//    dfs(tree[node]![0])
+//    results[1] += node
+//    dfs(tree[node]![1])
+//    results[2] += node
+//}
+//
+//dfs("A")
+//
+//for result in results {
+//    print(result)
+//}
 
-var i = 1
-arr[A] = 1
 
-while(true) {
-    var tmp = getResult(A, P)
-    
-    if arr[tmp] == 0 {
-        arr[tmp] = i
-        i += 1
-    } else {
-        print(arr[tmp]-1)
-    }
-}
+//class Tree {
+//    var left: String
+//    var right: String
+//
+//    init(_ left: String, _ right: String) {
+//        self.left = left
+//        self.right = right
+//    }
+//}
+//
+//var tree: [String: Tree] = [:]
+//var S1 = "", S2 = "", S3 = ""
+//
+//for _ in 0..<Int(readLine()!)! {
+//    let N = readLine()!.split{ $0 == " " }.map{ String($0) }
+//    tree[N[0]] = Tree(N[1], N[2])
+//}
+//
+//func dfs(_ node: String) {
+//    if node == "." {
+//        return
+//    }
+//
+//    S1 += node
+//    dfs(tree[node]!.left)
+//    S2 += node
+//    dfs(tree[node]!.right)
+//    S3 += node
+//}
+//
+//dfs("A")
+//print(S1)
+//print(S2)
+//print(S3)
