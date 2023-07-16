@@ -186,8 +186,29 @@ import Foundation
 
 
 // 추억 점수(176963)
-func solution(_ name:[String], _ yearning:[Int], _ photo:[[String]]) -> [Int] {
-    let score: [String: Int] = Dictionary(uniqueKeysWithValues: zip(name, yearning))
-    
-    return photo.map { $0.reduce(0) { $0 + (score[$1] ?? 0) } }
+//func solution(_ name:[String], _ yearning:[Int], _ photo:[[String]]) -> [Int] {
+//    let score: [String: Int] = Dictionary(uniqueKeysWithValues: zip(name, yearning))
+//
+//    return photo.map { $0.reduce(0) { $0 + (score[$1] ?? 0) } }
+//}
+
+
+
+
+// 카드 뭉치(159994)
+func solution(_ cards1:[String], _ cards2:[String], _ goal:[String]) -> String {
+    var index1:Int = 0
+    var index2:Int = 0
+
+    for i in 0..<goal.count {
+        if index1 < cards1.count && goal[i] == cards1[index1] {
+            index1 += 1
+        } else if index2 < cards2.count && goal[i] == cards2[index2] {
+            index2 += 1
+        } else {
+            return "No"
+        }
+    }
+
+    return "Yes"
 }
