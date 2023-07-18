@@ -196,19 +196,46 @@ import Foundation
 
 
 // 카드 뭉치(159994)
-func solution(_ cards1:[String], _ cards2:[String], _ goal:[String]) -> String {
-    var index1:Int = 0
-    var index2:Int = 0
+//func solution(_ cards1:[String], _ cards2:[String], _ goal:[String]) -> String {
+//    var index1:Int = 0
+//    var index2:Int = 0
+//
+//    for i in 0..<goal.count {
+//        if index1 < cards1.count && goal[i] == cards1[index1] {
+//            index1 += 1
+//        } else if index2 < cards2.count && goal[i] == cards2[index2] {
+//            index2 += 1
+//        } else {
+//            return "No"
+//        }
+//    }
+//
+//    return "Yes"
+//}
 
-    for i in 0..<goal.count {
-        if index1 < cards1.count && goal[i] == cards1[index1] {
-            index1 += 1
-        } else if index2 < cards2.count && goal[i] == cards2[index2] {
-            index2 += 1
-        } else {
-            return "No"
+
+
+// 
+func solution(_ t:String, _ p:String) -> Int {
+    // p의 길이를 저장
+    let len = p.count
+    // 뽑은 숫자가 p보다 작거나 같으면 1씩 늘려서 카운팅하기 위해
+    var answer = 0
+    
+    // for문으로 모든 경우의 수 확인
+    // 주의!!!! -len + 1을 하여 t의 인덱스를 넘어가지 않게 방지
+    for i in 0..<t.count-len+1 {
+        // 검색하여 공부한 결과 swift는 이런식으로
+        // string 인덱스를 설정하여 뽑아올 수 있다
+        let startIndex = t.index(t.startIndex, offsetBy: i)
+        let endIndex = t.index(t.startIndex, offsetBy: i+len-1)
+        let range = startIndex...endIndex
+        
+        // 문제에서 최대길이가 10000자리의 숫자기 때문에 Int64로 설정을 해주었다
+        // 안해주면 런타임 오류!!
+        if Int64(t[range])! <= Int64(p)! {
+            answer += 1
         }
     }
-
-    return "Yes"
+    return answer
 }
