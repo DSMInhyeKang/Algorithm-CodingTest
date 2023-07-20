@@ -216,19 +216,24 @@ import Foundation
 
 
 // 크기가 작은 부분 문자열(147355)
-func solution(_ t: String, _ p: String) -> Int {
-    let len = p.count
-    var answer = 0
-    
-    for i in 0..<t.count-len+1 {
-        let startIndex = t.index(t.startIndex, offsetBy: i)
-        let endIndex = t.index(t.startIndex, offsetBy: i+len-1)
-        let range = startIndex...endIndex
-        
-        if Int64(t[range])! <= Int64(p)! {
-            answer += 1
-        }
-    }
-    
-    return answer
-}
+//func solution(_ t: String, _ p: String) -> Int {
+//    let len = p.count
+//    var answer = 0
+//
+//    for i in 0..<t.count-len+1 {
+//        let startIndex = t.index(t.startIndex, offsetBy: i)
+//        let endIndex = t.index(t.startIndex, offsetBy: i+len-1)
+//        let range = startIndex...endIndex
+//
+//        if Int64(t[range])! <= Int64(p)! {
+//            answer += 1
+//        }
+//    }
+//
+//    return answer
+//}
+
+
+
+// 대소문자 바꿔서 출력하기(181949)
+print(readLine()!.map { $0.isUppercase ? $0.lowercased() : $0.uppercased() }.joined())
