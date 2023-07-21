@@ -236,4 +236,26 @@ import Foundation
 
 
 // 대소문자 바꿔서 출력하기(181949)
-print(readLine()!.map { $0.isUppercase ? $0.lowercased() : $0.uppercased() }.joined())
+//print(readLine()!.map { $0.isUppercase ? $0.lowercased() : $0.uppercased() }.joined())
+
+
+
+// 덧칠하기(161989)
+func solution(_ n:Int, _ m:Int, _ section:[Int]) -> Int {
+    var section = section
+    var count = 0
+    
+    while !section.isEmpty {
+        let wall = section[0]
+        for _ in 0..<m {
+            guard let first = section.first else { break }
+            if first < wall + m {
+                let _ = section.removeFirst()
+            } else {
+                break
+            }
+        }
+        count += 1
+    }
+    return count
+}
