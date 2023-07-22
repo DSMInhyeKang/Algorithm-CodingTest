@@ -241,21 +241,41 @@ import Foundation
 
 
 // 덧칠하기(161989)
-func solution(_ n:Int, _ m:Int, _ section:[Int]) -> Int {
-    var section = section
-    var count = 0
+//func solution(_ n: Int, _ m: Int, _ section: [Int]) -> Int {
+//    var section = section
+//    var count = 0
+//
+//    while !section.isEmpty {
+//        let wall = section[0]
+//
+//        for _ in 0..<m {
+//            guard let first = section.first else { break }
+//
+//            if first < wall + m {
+//                let _ = section.removeFirst()
+//            } else {
+//                break
+//            }
+//        }
+//
+//        count += 1
+//    }
+//    return count
+//}
+
+
+
+// 삼총사(131705)
+func solution(_ number: [Int]) -> Int {
+    var answer = 0
     
-    while !section.isEmpty {
-        let wall = section[0]
-        for _ in 0..<m {
-            guard let first = section.first else { break }
-            if first < wall + m {
-                let _ = section.removeFirst()
-            } else {
-                break
+    for i in 0..<number.count {
+        for j in i+1..<number.count {
+            for k in j+1..<number.count {
+                if number[i] + number[j] + number[k] == 0 { answer += 1 }
             }
         }
-        count += 1
     }
-    return count
+    
+    return answer
 }
