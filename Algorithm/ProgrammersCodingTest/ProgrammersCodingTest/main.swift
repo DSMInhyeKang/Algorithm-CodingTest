@@ -266,16 +266,45 @@ import Foundation
 
 
 // 삼총사(131705)
-func solution(_ number: [Int]) -> Int {
-    var answer = 0
+//func solution(_ number: [Int]) -> Int {
+//    var answer = 0
+//
+//    for i in 0..<number.count {
+//        for j in i+1..<number.count {
+//            for k in j+1..<number.count {
+//                if number[i] + number[j] + number[k] == 0 { answer += 1 }
+//            }
+//        }
+//    }
+//
+//    return answer
+//}
+
+
+
+// 성격 유형 검사하기(118666)
+func solution(_ survey: [String], _ choices: [Int]) -> String {
+    let types = ["R", "T", "C", "F", "J", "M", "A", "N"]
+    var score = Array(repeating: 0, count: types.count)
+    var result = ""
     
-    for i in 0..<number.count {
-        for j in i+1..<number.count {
-            for k in j+1..<number.count {
-                if number[i] + number[j] + number[k] == 0 { answer += 1 }
-            }
+    for i in 0..<survey.count {
+        if choices[i] == 4 {
+            continue
+        } else if choices[i] < 4 {
+            score[types.firstIndex(of: String(survey[i].first!))!] += (4 - choices[i])
+        } else {
+            score[types.firstIndex(of: String(survey[i].last!))!] += (choices[i] - 4)
         }
     }
-    
-    return answer
+
+    for i in stride(from: 0, to: score.count, by: 2) {
+        if score[i] >= score[i+1] { // 삼항연산자 -> 시간 초과
+            result += types[i]
+        } else {
+            result += types[i+1]
+        }
+    }
+
+    return result
 }
