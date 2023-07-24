@@ -283,28 +283,55 @@ import Foundation
 
 
 // 성격 유형 검사하기(118666)
-func solution(_ survey: [String], _ choices: [Int]) -> String {
-    let types = ["R", "T", "C", "F", "J", "M", "A", "N"]
-    var score = Array(repeating: 0, count: types.count)
-    var result = ""
-    
-    for i in 0..<survey.count {
-        if choices[i] == 4 {
-            continue
-        } else if choices[i] < 4 {
-            score[types.firstIndex(of: String(survey[i].first!))!] += (4 - choices[i])
-        } else {
-            score[types.firstIndex(of: String(survey[i].last!))!] += (choices[i] - 4)
-        }
+//func solution(_ survey: [String], _ choices: [Int]) -> String {
+//    let types = ["R", "T", "C", "F", "J", "M", "A", "N"]
+//    var score = Array(repeating: 0, count: types.count)
+//    var result = ""
+//
+//    for i in 0..<survey.count {
+//        if choices[i] == 4 {
+//            continue
+//        } else if choices[i] < 4 {
+//            score[types.firstIndex(of: String(survey[i].first!))!] += (4 - choices[i])
+//        } else {
+//            score[types.firstIndex(of: String(survey[i].last!))!] += (choices[i] - 4)
+//        }
+//    }
+//
+//    for i in stride(from: 0, to: score.count, by: 2) {
+//        if score[i] >= score[i+1] { // 삼항연산자 -> 시간 초과
+//            result += types[i]
+//        } else {
+//            result += types[i+1]
+//        }
+//    }
+//
+//    return result
+//}
+
+
+
+// 실패율(42889)
+func solution(_ N: Int, _ stages: [Int]) -> [Int] {
+    var failure = [Int: Double]()
+    var total = Double(stages.count)
+    var countArr = Array(repeating: 0, count: N+2)
+
+    for num in stages {
+        countArr[num] += 1
     }
 
-    for i in stride(from: 0, to: score.count, by: 2) {
-        if score[i] >= score[i+1] { // 삼항연산자 -> 시간 초과
-            result += types[i]
+    for i in 1..<N+1 { //filter map 고차함수 쓰면 시간 초과 -> for문 안에 최대한 사용 자제
+        if countArr[i] == 0 {
+            failure[i] = 0.0
         } else {
-            result += types[i+1]
+            total = total - Double(countArr[i])
+            failure[i] = Double(countArr[i]) / total
         }
     }
+    
+    let sortArr = failure.sorted(by: <).sorted(by: { $0.1 > $1.1 })
+    let result = sortArr.map{ $0.key }
 
     return result
 }
