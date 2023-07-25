@@ -312,26 +312,59 @@ import Foundation
 
 
 // 실패율(42889)
-func solution(_ N: Int, _ stages: [Int]) -> [Int] {
-    var failure = [Int: Double]()
-    var total = Double(stages.count)
-    var countArr = Array(repeating: 0, count: N+2)
+//func solution(_ N: Int, _ stages: [Int]) -> [Int] {
+//    var failure = [Int: Double]()
+//    var total = Double(stages.count)
+//    var countArr = Array(repeating: 0, count: N+2)
+//
+//    for num in stages {
+//        countArr[num] += 1
+//    }
+//
+//    for i in 1..<N+1 { //filter map 고차함수 쓰면 시간 초과 -> for문 안에 최대한 사용 자제
+//        if countArr[i] == 0 {
+//            failure[i] = 0.0
+//        } else {
+//            total = total - Double(countArr[i])
+//            failure[i] = Double(countArr[i]) / total
+//        }
+//    }
+//
+//    let sortArr = failure.sorted(by: <).sorted(by: { $0.1 > $1.1 })
+//    let result = sortArr.map{ $0.key }
+//
+//    return result
+//}
 
-    for num in stages {
-        countArr[num] += 1
-    }
 
-    for i in 1..<N+1 { //filter map 고차함수 쓰면 시간 초과 -> for문 안에 최대한 사용 자제
-        if countArr[i] == 0 {
-            failure[i] = 0.0
-        } else {
-            total = total - Double(countArr[i])
-            failure[i] = Double(countArr[i]) / total
+
+// 크레인 인형뽑기 게임(64061)
+func solution(_ board: [[Int]], _ moves: [Int]) -> Int {
+    var board = board
+    var basket = [Int]()
+    var result = 0
+
+    for move in moves {
+        var y = 0
+
+        while y < board.count {
+            let doll = board[y][move-1]
+
+            if doll == 0 {
+                y += 1
+                continue
+            }
+            basket.append(doll)
+            board[y][move-1] = 0
+
+            if board[y][move-1] == 0 { break }
+        }
+        
+        if (basket.count >= 2) && (basket[basket.endIndex-1] == basket[basket.endIndex-2]) {
+            basket.removeLast(2) // popLast: 옵셔널 리턴
+            result += 2
         }
     }
-    
-    let sortArr = failure.sorted(by: <).sorted(by: { $0.1 > $1.1 })
-    let result = sortArr.map{ $0.key }
 
     return result
 }
