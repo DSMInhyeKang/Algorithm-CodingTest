@@ -339,32 +339,58 @@ import Foundation
 
 
 // 크레인 인형뽑기 게임(64061)
-func solution(_ board: [[Int]], _ moves: [Int]) -> Int {
-    var board = board
-    var basket = [Int]()
-    var result = 0
+//func solution(_ board: [[Int]], _ moves: [Int]) -> Int {
+//    var board = board
+//    var basket = [Int]()
+//    var result = 0
+//
+//    for move in moves {
+//        var y = 0
+//
+//        while y < board.count {
+//            let doll = board[y][move-1]
+//
+//            if doll == 0 {
+//                y += 1
+//                continue
+//            }
+//            basket.append(doll)
+//            board[y][move-1] = 0
+//
+//            if board[y][move-1] == 0 { break }
+//        }
+//
+//        if (basket.count >= 2) && (basket[basket.endIndex-1] == basket[basket.endIndex-2]) {
+//            basket.removeLast(2) // popLast: 옵셔널 리턴
+//            result += 2
+//        }
+//    }
+//
+//    return result
+//}
 
-    for move in moves {
-        var y = 0
 
-        while y < board.count {
-            let doll = board[y][move-1]
 
-            if doll == 0 {
-                y += 1
-                continue
+// 기사단원의 무기(136798)
+func solution(_ number: Int, _ limit: Int, _ power: Int) -> Int {
+    var result = [Int]()
+    
+    for number in 1...number{
+        var count = 0
+        
+        for i in 1...Int(sqrt(Double(number))) {
+            if number % i == 0 {
+                if(i * i) == number {
+                    count += 1
+                } else {
+                    count += 2
+                }
             }
-            basket.append(doll)
-            board[y][move-1] = 0
-
-            if board[y][move-1] == 0 { break }
         }
         
-        if (basket.count >= 2) && (basket[basket.endIndex-1] == basket[basket.endIndex-2]) {
-            basket.removeLast(2) // popLast: 옵셔널 리턴
-            result += 2
-        }
+        count = count > limit ? power : count
+        result.append(count)
     }
-
-    return result
+    
+    return result.reduce(0){ $0 + $1 }
 }
