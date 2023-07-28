@@ -372,25 +372,43 @@ import Foundation
 
 
 // 기사단원의 무기(136798)
-func solution(_ number: Int, _ limit: Int, _ power: Int) -> Int {
-    var result = [Int]()
+//func solution(_ number: Int, _ limit: Int, _ power: Int) -> Int {
+//    var result = [Int]()
+//
+//    for number in 1...number{
+//        var count = 0
+//
+//        for i in 1...Int(sqrt(Double(number))) {
+//            if number % i == 0 {
+//                if(i * i) == number {
+//                    count += 1
+//                } else {
+//                    count += 2
+//                }
+//            }
+//        }
+//
+//        count = count > limit ? power : count
+//        result.append(count)
+//    }
+//
+//    return result.reduce(0){ $0 + $1 }
+//}
+
+
+
+// 콜라 문제(132267)
+func cokes(_ a: Int, _ b: Int, _ n: Int) -> Int {
+    var rest = n%a
+    var count = (n/a)*b
     
-    for number in 1...number{
-        var count = 0
-        
-        for i in 1...Int(sqrt(Double(number))) {
-            if number % i == 0 {
-                if(i * i) == number {
-                    count += 1
-                } else {
-                    count += 2
-                }
-            }
-        }
-        
-        count = count > limit ? power : count
-        result.append(count)
-    }
+    if a > n { return 0 }
     
-    return result.reduce(0){ $0 + $1 }
+    let bottles = rest + count
+    
+    return count + cokes(a, b, bottles)
+}
+
+func solution(_ a: Int, _ b: Int, _ n: Int) -> Int {
+    return cokes(a, b, n)
 }
