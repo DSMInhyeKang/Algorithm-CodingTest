@@ -398,17 +398,26 @@ import Foundation
 
 
 // 콜라 문제(132267)
-func cokes(_ a: Int, _ b: Int, _ n: Int) -> Int {
-    var rest = n%a
-    var count = (n/a)*b
-    
-    if a > n { return 0 }
-    
-    let bottles = rest + count
-    
-    return count + cokes(a, b, bottles)
-}
+//func cokes(_ a: Int, _ b: Int, _ n: Int) -> Int {
+//    var rest = n%a
+//    var count = (n/a)*b
+//
+//    if a > n { return 0 }
+//
+//    let bottles = rest + count
+//
+//    return count + cokes(a, b, bottles)
+//}
+//
+//func solution(_ a: Int, _ b: Int, _ n: Int) -> Int {
+//    return cokes(a, b, n)
+//}
 
-func solution(_ a: Int, _ b: Int, _ n: Int) -> Int {
-    return cokes(a, b, n)
+
+
+// 과일 장수(135808)
+func solution(_ k: Int, _ m: Int, _ score: [Int]) -> Int {
+    let s = score.sorted(by: >)
+       
+    return stride(from: m-1, to: score.count, by: m).reduce(0) { $0 + s[$1] * m }
 }
