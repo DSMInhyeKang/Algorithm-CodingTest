@@ -425,25 +425,38 @@ import Foundation
 
 
 // 문자열 나누기(140108)
-func solution(_ s: String) -> Int {
-    var answer = 0
-    var x: Character? = nil
-    var xCount = 0
+//func solution(_ s: String) -> Int {
+//    var answer = 0
+//    var x: Character? = nil
+//    var xCount = 0
+//
+//    for i in s {
+//        if x == nil {
+//            x = i
+//            xCount = 1
+//            answer += 1
+//            continue
+//        }
+//
+//        xCount += x == i ? 1 : -1
+//
+//        if xCount == 0 {
+//            x = nil
+//        }
+//    }
+//
+//    return answer
+//}
 
-    for i in s {
-        if x == nil {
-            x = i
-            xCount = 1
-            answer += 1
-            continue
-        }
 
-        xCount += x == i ? 1 : -1
 
-        if xCount == 0 {
-            x = nil
+// 나머지가 1이 되는 수 찾기(87389)
+func solution(_ n: Int) -> Int {
+    for num in 2...n  {
+        if n % num == 1 {
+            return num
         }
     }
-
-    return answer
+    
+    return 1
 }
