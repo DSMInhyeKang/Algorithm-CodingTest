@@ -451,12 +451,54 @@ import Foundation
 
 
 // 나머지가 1이 되는 수 찾기(87389)
-func solution(_ n: Int) -> Int {
-    for num in 2...n  {
-        if n % num == 1 {
-            return num
-        }
-    }
-    
-    return 1
-}
+//func solution(_ n: Int) -> Int {
+//    for num in 2...n  {
+//        if n % num == 1 {
+//            return num
+//        }
+//    }
+//
+//    return 1
+//}
+
+
+
+// 문자열 곱하기(181940)
+//func solution(_ my_string: String, _ k: Int) -> String {
+//    return String(repeating: my_string, count: k)
+//}
+
+
+
+// 홀짝에 따라 다른 값 반환하기(181935)
+//func solution(_ n: Int) -> Int {
+//    return n % 2 == 0 ? stride(from: 0, through: n, by: 2).map { $0 * $0 }.reduce(0, +) : stride(from: 1, through: n, by: 2).reduce(0, +)
+//}
+
+
+
+// 공배수(181936)
+//func solution(_ number: Int, _ n: Int, _ m: Int) -> Int {
+//    return number % n == 0 && number % m == 0 ? 1 : 0
+//}
+
+
+
+//문자 리스트를 문자열로 반환하기(181941)
+//func solution(_ arr: [String]) -> String {
+//    return arr.joined()
+//}
+
+
+
+//덧셈식 출력하기(181947)
+//let n = readLine()!.components(separatedBy: [" "]).map { Int($0)! }
+//let (a, b) = (n[0], n[1])
+//
+//print(a, "+", b, "=", a+b)
+
+
+//문자열 섞기(181942)
+//func solution(_ str1:String, _ str2:String) -> String {
+//    return zip(str1, str2).map { String($0) + String($1) }.joined()
+//}
