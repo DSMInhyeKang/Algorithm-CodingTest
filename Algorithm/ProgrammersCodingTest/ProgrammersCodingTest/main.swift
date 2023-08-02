@@ -484,21 +484,92 @@ import Foundation
 
 
 
-//문자 리스트를 문자열로 반환하기(181941)
+// 문자 리스트를 문자열로 반환하기(181941)
 //func solution(_ arr: [String]) -> String {
 //    return arr.joined()
 //}
 
 
 
-//덧셈식 출력하기(181947)
+// 덧셈식 출력하기(181947)
 //let n = readLine()!.components(separatedBy: [" "]).map { Int($0)! }
 //let (a, b) = (n[0], n[1])
 //
 //print(a, "+", b, "=", a+b)
 
 
-//문자열 섞기(181942)
+// 문자열 섞기(181942)
 //func solution(_ str1:String, _ str2:String) -> String {
 //    return zip(str1, str2).map { String($0) + String($1) }.joined()
 //}
+
+
+
+// 홀짝 구분하기(181944)
+//let n = Int(readLine()!)!
+//
+//print(n, "is", n%2 == 0 ? "even" : "odd")
+
+
+
+// n의 배수(181937)
+//func solution(_ num: Int, _ n: Int) -> Int {
+//    return num % n == 0 ? 1 : 0
+//}
+
+
+
+// flag에 따라 다른 값 반환하기(181933)
+//func solution(_ a: Int, _ b: Int, _ flag: Bool) -> Int {
+//    return flag ? a+b : a-b
+//}
+
+
+
+// 문자열 붙여서 출력하기(181946)
+//let inp = readLine()!.components(separatedBy: [" "]).map { $0 }
+//
+//print(inp.joined())
+
+
+
+// 조건 문자열(181934)
+//func solution(_ ineq: String, _ eq: String, _ n: Int, _ m: Int) -> Int {
+//    switch ineq+eq {
+//    case ">=":
+//        return n >= m ? 1 : 0
+//    case ">!":
+//        return n > m ? 1 : 0
+//    case "<=":
+//        return n <= m ? 1 : 0
+//    case "<!":
+//        return n < m ? 1 : 0
+//    default:
+//        return -1
+//    }
+//}
+
+
+
+// 더 크게 합치기(181939)
+//func solution(_ a: Int, _ b: Int) -> Int {
+//    return max(Int(String(a) + String(b))!, Int(String(b) + String(a))!)
+//}
+
+
+
+// 두 수의 연산값 비교하기(181938)
+//func solution(_ a: Int, _ b: Int) -> Int {
+//    return max(Int(String(a) + String(b))!, 2 * a * b)
+//}
+
+
+
+// 문자열 겹쳐쓰기(181943)
+func solution(_ my_string: String, _ overwrite_string: String, _ s: Int) -> String {
+    var myString = Array(my_string)
+    myString.replaceSubrange(s...(overwrite_string.count + s - 1), with: Array(overwrite_string))
+    
+    return String(myString)
+//    return String(my_string.prefix(s)) + overwrite_string + String(my_string.suffix(my_string.count - overwrite_string.count - s))
+}
