@@ -566,10 +566,56 @@ import Foundation
 
 
 // 문자열 겹쳐쓰기(181943)
-func solution(_ my_string: String, _ overwrite_string: String, _ s: Int) -> String {
-    var myString = Array(my_string)
-    myString.replaceSubrange(s...(overwrite_string.count + s - 1), with: Array(overwrite_string))
-    
-    return String(myString)
-//    return String(my_string.prefix(s)) + overwrite_string + String(my_string.suffix(my_string.count - overwrite_string.count - s))
+//func solution(_ my_string: String, _ overwrite_string: String, _ s: Int) -> String {
+//    var myString = Array(my_string)
+//    myString.replaceSubrange(s...(overwrite_string.count + s - 1), with: Array(overwrite_string))
+//
+//    return String(myString)
+////    return String(my_string.prefix(s)) + overwrite_string + String(my_string.suffix(my_string.count - overwrite_string.count - s))
+//}
+
+
+
+// 서울에서 김서방 찾기(12919)
+//func solution(_ seoul: [String]) -> String {
+//    return "김서방은 \(seoul.firstIndex(of: "Kim")!)에 있다"
+//}
+
+
+
+// 자릿수 더하기(12931)
+//func solution(_ n: Int) -> Int {
+//    var answer: Int = 0
+//
+//    for i in String(n) {
+//        answer += Int(String(i))!
+//    }
+//
+//    return answer
+//
+////    return String(n).reduce(0, { $0 + Int(String($1))! });
+//}
+
+
+
+// 정수 내림차순으로 배치하기(12933)
+//func solution(_ n: Int64) -> Int64 {
+//    return Int64(String(String(n).sorted(by: >)))!
+//}
+
+
+
+// 시저 암호(12926)
+func solution(_ s: String, _ n: Int) -> String {
+    let alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".map { $0 }
+
+    return String(
+        s.map {
+            guard let index = alphabet.firstIndex(of: Character($0.uppercased())) else { return $0 }
+
+            let word = alphabet[(index + n) % alphabet.count]
+
+            return $0.isLowercase ? Character(word.lowercased()) : word
+        }
+    )
 }
