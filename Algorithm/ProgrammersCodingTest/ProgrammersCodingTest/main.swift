@@ -606,16 +606,25 @@ import Foundation
 
 
 // 시저 암호(12926)
-func solution(_ s: String, _ n: Int) -> String {
-    let alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".map { $0 }
+//func solution(_ s: String, _ n: Int) -> String {
+//    let alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".map { $0 }
+//
+//    return String(
+//        s.map {
+//            guard let index = alphabet.firstIndex(of: Character($0.uppercased())) else { return $0 }
+//
+//            let word = alphabet[(index + n) % alphabet.count]
+//
+//            return $0.isLowercase ? Character(word.lowercased()) : word
+//        }
+//    )
+//}
 
-    return String(
-        s.map {
-            guard let index = alphabet.firstIndex(of: Character($0.uppercased())) else { return $0 }
 
-            let word = alphabet[(index + n) % alphabet.count]
 
-            return $0.isLowercase ? Character(word.lowercased()) : word
-        }
-    )
+// 문자열 내 마음대로 정렬하기(12915)
+func solution(_ strings: [String], _ n: Int) -> [String] {
+    return strings.sorted {
+        Array($0)[n] == Array($1)[n] ? $0 < $1 : Array($0)[n] < Array($1)[n]
+    }
 }
