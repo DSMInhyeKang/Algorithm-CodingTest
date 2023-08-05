@@ -623,8 +623,28 @@ import Foundation
 
 
 // 문자열 내 마음대로 정렬하기(12915)
-func solution(_ strings: [String], _ n: Int) -> [String] {
-    return strings.sorted {
-        Array($0)[n] == Array($1)[n] ? $0 < $1 : Array($0)[n] < Array($1)[n]
+//func solution(_ strings: [String], _ n: Int) -> [String] {
+//    return strings.sorted {
+//        Array($0)[n] == Array($1)[n] ? $0 < $1 : Array($0)[n] < Array($1)[n]
+//    }
+//}
+
+
+
+// 올바른 괄호(12909)
+func solution(_ s: String) -> Bool {
+    var opens = 0
+    
+    for c in s {
+        if c == "(" {
+            opens += 1;
+        } else if c == ")" {
+            opens -= 1;
+            
+            if opens < 0 {
+                return false;
+            }
+        }
     }
+    return opens == 0;
 }
