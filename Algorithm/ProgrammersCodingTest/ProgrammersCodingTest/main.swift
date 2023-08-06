@@ -632,19 +632,43 @@ import Foundation
 
 
 // 올바른 괄호(12909)
-func solution(_ s: String) -> Bool {
-    var opens = 0
+//func solution(_ s: String) -> Bool {
+//    var opens = 0
+//
+//    for c in s {
+//        if c == "(" {
+//            opens += 1;
+//        } else if c == ")" {
+//            opens -= 1;
+//
+//            if opens < 0 {
+//                return false;
+//            }
+//        }
+//    }
+//    return opens == 0;
+//}
+
+
+
+// 가장 큰 정사각형 찾기(12905)
+func solution(_ board:[[Int]]) -> Int {
+    var answer:Int = 0
+    var dp = board
     
-    for c in s {
-        if c == "(" {
-            opens += 1;
-        } else if c == ")" {
-            opens -= 1;
+    for i in 0..<board.count {
+        for j in 0..<board[0].count {
+            answer = max(answer, board[i][j])
+            if i - 1 < 0 || j - 1 < 0 {
+                continue
+            }
             
-            if opens < 0 {
-                return false;
+            if board[i][j] == 1 && board[i-1][j] == 1 && board[i][j-1] == 1 {
+                dp[i][j] = min(dp[i][j-1], dp[i-1][j], dp[i-1][j-1]) + 1
+                answer = max(answer, dp[i][j])
             }
         }
     }
-    return opens == 0;
+    
+    return answer * answer
 }
