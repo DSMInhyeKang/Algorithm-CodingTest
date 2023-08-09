@@ -676,17 +676,29 @@ import Foundation
 
 
 // 땅따먹기(12913)
-func solution(_ land: [[Int]]) -> Int {
-    var dp = land
-    
-    for i in 1..<land.count {
-        for j in 0..<land[0].count {
-            for k in 0..<land[0].count {
-                if j == k { continue }
-                dp[i][j] = max(dp[i][j], dp[i-1][k] + land[i][j])
-            }
-        }
+//func solution(_ land: [[Int]]) -> Int {
+//    var dp = land
+//
+//    for i in 1..<land.count {
+//        for j in 0..<land[0].count {
+//            for k in 0..<land[0].count {
+//                if j == k { continue }
+//                dp[i][j] = max(dp[i][j], dp[i-1][k] + land[i][j])
+//            }
+//        }
+//    }
+//
+//    return dp.last!.max()!
+//}
+
+
+
+// 가운데 글자 가져오기(12903)
+func solution(_ s: String) -> String {
+    if s.count % 2 == 0 {
+        return String(Array(s)[(s.count/2 - 1)...(s.count/2)])
+    } else {
+        return String(Array(s)[s.count/2])
     }
-    
-    return dp.last!.max()!
+//    return String(s[String.Index(encodedOffset: (s.count-1)/2)...String.Index(encodedOffset: s.count/2)])
 }
