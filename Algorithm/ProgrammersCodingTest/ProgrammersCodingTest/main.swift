@@ -694,11 +694,27 @@ import Foundation
 
 
 // 가운데 글자 가져오기(12903)
-func solution(_ s: String) -> String {
-    if s.count % 2 == 0 {
-        return String(Array(s)[(s.count/2 - 1)...(s.count/2)])
-    } else {
-        return String(Array(s)[s.count/2])
+//func solution(_ s: String) -> String {
+//    if s.count % 2 == 0 {
+//        return String(Array(s)[(s.count/2 - 1)...(s.count/2)])
+//    } else {
+//        return String(Array(s)[s.count/2])
+//    }
+////    return String(s[String.Index(encodedOffset: (s.count-1)/2)...String.Index(encodedOffset: s.count/2)])
+//}
+
+
+
+// 다음 큰 숫자(12911)
+func solution(_ n: Int) -> Int {
+    var answer : Int = n + 1
+
+    while true {
+        if n.nonzeroBitCount == answer.nonzeroBitCount {
+            break;
+        }
+        answer += 1
     }
-//    return String(s[String.Index(encodedOffset: (s.count-1)/2)...String.Index(encodedOffset: s.count/2)])
+
+    return answer
 }
