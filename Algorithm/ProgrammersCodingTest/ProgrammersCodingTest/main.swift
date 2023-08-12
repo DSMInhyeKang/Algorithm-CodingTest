@@ -706,15 +706,22 @@ import Foundation
 
 
 // 다음 큰 숫자(12911)
-func solution(_ n: Int) -> Int {
-    var answer : Int = n + 1
+//func solution(_ n: Int) -> Int {
+//    var answer : Int = n + 1
+//
+//    while true {
+//        if n.nonzeroBitCount == answer.nonzeroBitCount {
+//            break;
+//        }
+//        answer += 1
+//    }
+//
+//    return answer
+//}
 
-    while true {
-        if n.nonzeroBitCount == answer.nonzeroBitCount {
-            break;
-        }
-        answer += 1
-    }
 
-    return answer
+
+// 내적(70128)
+func solution(_ a: [Int], _ b: [Int]) -> Int {
+    return zip(a, b).map(*).reduce(0, +)
 }
