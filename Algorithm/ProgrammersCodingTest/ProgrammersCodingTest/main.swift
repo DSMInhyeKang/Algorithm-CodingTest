@@ -788,23 +788,30 @@ import Foundation
 
 
 // 튜플(64065)
-func solution(_ s: String) -> [Int] {
-    var s = s
-    var answer = [Int]()
-    
-    s.removeFirst(2)
-    s.removeLast(2)
+//func solution(_ s: String) -> [Int] {
+//    var s = s
+//    var answer = [Int]()
+//
+//    s.removeFirst(2)
+//    s.removeLast(2)
+//
+//    s.components(separatedBy: "},{")
+//        .map { $0.components(separatedBy: ",").map { Int($0)! } }
+//        .sorted { $0.count < $1.count }
+//        .forEach {
+//            $0.forEach {
+//                if !answer.contains($0) {
+//                    answer.append($0)
+//                }
+//            }
+//    }
+//
+//    return answer
+//}
 
-    s.components(separatedBy: "},{")
-        .map { $0.components(separatedBy: ",").map { Int($0)! } }
-        .sorted { $0.count < $1.count }
-        .forEach {
-            $0.forEach {
-                if !answer.contains($0) {
-                    answer.append($0)
-                }
-            }
-    }
-    
-    return answer
+
+
+// 3진법 뒤집기(68935)
+func solution(_ n: Int) -> Int {
+    return Int(String(String(n, radix: 3).reversed()), radix: 3)!
 }
