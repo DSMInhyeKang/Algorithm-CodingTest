@@ -812,6 +812,37 @@ import Foundation
 
 
 // 3진법 뒤집기(68935)
-func solution(_ n: Int) -> Int {
-    return Int(String(String(n, radix: 3).reversed()), radix: 3)!
+//func solution(_ n: Int) -> Int {
+//    return Int(String(String(n, radix: 3).reversed()), radix: 3)!
+//}
+
+
+
+// 오픈채팅방(42888)
+func solution(_ record: [String]) -> [String] {
+    let actions = ["Enter":"님이 들어왔습니다.", "Leave":"님이 나갔습니다."]
+    var a = [String:String]()
+    
+    record.forEach {
+        let separated = $0.components(separatedBy: " ")
+        
+        if separated.count > 2 {
+            a[separated[1]] = separated[2]
+        }
+    }
+    print(
+        record.filter { !$0.contains("Change") }.map { (value: String) -> String in
+            let separated = value.components(separatedBy: " ")
+            let newString = a[separated[1]]! + actions[separated[0]]!
+            
+            return newString
+        }
+    )
+    
+    return record.filter { !$0.contains("Change") }.map { (value: String) -> String in
+        let separated = value.components(separatedBy: " ")
+        let newString = a[separated[1]]! + actions[separated[0]]!
+        
+        return newString
+    }
 }
