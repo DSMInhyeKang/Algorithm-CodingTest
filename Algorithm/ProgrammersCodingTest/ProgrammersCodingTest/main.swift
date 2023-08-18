@@ -852,17 +852,55 @@ import Foundation
 
 
 // 이진 변환 반복하기(70129)
-func solution(_ s: String) -> [Int] {
-    var s = s
-    var count = 0, times = 0
+//func solution(_ s: String) -> [Int] {
+//    var s = s
+//    var count = 0, times = 0
+//
+//    while s != "1" {
+//        let replaceCount = s.filter { $0 == "0" }.count
+//        count += replaceCount
+//
+//        s = String(s.count - replaceCount, radix: 2)
+//        times += 1
+//    }
+//
+//    return [times, count]
+//}
 
-    while s != "1" {
-        let replaceCount = s.filter { $0 == "0" }.count
-        count += replaceCount
 
-        s = String(s.count - replaceCount, radix: 2)
-        times += 1
+
+// 쿼드 압축 후 개수 세기(68936)
+var G = [[Int]]()
+var Ans = (0, 0)
+
+func DFS(_ x: Int, _ y: Int, _ len: Int) {
+    var isEqual = true
+    var target = G[x][y]
+    
+    for idx in x ..< x+len {
+        for jdx in y ..< y+len {
+            if target != G[idx][jdx] {
+                isEqual = false
+                break
+            }
+        }
+        
+        if !isEqual { break }
     }
 
-    return [times, count]
+    if !isEqual {
+        DFS(x, y, len/2)
+        DFS(x, y+len/2, len/2)
+        DFS(x+len/2, y, len/2)
+        DFS(x+len/2, y+len/2, len/2)
+    } else {
+        if target == 0 { Ans.0 += 1 }
+        else { Ans.1 += 1 }
+    }
+}
+
+func solution(_ arr: [[Int]]) -> [Int] {
+    G = arr
+    DFS(0, 0, arr.count)
+    return [Ans.0, Ans.1]
 }
