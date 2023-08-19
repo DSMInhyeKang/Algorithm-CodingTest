@@ -870,37 +870,100 @@ import Foundation
 
 
 // 쿼드 압축 후 개수 세기(68936)
-var G = [[Int]]()
-var Ans = (0, 0)
+//var G = [[Int]]()
+//var Ans = (0, 0)
+//
+//func DFS(_ x: Int, _ y: Int, _ len: Int) {
+//    var isEqual = true
+//    var target = G[x][y]
+//
+//    for idx in x ..< x+len {
+//        for jdx in y ..< y+len {
+//            if target != G[idx][jdx] {
+//                isEqual = false
+//                break
+//            }
+//        }
+//
+//        if !isEqual { break }
+//    }
+//
+//    if !isEqual {
+//        DFS(x, y, len/2)
+//        DFS(x, y+len/2, len/2)
+//        DFS(x+len/2, y, len/2)
+//        DFS(x+len/2, y+len/2, len/2)
+//    } else {
+//        if target == 0 { Ans.0 += 1 }
+//        else { Ans.1 += 1 }
+//    }
+//}
+//
+//func solution(_ arr: [[Int]]) -> [Int] {
+//    G = arr
+//    DFS(0, 0, arr.count)
+//    return [Ans.0, Ans.1]
+//}
 
-func DFS(_ x: Int, _ y: Int, _ len: Int) {
-    var isEqual = true
-    var target = G[x][y]
+
+
+// 후보키(42890)
+var cases = [[Int]]()
+
+func solution(_ relation: [[String]]) -> Int {
+    var candidateKey = [[Int]]()
+    var colsize = [Int]()
+
+    for i in 0..<relation[0].count {
+        colsize.append(i)
+    }
     
-    for idx in x ..< x+len {
-        for jdx in y ..< y+len {
-            if target != G[idx][jdx] {
-                isEqual = false
-                break
+    for i in 0..<colsize.count {
+        combination(n: colsize, m: i+1, current: 0, pickedArray: [])
+    }
+
+    out: for c in cases {
+        let set = Set(c)
+        
+        for key in candidateKey {
+            if set.isSuperset(of: key) {
+                continue out
             }
         }
+
+        var rowSet = Set<Array<String>>()
         
-        if !isEqual { break }
+        for row in relation {
+            var tuple = [String]()
+
+            for i in c {
+                tuple.append(row[i])
+            }
+
+            if !rowSet.contains(tuple) {
+                rowSet.insert(tuple)
+            } else { break }
+        }
+
+        if rowSet.count == relation.count {
+            candidateKey.append(c)
+        }
     }
 
-    if !isEqual {
-        DFS(x, y, len/2)
-        DFS(x, y+len/2, len/2)
-        DFS(x+len/2, y, len/2)
-        DFS(x+len/2, y+len/2, len/2)
-    } else {
-        if target == 0 { Ans.0 += 1 }
-        else { Ans.1 += 1 }
-    }
+    return candidateKey.count
 }
 
-func solution(_ arr: [[Int]]) -> [Int] {
-    G = arr
-    DFS(0, 0, arr.count)
-    return [Ans.0, Ans.1]
+
+func combination(n: [Int], m: Int, current index: Int, pickedArray: [Int]) {
+    if m == 0 {
+        cases.append(pickedArray)
+    } else if index == n.count {
+        return
+    } else {
+        var newSelected = pickedArray
+        
+        newSelected.append(n[index])
+        combination(n: n, m: m-1, current: index+1, pickedArray: newSelected)
+        combination(n: n, m: m, current: index+1, pickedArray: pickedArray)
+    }
 }
