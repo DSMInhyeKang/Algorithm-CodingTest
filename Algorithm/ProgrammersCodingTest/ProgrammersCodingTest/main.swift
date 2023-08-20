@@ -908,62 +908,80 @@ import Foundation
 
 
 // 후보키(42890)
-var cases = [[Int]]()
+//var cases = [[Int]]()
+//
+//func solution(_ relation: [[String]]) -> Int {
+//    var candidateKey = [[Int]]()
+//    var colsize = [Int]()
+//
+//    for i in 0..<relation[0].count {
+//        colsize.append(i)
+//    }
+//
+//    for i in 0..<colsize.count {
+//        combination(n: colsize, m: i+1, current: 0, pickedArray: [])
+//    }
+//
+//    out: for c in cases {
+//        let set = Set(c)
+//
+//        for key in candidateKey {
+//            if set.isSuperset(of: key) {
+//                continue out
+//            }
+//        }
+//
+//        var rowSet = Set<Array<String>>()
+//
+//        for row in relation {
+//            var tuple = [String]()
+//
+//            for i in c {
+//                tuple.append(row[i])
+//            }
+//
+//            if !rowSet.contains(tuple) {
+//                rowSet.insert(tuple)
+//            } else { break }
+//        }
+//
+//        if rowSet.count == relation.count {
+//            candidateKey.append(c)
+//        }
+//    }
+//
+//    return candidateKey.count
+//}
+//
+//
+//func combination(n: [Int], m: Int, current index: Int, pickedArray: [Int]) {
+//    if m == 0 {
+//        cases.append(pickedArray)
+//    } else if index == n.count {
+//        return
+//    } else {
+//        var newSelected = pickedArray
+//
+//        newSelected.append(n[index])
+//        combination(n: n, m: m-1, current: index+1, pickedArray: newSelected)
+//        combination(n: n, m: m, current: index+1, pickedArray: pickedArray)
+//    }
+//}
 
-func solution(_ relation: [[String]]) -> Int {
-    var candidateKey = [[Int]]()
-    var colsize = [Int]()
 
-    for i in 0..<relation[0].count {
-        colsize.append(i)
+
+// 최소직사각형(86491)
+func solution(_ sizes: [[Int]]) -> Int {
+    var size = sizes
+    let count = size.count;
+    var x: [Int] = []
+    var y: [Int] = []
+
+    for i in 0..<count {
+        size[i].sort()
+        x.append(size[i][0])
+        y.append(size[i][1])
     }
     
-    for i in 0..<colsize.count {
-        combination(n: colsize, m: i+1, current: 0, pickedArray: [])
-    }
-
-    out: for c in cases {
-        let set = Set(c)
-        
-        for key in candidateKey {
-            if set.isSuperset(of: key) {
-                continue out
-            }
-        }
-
-        var rowSet = Set<Array<String>>()
-        
-        for row in relation {
-            var tuple = [String]()
-
-            for i in c {
-                tuple.append(row[i])
-            }
-
-            if !rowSet.contains(tuple) {
-                rowSet.insert(tuple)
-            } else { break }
-        }
-
-        if rowSet.count == relation.count {
-            candidateKey.append(c)
-        }
-    }
-
-    return candidateKey.count
-}
-
-
-func combination(n: [Int], m: Int, current index: Int, pickedArray: [Int]) {
-    if m == 0 {
-        cases.append(pickedArray)
-    } else if index == n.count {
-        return
-    } else {
-        var newSelected = pickedArray
-        
-        newSelected.append(n[index])
-        combination(n: n, m: m-1, current: index+1, pickedArray: newSelected)
-        combination(n: n, m: m, current: index+1, pickedArray: pickedArray)
-    }
+    return x.max()! * y.max()!
 }
