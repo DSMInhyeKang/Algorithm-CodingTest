@@ -971,17 +971,27 @@ import Foundation
 
 
 // 최소직사각형(86491)
-func solution(_ sizes: [[Int]]) -> Int {
-    var size = sizes
-    let count = size.count;
-    var x: [Int] = []
-    var y: [Int] = []
+//func solution(_ sizes: [[Int]]) -> Int {
+//    var size = sizes
+//    let count = size.count;
+//    var x: [Int] = []
+//    var y: [Int] = []
+//
+//    for i in 0..<count {
+//        size[i].sort()
+//        x.append(size[i][0])
+//        y.append(size[i][1])
+//    }
+//
+//    return x.max()! * y.max()!
+//}
 
-    for i in 0..<count {
-        size[i].sort()
-        x.append(size[i][0])
-        y.append(size[i][1])
-    }
-    
-    return x.max()! * y.max()!
+
+
+// 음양 더하기(76501)
+func solution(_ absolutes:[Int], _ signs:[Bool]) -> Int {
+    return zip(absolutes, signs)
+        .map { $1 ? $0 : -$0 }
+        .reduce(0, +)
+//    return (0..<absolutes.count).map { signs[$0] ? absolutes[$0] : -absolutes[$0] }.reduce(0, +)
 }
