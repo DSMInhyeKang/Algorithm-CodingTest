@@ -989,9 +989,18 @@ import Foundation
 
 
 // 음양 더하기(76501)
-func solution(_ absolutes:[Int], _ signs:[Bool]) -> Int {
-    return zip(absolutes, signs)
-        .map { $1 ? $0 : -$0 }
-        .reduce(0, +)
-//    return (0..<absolutes.count).map { signs[$0] ? absolutes[$0] : -absolutes[$0] }.reduce(0, +)
+//func solution(_ absolutes:[Int], _ signs:[Bool]) -> Int {
+//    return zip(absolutes, signs)
+//        .map { $1 ? $0 : -$0 }
+//        .reduce(0, +)
+////    return (0..<absolutes.count).map { signs[$0] ? absolutes[$0] : -absolutes[$0] }.reduce(0, +)
+//}
+
+
+
+// 둘만의 암호(155652)
+func solution(_ s: String, _ skip: String, _ index: Int) -> String {
+    let arr = "abcdefghijklmnopqrstuvwxyz".map{String($0)}.filter {!skip.contains($0) }
+    
+    return s.map { arr[arr.index(arr.firstIndex(of: String($0))!, offsetBy: index) % arr.count] }.joined()
 }
