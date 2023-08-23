@@ -999,8 +999,35 @@ import Foundation
 
 
 // 둘만의 암호(155652)
-func solution(_ s: String, _ skip: String, _ index: Int) -> String {
-    let arr = "abcdefghijklmnopqrstuvwxyz".map{String($0)}.filter {!skip.contains($0) }
-    
-    return s.map { arr[arr.index(arr.firstIndex(of: String($0))!, offsetBy: index) % arr.count] }.joined()
+//func solution(_ s: String, _ skip: String, _ index: Int) -> String {
+//    let arr = "abcdefghijklmnopqrstuvwxyz".map{String($0)}.filter {!skip.contains($0) }
+//
+//    return s.map { arr[arr.index(arr.firstIndex(of: String($0))!, offsetBy: index) % arr.count] }.joined()
+//}
+
+
+
+// 대충 만든 자판(160586)
+func solution(_ keymap: [String], _ targets: [String]) -> [Int] {
+    var map = [Character: Int]()
+    var answer = [Int]()
+
+    for key in keymap {
+        key.enumerated().forEach {
+            if map[$0.element, default: Int.max] > $0.offset {
+                map[$0.element] = $0.offset + 1
+            }
+        }
+    }
+
+    targets.forEach {
+        var sum = 0
+        for target in $0 {
+            guard let key = map[target] else { sum = -1; break }
+            sum += key
+        }
+        answer.append(sum)
+    }
+
+    return answer
 }
