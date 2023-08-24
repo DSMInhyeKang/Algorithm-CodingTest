@@ -1008,26 +1008,47 @@ import Foundation
 
 
 // 대충 만든 자판(160586)
-func solution(_ keymap: [String], _ targets: [String]) -> [Int] {
-    var map = [Character: Int]()
-    var answer = [Int]()
+//func solution(_ keymap: [String], _ targets: [String]) -> [Int] {
+//    var map = [Character: Int]()
+//    var answer = [Int]()
+//
+//    for key in keymap {
+//        key.enumerated().forEach {
+//            if map[$0.element, default: Int.max] > $0.offset {
+//                map[$0.element] = $0.offset + 1
+//            }
+//        }
+//    }
+//
+//    targets.forEach {
+//        var sum = 0
+//        for target in $0 {
+//            guard let key = map[target] else { sum = -1; break }
+//            sum += key
+//        }
+//        answer.append(sum)
+//    }
+//
+//    return answer
+//}
 
-    for key in keymap {
-        key.enumerated().forEach {
-            if map[$0.element, default: Int.max] > $0.offset {
-                map[$0.element] = $0.offset + 1
+
+
+// 바탕화면 정리(161990)
+func solution(_ wallpaper: [String]) -> [Int] {
+    var x_arr = [Int]()
+    var y_arr = [Int]()
+
+    for (i, paper) in wallpaper.enumerated() {
+        if paper.contains("#"){
+            for (index, w) in paper.map({String($0)}).enumerated(){
+                if w == "#" {
+                    x_arr.append(i)
+                    y_arr.append(index)
+                }
             }
         }
     }
 
-    targets.forEach {
-        var sum = 0
-        for target in $0 {
-            guard let key = map[target] else { sum = -1; break }
-            sum += key
-        }
-        answer.append(sum)
-    }
-
-    return answer
+    return [x_arr.min() ?? 0, y_arr.min() ?? 0, x_arr.max()!+1, y_arr.max()!+1]
 }
