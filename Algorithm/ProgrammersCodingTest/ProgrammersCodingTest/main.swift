@@ -1056,19 +1056,49 @@ import Foundation
 
 
 // 뒤에 있는 큰 수 찾기(154539)
-func solution(_ numbers: [Int]) -> [Int] {
-    var result: [Int] = Array(repeating: -1, count: numbers.count)
-    var stack: [(Int, Int)] = []
+//func solution(_ numbers: [Int]) -> [Int] {
+//    var result: [Int] = Array(repeating: -1, count: numbers.count)
+//    var stack: [(Int, Int)] = []
+//
+//    for (i, n) in numbers.enumerated() {
+//        if !stack.isEmpty {
+//            while !stack.isEmpty && stack.last!.1 < n {
+//                result[stack.removeLast().0] = n
+//            }
+//        }
+//
+//        stack.append((i, n))
+//    }
+//
+//    return result
+//}
+
+
+
+// 호텔 대실(155651)
+func solution(_ book_time: [[String]]) -> Int {
+    var bookTime: [(Int, Int)] = []
+    var rooms: [(Int, Int)] = []
     
-    for (i, n) in numbers.enumerated() {
-        if !stack.isEmpty {
-            while !stack.isEmpty && stack.last!.1 < n {
-                result[stack.removeLast().0] = n
-            }
-        }
-        
-        stack.append((i, n))
+    for book in book_time {
+        let start = book[0].components(separatedBy: ":")
+        let end = book[1].components(separatedBy: ":")
+        let startTime = Int(start[0])!*60 + Int(start[1])!
+        let endTime = Int(end[0])!*60 + Int(end[1])! + 10
+        bookTime.append((startTime, endTime))
     }
     
-    return result
+    bookTime.sort(by: { $0.0 < $1.0 })
+    
+    loop1: for book in bookTime {
+        for (i, room) in rooms.enumerated() {
+            if !(room.0..<room.1 ~= book.0) {
+                rooms[i] = book
+                continue loop1
+            }
+        }
+        rooms.append((book.0, book.1))
+    }
+    
+    return rooms.count
 }
