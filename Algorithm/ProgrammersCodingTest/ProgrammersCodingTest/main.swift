@@ -1106,20 +1106,31 @@ import Foundation
 
 
 // 가장 가까운 같은 글자(142086)
-func solution(_ s: String) -> [Int] {
-//    var dict: [Character:Int] = [:]
-//    var result: [Int] = []
-//
-//    s.enumerated().forEach { (index, char) in
-//        if let pre = dict[char] {
-//            dict[char] = index
-//            result += [index - pre]
-//        } else {
-//            result.append(-1)
-//            dict[char] = index
-//        }
-//    }
-//
-//    return result
-    return s.enumerated().map { (i, c) in i - (Array(s)[0..<i].lastIndex(of: c) ?? i + 1) }
+//func solution(_ s: String) -> [Int] {
+////    var dict: [Character:Int] = [:]
+////    var result: [Int] = []
+////
+////    s.enumerated().forEach { (index, char) in
+////        if let pre = dict[char] {
+////            dict[char] = index
+////            result += [index - pre]
+////        } else {
+////            result.append(-1)
+////            dict[char] = index
+////        }
+////    }
+////
+////    return result
+//    return s.enumerated().map { (i, c) in i - (Array(s)[0..<i].lastIndex(of: c) ?? i + 1) }
+//}
+
+
+
+// 명예의 전당(1)(138477)
+func solution(_ k: Int, _ score: [Int]) -> [Int] {
+    return (0...score.count-1).map {
+        let end = $0 < k-1 ? $0 : k-1
+        
+        return Array(score[0...$0].sorted(by: >)[0...end]).last!
+    }
 }
