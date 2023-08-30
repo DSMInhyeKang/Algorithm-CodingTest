@@ -1127,10 +1127,31 @@ import Foundation
 
 
 // 명예의 전당(1)(138477)
-func solution(_ k: Int, _ score: [Int]) -> [Int] {
-    return (0...score.count-1).map {
-        let end = $0 < k-1 ? $0 : k-1
-        
-        return Array(score[0...$0].sorted(by: >)[0...end]).last!
+//func solution(_ k: Int, _ score: [Int]) -> [Int] {
+//    return (0...score.count-1).map {
+//        let end = $0 < k-1 ? $0 : k-1
+//
+//        return Array(score[0...$0].sorted(by: >)[0...end]).last!
+//    }
+//}
+
+
+
+// 햄버거 만들기(133502)
+func solution(_ ingredient: [Int]) -> Int {
+    var stack = [Int]()
+    var result = 0
+
+    for i in ingredient {
+        stack.append(i)
+
+        if stack.count < 4 { continue }
+
+        if stack.count > 3 && Array(stack.suffix(4)) == [1, 2, 3, 1] {
+            stack = Array(stack.dropLast(4))
+            result += 1
+        }
     }
+
+    return result
 }
