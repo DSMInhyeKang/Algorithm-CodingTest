@@ -1138,20 +1138,47 @@ import Foundation
 
 
 // 햄버거 만들기(133502)
-func solution(_ ingredient: [Int]) -> Int {
-    var stack = [Int]()
-    var result = 0
+//func solution(_ ingredient: [Int]) -> Int {
+//    var stack = [Int]()
+//    var result = 0
+//
+//    for i in ingredient {
+//        stack.append(i)
+//
+//        if stack.count < 4 { continue }
+//
+//        if stack.count > 3 && Array(stack.suffix(4)) == [1, 2, 3, 1] {
+//            stack = Array(stack.dropLast(4))
+//            result += 1
+//        }
+//    }
+//
+//    return result
+//}
 
-    for i in ingredient {
-        stack.append(i)
 
-        if stack.count < 4 { continue }
 
-        if stack.count > 3 && Array(stack.suffix(4)) == [1, 2, 3, 1] {
-            stack = Array(stack.dropLast(4))
-            result += 1
+// 택배상자(131704)
+func solution(_ order: [Int]) -> Int {
+    var stack: [Int] = []
+    var max: Int = 0
+    var count: Int = 0
+    
+    for box in order {
+        if stack.last == box {
+            count += 1
+            stack.removeLast()
+        } else if max < box {
+            count += 1
+            
+            for b in max+1..<box {
+                stack.append(b)
+            }
+            
+            max = box
+        } else {
+            break
         }
     }
-
-    return result
+    return count
 }
