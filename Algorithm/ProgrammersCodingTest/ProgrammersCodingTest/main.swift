@@ -1159,26 +1159,41 @@ import Foundation
 
 
 // 택배상자(131704)
-func solution(_ order: [Int]) -> Int {
-    var stack: [Int] = []
-    var max: Int = 0
-    var count: Int = 0
+//func solution(_ order: [Int]) -> Int {
+//    var stack: [Int] = []
+//    var max: Int = 0
+//    var count: Int = 0
+//
+//    for box in order {
+//        if stack.last == box {
+//            count += 1
+//            stack.removeLast()
+//        } else if max < box {
+//            count += 1
+//
+//            for b in max+1..<box {
+//                stack.append(b)
+//            }
+//
+//            max = box
+//        } else {
+//            break
+//        }
+//    }
+//    return count
+//}
+
+
+
+// 숫자 짝꿍(131128)
+func solution(_ X: String, _ Y: String) -> String {
+    var list: [String] = []
     
-    for box in order {
-        if stack.last == box {
-            count += 1
-            stack.removeLast()
-        } else if max < box {
-            count += 1
-            
-            for b in max+1..<box {
-                stack.append(b)
-            }
-            
-            max = box
-        } else {
-            break
-        }
+    for i in (0..<10) {
+        let xCount = X.filter { String($0) == String(i) }.count
+        let yCount = Y.filter { String($0) == String(i) }.count
+        list += Array(repeating: String(i), count: min(xCount, yCount))
     }
-    return count
+    
+    return list.isEmpty ? "-1" : list.filter { $0 == "0" }.count == list.count ? "0" : list.sorted(by: >).joined()
 }
