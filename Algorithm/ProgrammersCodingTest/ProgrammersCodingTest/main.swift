@@ -1186,14 +1186,43 @@ import Foundation
 
 
 // 숫자 짝꿍(131128)
-func solution(_ X: String, _ Y: String) -> String {
-    var list: [String] = []
+//func solution(_ X: String, _ Y: String) -> String {
+//    var list: [String] = []
+//
+//    for i in (0..<10) {
+//        let xCount = X.filter { String($0) == String(i) }.count
+//        let yCount = Y.filter { String($0) == String(i) }.count
+//        list += Array(repeating: String(i), count: min(xCount, yCount))
+//    }
+//
+//    return list.isEmpty ? "-1" : list.filter { $0 == "0" }.count == list.count ? "0" : list.sorted(by: >).joined()
+//}
+
+
+
+// 옹알이(2)(133499)
+func solution(_ babbling: [String]) -> Int {
+    let words = [ "aya", "ye", "woo", "ma" ]
+    var result = 0
     
-    for i in (0..<10) {
-        let xCount = X.filter { String($0) == String(i) }.count
-        let yCount = Y.filter { String($0) == String(i) }.count
-        list += Array(repeating: String(i), count: min(xCount, yCount))
+    for i in babbling {
+        var bab = i
+        var valid = [String]()
+        var word = ""
+        
+        for b in bab {
+            word = word + String(b)
+            
+            if words.contains(word) && valid.last != word {
+                valid.append(word)
+                word = ""
+            }
+        }
+        
+        if word == "" {
+            result += 1
+        }
     }
     
-    return list.isEmpty ? "-1" : list.filter { $0 == "0" }.count == list.count ? "0" : list.sorted(by: >).joined()
+    return result
 }
