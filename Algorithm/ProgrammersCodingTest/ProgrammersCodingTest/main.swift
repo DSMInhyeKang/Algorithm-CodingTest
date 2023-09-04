@@ -1201,28 +1201,55 @@ import Foundation
 
 
 // 옹알이(2)(133499)
-func solution(_ babbling: [String]) -> Int {
-    let words = [ "aya", "ye", "woo", "ma" ]
+//func solution(_ babbling: [String]) -> Int {
+//    let words = [ "aya", "ye", "woo", "ma" ]
+//    var result = 0
+//
+//    for i in babbling {
+//        var bab = i
+//        var valid = [String]()
+//        var word = ""
+//
+//        for b in bab {
+//            word = word + String(b)
+//
+//            if words.contains(word) && valid.last != word {
+//                valid.append(word)
+//                word = ""
+//            }
+//        }
+//
+//        if word == "" {
+//            result += 1
+//        }
+//    }
+//
+//    return result
+//}
+
+
+
+// 피로도(87946)
+func solution(_ k: Int, _ dungeons: [[Int]]) -> Int {
     var result = 0
+    var visited = [Bool](repeating: false, count: dungeons.count)
     
-    for i in babbling {
-        var bab = i
-        var valid = [String]()
-        var word = ""
+    
+    func dfs(_ count: Int, _ pirodo: Int){
+        if result < count{
+            result = count
+        }
         
-        for b in bab {
-            word = word + String(b)
-            
-            if words.contains(word) && valid.last != word {
-                valid.append(word)
-                word = ""
+        for i in 0..<dungeons.count{
+            if !visited[i] && dungeons[i][0] <= pirodo{
+                visited[i] = true
+                dfs(count + 1, pirodo - dungeons[i][1])
+                visited[i] = false
             }
         }
-        
-        if word == "" {
-            result += 1
-        }
     }
+    
+    dfs(0, k)
     
     return result
 }
