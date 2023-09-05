@@ -1230,26 +1230,42 @@ import Foundation
 
 
 // 피로도(87946)
-func solution(_ k: Int, _ dungeons: [[Int]]) -> Int {
-    var result = 0
-    var visited = [Bool](repeating: false, count: dungeons.count)
+//func solution(_ k: Int, _ dungeons: [[Int]]) -> Int {
+//    var result = 0
+//    var visited = [Bool](repeating: false, count: dungeons.count)
+//
+//
+//    func dfs(_ count: Int, _ pirodo: Int){
+//        if result < count{
+//            result = count
+//        }
+//
+//        for i in 0..<dungeons.count{
+//            if !visited[i] && dungeons[i][0] <= pirodo{
+//                visited[i] = true
+//                dfs(count + 1, pirodo - dungeons[i][1])
+//                visited[i] = false
+//            }
+//        }
+//    }
+//
+//    dfs(0, k)
+//
+//    return result
+//}
+
+
+
+// 부족한 금액 계산하기(82612)
+func solution(_ price: Int, _ money: Int, _ count: Int) -> Int64{
+    var answer: Int64 = -1
+    var sum = 0
     
-    
-    func dfs(_ count: Int, _ pirodo: Int){
-        if result < count{
-            result = count
-        }
-        
-        for i in 0..<dungeons.count{
-            if !visited[i] && dungeons[i][0] <= pirodo{
-                visited[i] = true
-                dfs(count + 1, pirodo - dungeons[i][1])
-                visited[i] = false
-            }
-        }
+    for i in 1...count {
+        sum += i * price
     }
     
-    dfs(0, k)
+    answer = Int64(sum > money ? (sum - money) : 0)
     
-    return result
+    return answer
 }
