@@ -1257,15 +1257,6 @@ import Foundation
 
 
 // 부족한 금액 계산하기(82612)
-func solution(_ price: Int, _ money: Int, _ count: Int) -> Int64{
-    var answer: Int64 = -1
-    var sum = 0
-    
-    for i in 1...count {
-        sum += i * price
-    }
-    
-    answer = Int64(sum > money ? (sum - money) : 0)
-    
-    return answer
+func solution(_ price: Int, _ money: Int, _ count: Int) -> Int{
+    return max((count + 1) * count / 2 * price - money , 0)
 }
