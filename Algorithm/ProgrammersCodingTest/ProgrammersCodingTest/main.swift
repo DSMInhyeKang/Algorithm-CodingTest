@@ -1257,6 +1257,16 @@ import Foundation
 
 
 // 부족한 금액 계산하기(82612)
-func solution(_ price: Int, _ money: Int, _ count: Int) -> Int{
-    return max((count + 1) * count / 2 * price - money , 0)
+//func solution(_ price: Int, _ money: Int, _ count: Int) -> Int{
+//    return max((count + 1) * count / 2 * price - money , 0)
+//}
+
+
+
+// 로또의 최고 순위와 최저 순위(77484)
+func solution(_ lottos: [Int], _ win_nums: [Int]) -> [Int] {
+    let zeroCount = lottos.filter { $0 == 0 }.count
+    let winCount: Int = win_nums.filter { lottos.contains($0) }.count
+
+    return [ min(7-winCount-zeroCount, 6), min(7-winCount, 6) ]
 }
