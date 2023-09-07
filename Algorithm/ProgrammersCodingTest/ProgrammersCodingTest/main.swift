@@ -1264,9 +1264,16 @@ import Foundation
 
 
 // 로또의 최고 순위와 최저 순위(77484)
-func solution(_ lottos: [Int], _ win_nums: [Int]) -> [Int] {
-    let zeroCount = lottos.filter { $0 == 0 }.count
-    let winCount: Int = win_nums.filter { lottos.contains($0) }.count
+//func solution(_ lottos: [Int], _ win_nums: [Int]) -> [Int] {
+//    let zeroCount = lottos.filter { $0 == 0 }.count
+//    let winCount: Int = win_nums.filter { lottos.contains($0) }.count
+//
+//    return [ min(7-winCount-zeroCount, 6), min(7-winCount, 6) ]
+//}
 
-    return [ min(7-winCount-zeroCount, 6), min(7-winCount, 6) ]
+
+
+// 약수의 개수와 덧셈(77884)
+func solution(_ left: Int, _ right: Int) -> Int {
+    return (left...right).map { i in (1...i).filter { i % $0 == 0 }.count % 2 == 0 ? i : -i }.reduce(0, +)
 }
