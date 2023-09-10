@@ -1274,6 +1274,20 @@ import Foundation
 
 
 // 약수의 개수와 덧셈(77884)
-func solution(_ left: Int, _ right: Int) -> Int {
-    return (left...right).map { i in (1...i).filter { i % $0 == 0 }.count % 2 == 0 ? i : -i }.reduce(0, +)
+//func solution(_ left: Int, _ right: Int) -> Int {
+//    return (left...right).map { i in (1...i).filter { i % $0 == 0 }.count % 2 == 0 ? i : -i }.reduce(0, +)
+//}
+
+
+
+// 숫자 문자열과 영단어(81301)
+func solution(_ s: String) -> Int {
+    var result = s
+    let numbers = ["zero","one","two","three","four","five","six","seven","eight","nine","ten"]
+    
+    for i in 0..<numbers.count {
+        result = result.replacingOccurrences(of: numbers[i], with: String(i))
+    }
+    
+    return Int(result)!
 }
