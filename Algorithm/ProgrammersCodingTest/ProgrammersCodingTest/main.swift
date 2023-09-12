@@ -1281,13 +1281,35 @@ import Foundation
 
 
 // 숫자 문자열과 영단어(81301)
-func solution(_ s: String) -> Int {
-    var result = s
-    let numbers = ["zero","one","two","three","four","five","six","seven","eight","nine","ten"]
-    
-    for i in 0..<numbers.count {
-        result = result.replacingOccurrences(of: numbers[i], with: String(i))
+//func solution(_ s: String) -> Int {
+//    var result = s
+//    let numbers = ["zero","one","two","three","four","five","six","seven","eight","nine","ten"]
+//
+//    for i in 0..<numbers.count {
+//        result = result.replacingOccurrences(of: numbers[i], with: String(i))
+//    }
+//
+//    return Int(result)!
+//}
+
+
+
+// 체육복(42862)
+func solution(_ n: Int, _ lost: [Int], _ reserve: [Int]) -> Int {
+    let losted = lost.filter{ !reserve.contains($0) }.sorted()
+    var reserved = reserve.filter{ !lost.contains($0) }.sorted()
+
+    var result = n - losted.count
+    for lost in losted {
+        for i in 0..<reserved.count {
+            if lost == reserved[i]-1 || lost == reserved[i]+1 {
+                reserved.remove(at: i)
+                result += 1
+                
+                break
+            }
+        }
     }
-    
-    return Int(result)!
+
+    return result
 }
