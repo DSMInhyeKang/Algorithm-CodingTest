@@ -1295,21 +1295,58 @@ import Foundation
 
 
 // 체육복(42862)
-func solution(_ n: Int, _ lost: [Int], _ reserve: [Int]) -> Int {
-    let losted = lost.filter{ !reserve.contains($0) }.sorted()
-    var reserved = reserve.filter{ !lost.contains($0) }.sorted()
+//func solution(_ n: Int, _ lost: [Int], _ reserve: [Int]) -> Int {
+//    let losted = lost.filter{ !reserve.contains($0) }.sorted()
+//    var reserved = reserve.filter{ !lost.contains($0) }.sorted()
+//
+//    var result = n - losted.count
+//    for lost in losted {
+//        for i in 0..<reserved.count {
+//            if lost == reserved[i]-1 || lost == reserved[i]+1 {
+//                reserved.remove(at: i)
+//                result += 1
+//
+//                break
+//            }
+//        }
+//    }
+//
+//    return result
+//}
 
-    var result = n - losted.count
-    for lost in losted {
-        for i in 0..<reserved.count {
-            if lost == reserved[i]-1 || lost == reserved[i]+1 {
-                reserved.remove(at: i)
-                result += 1
-                
-                break
+
+
+// 키패드 누르기(67256)
+func solution(_ numbers: [Int], _ hand: String) -> String {
+    var answer = ""
+    let position = [
+        1:[0,0], 2:[0,1], 3:[0,2],
+        4:[1,0], 5:[1,1], 6:[1,2],
+        7:[2,0], 8:[2,1], 9:[2,2],
+        0:[3,1],
+    ]
+    var left = [3,0]
+    var right = [3,2]
+    
+    for i in numbers {
+        if i == 1 || i == 4 || i == 7 {
+            left = position[i]!
+            answer += "L"
+        } else if i == 3 || i == 6 || i == 9 {
+            right = position[i]!
+            answer += "R"
+        } else {
+            var sizeL = abs(left[0] - position[i]![0]) + abs(left[1] - position[i]![1])
+            var sizeR = abs(right[0] - position[i]![0]) + abs(right[1] - position[i]![1])
+            if sizeL < sizeR || (sizeL == sizeR && hand == "left") {
+                left = position[i]!
+                answer += "L"
+            } else {
+                right = position[i]!
+                answer += "R"
             }
         }
     }
-
-    return result
+    
+    return answer
 }
