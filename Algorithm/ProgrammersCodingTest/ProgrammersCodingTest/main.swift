@@ -1317,36 +1317,45 @@ import Foundation
 
 
 // 키패드 누르기(67256)
-func solution(_ numbers: [Int], _ hand: String) -> String {
-    var answer = ""
-    let position = [
-        1:[0,0], 2:[0,1], 3:[0,2],
-        4:[1,0], 5:[1,1], 6:[1,2],
-        7:[2,0], 8:[2,1], 9:[2,2],
-        0:[3,1],
-    ]
-    var left = [3,0]
-    var right = [3,2]
-    
-    for i in numbers {
-        if i == 1 || i == 4 || i == 7 {
-            left = position[i]!
-            answer += "L"
-        } else if i == 3 || i == 6 || i == 9 {
-            right = position[i]!
-            answer += "R"
-        } else {
-            var sizeL = abs(left[0] - position[i]![0]) + abs(left[1] - position[i]![1])
-            var sizeR = abs(right[0] - position[i]![0]) + abs(right[1] - position[i]![1])
-            if sizeL < sizeR || (sizeL == sizeR && hand == "left") {
-                left = position[i]!
-                answer += "L"
-            } else {
-                right = position[i]!
-                answer += "R"
-            }
-        }
-    }
-    
-    return answer
+//func solution(_ numbers: [Int], _ hand: String) -> String {
+//    var answer = ""
+//    let position = [
+//        1:[0,0], 2:[0,1], 3:[0,2],
+//        4:[1,0], 5:[1,1], 6:[1,2],
+//        7:[2,0], 8:[2,1], 9:[2,2],
+//        0:[3,1],
+//    ]
+//    var left = [3,0]
+//    var right = [3,2]
+//
+//    for i in numbers {
+//        if i == 1 || i == 4 || i == 7 {
+//            left = position[i]!
+//            answer += "L"
+//        } else if i == 3 || i == 6 || i == 9 {
+//            right = position[i]!
+//            answer += "R"
+//        } else {
+//            var sizeL = abs(left[0] - position[i]![0]) + abs(left[1] - position[i]![1])
+//            var sizeR = abs(right[0] - position[i]![0]) + abs(right[1] - position[i]![1])
+//            if sizeL < sizeR || (sizeL == sizeR && hand == "left") {
+//                left = position[i]!
+//                answer += "L"
+//            } else {
+//                right = position[i]!
+//                answer += "R"
+//            }
+//        }
+//    }
+//
+//    return answer
+//}
+
+
+
+// 2016년(12901)
+func solution(_ a: Int, _ b: Int) -> String {
+    let weekday = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"]
+    let dayCount = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+    return weekday[(dayCount[0..<a - 1].reduce(0, +) + b + 4) % 7]
 }
