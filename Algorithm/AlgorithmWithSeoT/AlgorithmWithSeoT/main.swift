@@ -621,19 +621,102 @@ final class FileIO {
 
 
 // 2×n 타일링(11726)
+//let n = Int(readLine()!)!
+//var dp = [Int](repeating: 0, count: n+1)
+//
+//
+//if n == 1 {
+//    print(1)
+//} else if n == 2 {
+//    print(2)
+//} else {
+//    dp[1] = 1
+//    dp[2] = 2
+//    for i in 3..<n+1 {
+//        dp[i] = (dp[i-1] + dp[i-2]) % 10007
+//    }
+//    print(dp[n])
+//}
+
+
+
+// 2xn 타일링(11727)
+//let n = Int(readLine()!)!
+//var dp = [Int](repeating: 0, count: n+1)
+//
+//dp[0] = 1
+//dp[1] = 1
+//
+//for i in 2..<n+1 {
+//    dp[i] = (dp[i-1] + 2*dp[i-2]) % 10007
+//}
+//
+//print(dp[n])
+
+
+
+// 1,2,3 더하기(9095)
+//let count = Int(readLine()!) ?? 0
+//var dp = [Int](repeating: 0, count: 11)
+//
+//dp[0] = 1
+//dp[1] = 1
+//dp[2] = 2
+//
+//for j in 3..<11 {
+//    dp[j] = (dp[j-1] + dp[j-2] + dp[j-3])
+//}
+//
+//for _ in 0..<count {
+//    let n = Int(readLine()!)!
+//
+//    print(dp[n])
+//}
+
+
+
+// 카드 구매하기(11052)
+//let n = Int(readLine()!)!
+//let price = readLine()!.split(separator: " ").map{ Int($0)! }
+//var dp = [Int](repeating: 0, count: n+1)
+//
+//
+//for i in 1..<n+1 {
+//    for j in 1..<i+1 {
+//        dp[i] = max(dp[i], dp[i-j]+price[j-1])
+//    }
+//}
+//
+//print(dp[n])
+
+
+
+// 카드 구매하기 2(16194)
+//let n = Int(readLine()!)!
+//let p = readLine()!.split(separator: " ").map { Int(String($0))! }
+//var dp = [Int](repeating: 999999, count: n+1)
+//
+//dp[0] = 0
+//
+//for i in 1..<n+1 {
+//    for j in 1..<i+1 {
+//        dp[i] = min(dp[i], dp[i-j]+p[j-1])
+//    }
+//}
+
+//print(dp[n])
+
+
+
+// 이친수(2193)
 let n = Int(readLine()!)!
-var dp = [Int](repeating: 0, count: n+1)
+var dp = Array(repeating: 0, count: 91)
 
+dp[1] = 1
+dp[2] = 1
 
-if n == 1 {
-    print(1)
-} else if n == 2 {
-    print(2)
-} else {
-    dp[1] = 1
-    dp[2] = 2
-    for i in 3..<n+1 {
-        dp[i] = (dp[i-1] + dp[i-2]) % 10007
-    }
-    print(dp[n])
+for i in stride(from: 3, through: n, by: 1){
+    dp[i] = dp[i - 1] + dp[i - 2]
 }
+
+print(dp[n])
