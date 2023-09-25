@@ -709,14 +709,75 @@ final class FileIO {
 
 
 // 이친수(2193)
-let n = Int(readLine()!)!
-var dp = Array(repeating: 0, count: 91)
+//let n = Int(readLine()!)!
+//var dp = Array(repeating: 0, count: 91)
+//
+//dp[1] = 1
+//dp[2] = 1
+//
+//for i in stride(from: 3, through: n, by: 1){
+//    dp[i] = dp[i - 1] + dp[i - 2]
+//}
+//
+//print(dp[n])
 
-dp[1] = 1
-dp[2] = 1
 
-for i in stride(from: 3, through: n, by: 1){
-    dp[i] = dp[i - 1] + dp[i - 2]
-}
 
-print(dp[n])
+// 1,2,3 더하기 5(15990)
+//let T = Int(readLine()!)!
+//var dp = [[Int64]]()
+//
+//for _ in 0...100001 {
+//    var row = [Int64]()
+//
+//    for _ in 0...4 {
+//        row.append(0)
+//    }
+//    
+//    dp.append(row)
+//}
+//
+//
+//dp[1][1] = 1
+//dp[2][2] = 1
+//dp[3][1] = 1
+//dp[3][2] = 1
+//dp[3][3] = 1
+//
+//for i in stride(from: 4, through: 100000, by: 1) {
+//    dp[i][1] = (dp[i-1][2] % 1000000009 + dp[i-1][3] % 1000000009) % 1000000009
+//    dp[i][2] = (dp[i-2][1] % 1000000009 + dp[i-2][3] % 1000000009) % 1000000009
+//    dp[i][3] = (dp[i-3][1]  % 1000000009 + dp[i-3][2] % 1000000009) % 1000000009
+//}
+//
+//for _ in 0..<T {
+//    let N = Int(readLine()!)!
+//    print("\((dp[N][1] + dp[N][2] + dp[N][3]) % 1000000009)")
+//}
+
+
+
+// 쉬운 계단 수(10844)
+//let N = Int(readLine()!)!
+//var dp = Array(repeating: Array(repeating: 0, count: 10), count: 101)
+//var sum = 0
+//
+//for i in 0...9 {
+//    dp[1][i] = 1
+//}
+//
+//for i in 2...100 {
+//    dp[i][0] = dp[i-1][1]
+//    
+//    for j in 1...8 {
+//        dp[i][j] = (dp[i-1][j-1] + dp[i-1][j+1]) % 1000000000
+//    }
+//    
+//    dp[i][9] = dp[i-1][8]
+//}
+//
+//for i in 1...9 {
+//    sum = (sum + dp[N][i]) % 1000000000
+//}
+//
+//print(sum)
