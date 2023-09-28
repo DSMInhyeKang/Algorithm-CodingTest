@@ -1354,8 +1354,24 @@ import Foundation
 
 
 // 2016년(12901)
-func solution(_ a: Int, _ b: Int) -> String {
-    let weekday = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"]
-    let dayCount = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
-    return weekday[(dayCount[0..<a - 1].reduce(0, +) + b + 4) % 7]
+//func solution(_ a: Int, _ b: Int) -> String {
+//    let weekday = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"]
+//    let dayCount = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+//    return weekday[(dayCount[0..<a - 1].reduce(0, +) + b + 4) % 7]
+//}
+
+
+
+// 짝수와 홀수(12937)
+//func solution(_ num: Int) -> String {
+//    return num % 2 == 0 ? "Even" : "Odd"
+//}
+
+
+
+// 정수 제곱근 판별(12934)
+func solution(_ n: Int64) -> Int64 {
+    let root = Int64(sqrt(Double(n)))
+
+    return root * root == n ? (root+1) * (root+1) : -1
 }
