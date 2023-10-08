@@ -1370,8 +1370,28 @@ import Foundation
 
 
 // 정수 제곱근 판별(12934)
-func solution(_ n: Int64) -> Int64 {
-    let root = Int64(sqrt(Double(n)))
+//func solution(_ n: Int64) -> Int64 {
+//    let root = Int64(sqrt(Double(n)))
+//
+//    return root * root == n ? (root+1) * (root+1) : -1
+//}
 
-    return root * root == n ? (root+1) * (root+1) : -1
+
+
+// 두 원 사이의 정수 쌍(181187)
+func solution(_ r1: Int, _ r2: Int) -> Int64 {
+    let dr1 = Double(r1)
+    let dr2 = Double(r2)
+
+    var result = 0.0
+    
+    for x in 1...r2 {
+        let dx = Double(x)
+        let y1 = dr1 - dx > 0 ? sqrt(pow(dr1, 2) - pow(dx, 2)) : 0
+        let y2 = sqrt(pow(dr2, 2) - pow(dx, 2))
+        
+        result += floor(y2) - (ceil(y1) - 1)
+    }
+
+    return Int64(result * 4)
 }
