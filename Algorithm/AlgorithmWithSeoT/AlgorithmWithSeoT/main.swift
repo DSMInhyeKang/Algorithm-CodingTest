@@ -781,3 +781,33 @@ final class FileIO {
 //}
 //
 //print(sum)
+
+
+
+// 오르막 수(11057)
+let N = Int(readLine()!)!
+var dp = Array(repeating: Array(repeating: 0, count: 10), count: N+1)
+var sol = 0
+
+for i in 0...9 {
+    dp[1][i] = 1
+}
+
+if N > 1 {
+    for i in 2...N {
+        for j in 0...9 {
+            for k in 0...j {
+                dp[i][j] = (dp[i][j]%10007 + dp[i-1][k]%10007)%10007
+            }
+        }
+    }
+}
+
+for i in 0...9 {
+    sol = (sol + dp[N][i]) % 10007
+}
+
+print(sol)
+
+
+
