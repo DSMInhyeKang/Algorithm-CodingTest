@@ -814,32 +814,28 @@ final class FileIO {
 // 스티커(9465)
 // 그리디 안 됨
 let T = Int(readLine()!)!
-var n = 0
-var dp = Array(repeating: Array(repeating: 0, count: 3), count: 100001)
-var a = Array(repeating: Array(repeating: 0, count: 10001), count: 2)
+var  N = 0
+var dp = [[Int]]()
+var array = [[Int]]()
 
 for _ in 0..<T {
-    n = Int(readLine()!)!
+    N = Int(readLine()!)!
+    for _ in 0..<2 {
+        array.append( readLine()!.split(separator : " " ).map{Int(String($0))!})
+    }
+    dp = array
     
-    for i in 0...1 {
-        let inputs = readLine()!.split(separator:" ").map{ Int($0)! }
+    dp[0][1] += dp[1][0]
+    dp[1][1] += dp[0][0]
+    for i in 2..<N {
+        dp[0][i] += max(dp[1][i-1], dp[1][i-2])
+        dp[1][i] += max(dp[0][i-1], dp[0][i-2])
         
-        for j in 0..<n {
-            a[i][j] = inputs[j]
-        }
     }
+    print(max(dp[0][N-1],dp[1][N-1]))
     
-    dp[1][0] = 0
-    dp[1][1] = a[0][0]
-    dp[1][2] = a[0][1]
-
-    for i in 2...n {
-        dp[i][0] = max(dp[i-1][0], dp[i-1][1], dp[i-1][2])
-        dp[i][1] = max(dp[i-1][0], dp[i-1][2]) + a[0][i]
-        dp[i][2] = max(dp[i-1][0], dp[i-1][1]) + a[1][i]
-    }
-
-    print(max(dp[n][0], dp[n][1], dp[n][2]))
+    array.removeAll()
+    dp.removeAll()
 }
 
 
