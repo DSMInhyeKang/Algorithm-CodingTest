@@ -1379,19 +1379,46 @@ import Foundation
 
 
 // 두 원 사이의 정수 쌍(181187)
-func solution(_ r1: Int, _ r2: Int) -> Int64 {
-    let dr1 = Double(r1)
-    let dr2 = Double(r2)
+//func solution(_ r1: Int, _ r2: Int) -> Int64 {
+//    let dr1 = Double(r1)
+//    let dr2 = Double(r2)
+//
+//    var result = 0.0
+//    
+//    for x in 1...r2 {
+//        let dx = Double(x)
+//        let y1 = dr1 - dx > 0 ? sqrt(pow(dr1, 2) - pow(dx, 2)) : 0
+//        let y2 = sqrt(pow(dr2, 2) - pow(dx, 2))
+//        
+//        result += floor(y2) - (ceil(y1) - 1)
+//    }
+//
+//    return Int64(result * 4)
+//}
 
-    var result = 0.0
-    
-    for x in 1...r2 {
-        let dx = Double(x)
-        let y1 = dr1 - dx > 0 ? sqrt(pow(dr1, 2) - pow(dx, 2)) : 0
-        let y2 = sqrt(pow(dr2, 2) - pow(dx, 2))
-        
-        result += floor(y2) - (ceil(y1) - 1)
+
+
+// 문자열을 정수로 바꾸기(12925)
+func solution(_ s: String) -> Int {
+    return Int(s)!
+}
+
+
+
+// 소수 찾기(12921)
+func solution(_ n:Int) -> Int {
+    var check = Array(repeating: 0, count: n + 1)
+    var cnt = 0
+
+    for i in 2...n {
+        if check[i] == 0 {
+            cnt += 1
+            
+            for j in stride(from: i, to: n + 1, by: i) {
+                check[j] = 1
+            }
+        }
     }
 
-    return Int64(result * 4)
+    return cnt
 }
