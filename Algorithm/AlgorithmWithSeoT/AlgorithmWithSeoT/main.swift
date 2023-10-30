@@ -811,33 +811,110 @@ final class FileIO {
 
 
 
-// 스티커(9465)
-// 그리디 안 됨
-let T = Int(readLine()!)!
+//// 스티커(9465)
+//// 그리디 안 됨
+//let T = Int(readLine()!)!
+//
+//for _ in 0..<T {
+//    
+//    let N = Int(readLine()!)!
+//    let arr1 = readLine()!.split(separator: " ").map {Int(String($0))!}
+//    let arr2 = readLine()!.split(separator: " ").map {Int(String($0))!}
+//    var dp = Array(repeating: Array(repeating: 0, count: N), count: 2)
+//    
+//    if N == 1 {
+//        print(max(arr1[0], arr2[0]))
+//    } else {
+//        dp[0][0] = arr1[0]
+//        dp[1][0] = arr2[0]
+//        dp[0][1] = dp[1][0] + arr1[1]
+//        dp[1][1] = dp[0][0] + arr2[1]
+//    
+//        for i in 2..<N {
+//            dp[0][i] = arr1[i] + max(dp[1][i-1], dp[1][i-2])
+//            dp[1][i] = arr2[i] + max(dp[0][i-1], dp[0][i-2])
+//        }
+//        print(max(dp[0][N-1], dp[1][N-1]))
+//    }
+//}
+//
+//
+//
+//// 포도주 시식(2156)
 
-for _ in 0..<T {
-    
-    let N = Int(readLine()!)!
-    let arr1 = readLine()!.split(separator: " ").map {Int(String($0))!}
-    let arr2 = readLine()!.split(separator: " ").map {Int(String($0))!}
-    var dp = Array(repeating: Array(repeating: 0, count: N), count: 2)
-    
-    if N == 1 {
-        print(max(arr1[0], arr2[0]))
-    } else {
-        dp[0][0] = arr1[0]
-        dp[1][0] = arr2[0]
-        dp[0][1] = dp[1][0] + arr1[1]
-        dp[1][1] = dp[0][0] + arr2[1]
-    
-        for i in 2..<N {
-            dp[0][i] = arr1[i] + max(dp[1][i-1], dp[1][i-2])
-            dp[1][i] = arr2[i] + max(dp[0][i-1], dp[0][i-2])
-        }
-        print(max(dp[0][N-1], dp[1][N-1]))
-    }
-}
+
+
+// 정수 삼각형(1932)
+//let n = Int(readLine()!)!
+//var triangle = [[Int]]()
+//
+//for _ in 0..<n {
+//    triangle.append(readLine()!.split(separator: " ").map { Int($0)! })
+//}
+//
+//for i in 1..<n {
+//    for j in 0...i {
+//        if j==0 {
+//            triangle[i][j] += triangle[i-1][j]
+//        }
+//        else if j==i {
+//            triangle[i][j] += triangle[i-1][j-1]
+//        }
+//        else {
+//            triangle[i][j] += max(triangle[i-1][j], triangle[i-1][j-1])
+//        }
+//    }
+//}
+//
+//print(triangle[n-1].max()!)
 
 
 
-// 포도주 시식(2156)
+// 가장 긴 증가하는 부분 수열(11053)
+//let n = Int(readLine()!)!
+//let arr = readLine()!.split(separator: " ").map { Int($0)! }
+//var dp = [Int]()
+//
+//for i in 0..<n {
+//    dp.append(1)
+//    for j in 0..<i {
+//        if arr[j] < arr[i] && dp[i] < dp[j]+1 {
+//            dp[i] = dp[j]+1
+//        }
+//    }
+//}
+//
+//var answer = dp[0]
+//
+//for i in 0..<n {
+//    if answer < dp[i] {
+//        answer = dp[i]
+//    }
+//}
+//
+//print(dp.max()!)
+
+
+
+// 가장 큰 증가 부분 수열(11055)
+//let n = Int(readLine()!)!
+//let arr = readLine()!.split(separator: " ").map { Int($0)! }
+//var dp = [Int]()
+//
+//for i in 0..<n {
+//    dp.append(arr[i])
+//    for j in 0..<i {
+//        if arr[j] < arr[i] && dp[i] < dp[j]+arr[i] {
+//            dp[i] = dp[j] + arr[i]
+//        }
+//    }
+//}
+//
+//var answer = 0
+//for i in 0..<n {
+//    if answer < dp[i] {
+//        answer = dp[i]
+//    }
+//}
+//
+//print(dp.max()!)
