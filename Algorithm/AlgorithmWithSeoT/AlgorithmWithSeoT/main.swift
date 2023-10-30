@@ -918,3 +918,28 @@ final class FileIO {
 //}
 //
 //print(dp.max()!)
+
+
+
+// 가장 긴 감소하는 부분 수열(11722)
+let n = Int(readLine()!)!
+let arr = readLine()!.split(separator: " ").map { Int($0)! }
+var dp = [Int]()
+
+for i in 0..<n {
+    dp.append(1)
+    for j in 0..<i {
+        if arr[j] > arr[i] && dp[i] < dp[j] + 1 {
+            dp[i] = dp[j] + 1
+        }
+    }
+}
+
+var answer = 0
+for i in 0..<n {
+    if answer < dp[i] {
+        answer = dp[i]
+    }
+}
+
+print(dp.max()!)
