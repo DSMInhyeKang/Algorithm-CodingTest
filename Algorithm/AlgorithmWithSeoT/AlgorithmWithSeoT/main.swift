@@ -844,7 +844,7 @@ final class FileIO {
 
 
 
-// 정수 삼각형(1932)
+// 정수 삼각형(1932) - LIS 시작
 //let n = Int(readLine()!)!
 //var triangle = [[Int]]()
 //
@@ -922,24 +922,99 @@ final class FileIO {
 
 
 // 가장 긴 감소하는 부분 수열(11722)
+//let n = Int(readLine()!)!
+//let arr = readLine()!.split(separator: " ").map { Int($0)! }
+//var dp = [Int]()
+//
+//for i in 0..<n {
+//    dp.append(1)
+//    for j in 0..<i {
+//        if arr[j] > arr[i] && dp[i] < dp[j] + 1 {
+//            dp[i] = dp[j] + 1
+//        }
+//    }
+//}
+//
+//var answer = 0
+//for i in 0..<n {
+//    if answer < dp[i] {
+//        answer = dp[i]
+//    }
+//}
+//
+//print(dp.max()!)
+
+
+
+// 가장 긴 바이토닉 부분 수열(11054)
 let n = Int(readLine()!)!
 let arr = readLine()!.split(separator: " ").map { Int($0)! }
-var dp = [Int]()
+var increasing = Array(repeating: 0, count: n+1)
+var decreasing = Array(repeating: 0, count: n+1)
 
-for i in 0..<n {
-    dp.append(1)
-    for j in 0..<i {
-        if arr[j] > arr[i] && dp[i] < dp[j] + 1 {
-            dp[i] = dp[j] + 1
+for i in 1...n {
+    increasing[i] = 1
+    for j in 1..<i {
+        if arr[j] < arr[i] && increasing[i] < increasing[j]+1 {
+            increasing[i] = increasing[j]+1
+        }
+    }
+}
+
+for i in stride(from: n, through: 1, by: -1) {
+    decreasing[i] = 1
+    for j in stride(from: n, to: i, by: -1) {
+        if arr[j] < arr[i] && decreasing[i] < decreasing[j]+1 {
+            decreasing[i] = decreasing[j]+1
         }
     }
 }
 
 var answer = 0
-for i in 0..<n {
-    if answer < dp[i] {
-        answer = dp[i]
+
+for i in 1...n {
+    if answer < increasing[i] + decreasing[i] - 1 {
+        answer = increasing[i] + decreasing[i] - 1
     }
 }
 
-print(dp.max()!)
+print(answer)
+
+
+
+// 가장 긴 증가하는 부분 수열 4(14002)
+//let n = Int(readLine()!)!
+//let arr = readLine()!.split(separator: " ").map { Int($0)! }
+//var dp = [Int]()
+//
+//for i in 0..<n {
+//    dp.append(1)
+//    for j in 0..<i {
+//        if arr[j] < arr[i] && dp[i] < dp[j]+1 {
+//            dp[i] = dp[j]+1
+//        }
+//    }
+//}
+//
+//var answer = dp[0]
+//
+//for i in 0..<n {
+//    if answer < dp[i] {
+//        answer = dp[i]
+//    }
+//}
+//
+//print(dp.max()!)
+//
+//
+//var LIS: [Int] = []
+//var l = dp.max()!
+//
+//for i in (0..<n).reversed() {
+//    if dp[i] == l {
+//        LIS.append(arr[i])
+//        l -= 1
+//    }
+//}
+//
+//print(LIS.reversed().map { String($0) }.joined(separator: " "))
