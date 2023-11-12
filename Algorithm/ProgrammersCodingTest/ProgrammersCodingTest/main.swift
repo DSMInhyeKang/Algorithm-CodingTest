@@ -1446,17 +1446,57 @@ import Foundation
 
 
 // 요격 시스템(181188)
-func solution(_ targets: [[Int]]) -> Int {
-    var answer = 0
-    let sorted = targets.sorted(by: { $0[1] < $1[1] })
-    
-    var end = sorted[0][1]
+//func solution(_ targets: [[Int]]) -> Int {
+//    var answer = 0
+//    let sorted = targets.sorted(by: { $0[1] < $1[1] })
+//    
+//    var end = sorted[0][1]
+//
+//    for target in sorted {
+//        if target[0] >= end {
+//            end = target[1]
+//            answer += 1
+//        }
+//    }
+//    return answer + 1
+//}
 
-    for target in sorted {
-        if target[0] >= end {
-            end = target[1]
-            answer += 1
+
+
+// 이모티콘 할인행사(150368)
+func solution(_ users: [[Int]], _ emoticons: [Int]) -> [Int] {
+    var sale = [Int](repeating: 0, count: emoticons.count)
+    let percent = [10, 20, 30, 40]
+    var answer = [0, 0]
+    
+    func dfs(_ depth: Int) {
+        if depth == sale.count {
+            var plus = 0, money = 0
+            
+            users.forEach { user in
+                var total = 0
+                zip(sale, emoticons).forEach {
+                    if user[0] <= $0.0 { total += ($0.1 * (100 - $0.0) / 100) }
+                }
+                
+                if total >= user[1] { plus += 1; total = 0 }
+                
+                money += total
+            }
+            
+            if plus > answer[0] { answer[0] = plus; answer[1] = money }
+            else if plus == answer[0] && money > answer[1] { answer[1] = money }
+            
+            return
+        }
+        
+        percent.forEach {
+            sale[depth] = $0
+            dfs(depth+1)
         }
     }
-    return answer + 1
+    
+    dfs(0)
+    
+    return answer
 }
