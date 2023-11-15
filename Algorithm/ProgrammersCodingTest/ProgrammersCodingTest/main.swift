@@ -1464,39 +1464,70 @@ import Foundation
 
 
 // 이모티콘 할인행사(150368)
-func solution(_ users: [[Int]], _ emoticons: [Int]) -> [Int] {
-    var sale = [Int](repeating: 0, count: emoticons.count)
-    let percent = [10, 20, 30, 40]
-    var answer = [0, 0]
+//func solution(_ users: [[Int]], _ emoticons: [Int]) -> [Int] {
+//    var sale = [Int](repeating: 0, count: emoticons.count)
+//    let percent = [10, 20, 30, 40]
+//    var answer = [0, 0]
+//    
+//    func dfs(_ depth: Int) {
+//        if depth == sale.count {
+//            var plus = 0, money = 0
+//            
+//            users.forEach { user in
+//                var total = 0
+//                zip(sale, emoticons).forEach {
+//                    if user[0] <= $0.0 { total += ($0.1 * (100 - $0.0) / 100) }
+//                }
+//                
+//                if total >= user[1] { plus += 1; total = 0 }
+//                
+//                money += total
+//            }
+//            
+//            if plus > answer[0] { answer[0] = plus; answer[1] = money }
+//            else if plus == answer[0] && money > answer[1] { answer[1] = money }
+//            
+//            return
+//        }
+//        
+//        percent.forEach {
+//            sale[depth] = $0
+//            dfs(depth+1)
+//        }
+//    }
+//    
+//    dfs(0)
+//    
+//    return answer
+//}
+
+
+
+// 연속된 부분 수열의 합(178870)
+func solution(_ sequence: [Int], _ k: Int) -> [Int] {
+    var bag: [[Int]] = []
+    var preSum: [Int] = [0]
+
+    for num in sequence {
+        preSum.append(preSum.last! + num)
+    }
+
+    var left = 0
+    var right = 0
     
-    func dfs(_ depth: Int) {
-        if depth == sale.count {
-            var plus = 0, money = 0
-            
-            users.forEach { user in
-                var total = 0
-                zip(sale, emoticons).forEach {
-                    if user[0] <= $0.0 { total += ($0.1 * (100 - $0.0) / 100) }
-                }
-                
-                if total >= user[1] { plus += 1; total = 0 }
-                
-                money += total
-            }
-            
-            if plus > answer[0] { answer[0] = plus; answer[1] = money }
-            else if plus == answer[0] && money > answer[1] { answer[1] = money }
-            
-            return
-        }
-        
-        percent.forEach {
-            sale[depth] = $0
-            dfs(depth+1)
+    while right < preSum.count {
+        let sum = preSum[right] - preSum[left]
+        if sum == k {
+            bag.append([left, right - 1])
+            left += 1
+        } else if sum < k {
+            right += 1
+        } else {
+            left += 1
         }
     }
+
+    let sortedArr = bag.sorted { $0[1] - $0[0] < $1[1] - $1[0] }
     
-    dfs(0)
-    
-    return answer
+    return sortedArr[0]
 }
