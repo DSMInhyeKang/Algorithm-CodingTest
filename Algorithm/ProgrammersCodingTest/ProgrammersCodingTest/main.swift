@@ -1504,30 +1504,55 @@ import Foundation
 
 
 // 연속된 부분 수열의 합(178870)
-func solution(_ sequence: [Int], _ k: Int) -> [Int] {
-    var bag: [[Int]] = []
-    var preSum: [Int] = [0]
+//func solution(_ sequence: [Int], _ k: Int) -> [Int] {
+//    var bag: [[Int]] = []
+//    var preSum: [Int] = [0]
+//
+//    for num in sequence {
+//        preSum.append(preSum.last! + num)
+//    }
+//
+//    var left = 0
+//    var right = 0
+//    
+//    while right < preSum.count {
+//        let sum = preSum[right] - preSum[left]
+//        if sum == k {
+//            bag.append([left, right - 1])
+//            left += 1
+//        } else if sum < k {
+//            right += 1
+//        } else {
+//            left += 1
+//        }
+//    }
+//
+//    let sortedArr = bag.sorted { $0[1] - $0[0] < $1[1] - $1[0] }
+//    
+//    return sortedArr[0]
+//}
 
-    for num in sequence {
-        preSum.append(preSum.last! + num)
-    }
 
-    var left = 0
-    var right = 0
+
+// 마법의 엘리베이터(148653)
+func solution(_ storey: Int) -> Int {
+    var storey = storey
+    var count: Int = 0
     
-    while right < preSum.count {
-        let sum = preSum[right] - preSum[left]
-        if sum == k {
-            bag.append([left, right - 1])
-            left += 1
-        } else if sum < k {
-            right += 1
+    while storey != 0 {
+        let n = storey % 10
+        
+        if n >= 6 {
+            storey += 10 - n
+            count += 10 - n
+        } else if n == 5 && (storey / 10) % 10 >= 5 {
+            storey += 10 - n
+            count += 10 - n
         } else {
-            left += 1
+            count += n
         }
+        storey /= 10
     }
-
-    let sortedArr = bag.sorted { $0[1] - $0[0] < $1[1] - $1[0] }
     
-    return sortedArr[0]
+    return count
 }
