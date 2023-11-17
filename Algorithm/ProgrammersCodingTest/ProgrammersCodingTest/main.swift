@@ -1535,24 +1535,68 @@ import Foundation
 
 
 // 마법의 엘리베이터(148653)
-func solution(_ storey: Int) -> Int {
-    var storey = storey
-    var count: Int = 0
-    
-    while storey != 0 {
-        let n = storey % 10
-        
-        if n >= 6 {
-            storey += 10 - n
-            count += 10 - n
-        } else if n == 5 && (storey / 10) % 10 >= 5 {
-            storey += 10 - n
-            count += 10 - n
-        } else {
-            count += n
-        }
-        storey /= 10
+//func solution(_ storey: Int) -> Int {
+//    var storey = storey
+//    var count: Int = 0
+//    
+//    while storey != 0 {
+//        let n = storey % 10
+//        
+//        if n >= 6 {
+//            storey += 10 - n
+//            count += 10 - n
+//        } else if n == 5 && (storey / 10) % 10 >= 5 {
+//            storey += 10 - n
+//            count += 10 - n
+//        } else {
+//            count += n
+//        }
+//        storey /= 10
+//    }
+//    
+//    return count
+//}
+
+
+
+// 무인도 여행(154540)
+func solution(_ maps: [String]) -> [Int] {
+    var map = [[Character]]()
+    for i in maps{
+        map.append(Array(i))
     }
     
-    return count
+    let x_max = map.count - 1
+    let y_max = map[0].count - 1
+    var visited = [[Bool]](repeating: Array(repeating: false, count: y_max + 1 ), count: x_max + 1 )
+    
+    func dfs(_ x: Int, _ y: Int) -> Int{
+        if x < 0 || y < 0 || x > x_max || y > y_max {
+            return 0
+        }
+        if visited[x][y] == true{
+            return 0
+        }
+        if map[x][y] == "X"{
+            visited[x][y] = true
+            return 0
+        }
+        
+        visited[x][y] = true
+        var tmp = Int(String(map[x][y]))!
+        return tmp + dfs(x, y+1) + dfs(x, y - 1) + dfs(x + 1, y) + dfs(x - 1, y)
+    }
+   
+    var result = [Int]()
+
+    for i in 0...x_max{
+        for j in 0...y_max{
+            var a = dfs(i, j)
+            if a > 0{
+                result.append(a)
+            }
+        }
+    }
+    
+    return result == [] ? [-1] : result.sorted(by: <)
 }
