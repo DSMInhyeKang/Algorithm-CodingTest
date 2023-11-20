@@ -947,38 +947,38 @@ final class FileIO {
 
 
 // 가장 긴 바이토닉 부분 수열(11054)
-let n = Int(readLine()!)!
-let arr = readLine()!.split(separator: " ").map { Int($0)! }
-var increasing = Array(repeating: 0, count: n+1)
-var decreasing = Array(repeating: 0, count: n+1)
-
-for i in 1...n {
-    increasing[i] = 1
-    for j in 1..<i {
-        if arr[j] < arr[i] && increasing[i] < increasing[j]+1 {
-            increasing[i] = increasing[j]+1
-        }
-    }
-}
-
-for i in stride(from: n, through: 1, by: -1) {
-    decreasing[i] = 1
-    for j in stride(from: n, to: i, by: -1) {
-        if arr[j] < arr[i] && decreasing[i] < decreasing[j]+1 {
-            decreasing[i] = decreasing[j]+1
-        }
-    }
-}
-
-var answer = 0
-
-for i in 1...n {
-    if answer < increasing[i] + decreasing[i] - 1 {
-        answer = increasing[i] + decreasing[i] - 1
-    }
-}
-
-print(answer)
+//let n = Int(readLine()!)!
+//let arr = readLine()!.split(separator: " ").map { Int($0)! }
+//var increasing = Array(repeating: 0, count: n+1)
+//var decreasing = Array(repeating: 0, count: n+1)
+//
+//for i in 1...n {
+//    increasing[i] = 1
+//    for j in 1..<i {
+//        if arr[j] < arr[i] && increasing[i] < increasing[j]+1 {
+//            increasing[i] = increasing[j]+1
+//        }
+//    }
+//}
+//
+//for i in stride(from: n, through: 1, by: -1) {
+//    decreasing[i] = 1
+//    for j in stride(from: n, to: i, by: -1) {
+//        if arr[j] < arr[i] && decreasing[i] < decreasing[j]+1 {
+//            decreasing[i] = decreasing[j]+1
+//        }
+//    }
+//}
+//
+//var answer = 0
+//
+//for i in 1...n {
+//    if answer < increasing[i] + decreasing[i] - 1 {
+//        answer = increasing[i] + decreasing[i] - 1
+//    }
+//}
+//
+//print(answer)
 
 
 
@@ -1018,3 +1018,21 @@ print(answer)
 //}
 //
 //print(LIS.reversed().map { String($0) }.joined(separator: " "))
+
+
+
+// 타일 채우기(2133)
+let n = Int(readLine()!)!
+var dp = Array(repeating: 0 ,count: n+1)
+
+dp[0] = 1
+dp[2] = 3
+
+for i in stride(from: 4, through: n, by: 1){
+    dp[i] = dp[i - 2] * 3
+    for j in  stride(from: 4, through: i, by: 2){
+        dp[i] += dp[i - j] * 2
+    }
+}
+
+print(dp[n])
