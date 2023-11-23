@@ -1560,43 +1560,65 @@ import Foundation
 
 
 // 무인도 여행(154540)
-func solution(_ maps: [String]) -> [Int] {
-    var map = [[Character]]()
-    for i in maps{
-        map.append(Array(i))
-    }
-    
-    let x_max = map.count - 1
-    let y_max = map[0].count - 1
-    var visited = [[Bool]](repeating: Array(repeating: false, count: y_max + 1 ), count: x_max + 1 )
-    
-    func dfs(_ x: Int, _ y: Int) -> Int{
-        if x < 0 || y < 0 || x > x_max || y > y_max {
-            return 0
-        }
-        if visited[x][y] == true{
-            return 0
-        }
-        if map[x][y] == "X"{
-            visited[x][y] = true
-            return 0
-        }
-        
-        visited[x][y] = true
-        var tmp = Int(String(map[x][y]))!
-        return tmp + dfs(x, y+1) + dfs(x, y - 1) + dfs(x + 1, y) + dfs(x - 1, y)
-    }
-   
-    var result = [Int]()
+//func solution(_ maps: [String]) -> [Int] {
+//    var map = [[Character]]()
+//    for i in maps{
+//        map.append(Array(i))
+//    }
+//    
+//    let x_max = map.count - 1
+//    let y_max = map[0].count - 1
+//    var visited = [[Bool]](repeating: Array(repeating: false, count: y_max + 1 ), count: x_max + 1 )
+//    
+//    func dfs(_ x: Int, _ y: Int) -> Int{
+//        if x < 0 || y < 0 || x > x_max || y > y_max {
+//            return 0
+//        }
+//        if visited[x][y] == true{
+//            return 0
+//        }
+//        if map[x][y] == "X"{
+//            visited[x][y] = true
+//            return 0
+//        }
+//        
+//        visited[x][y] = true
+//        var tmp = Int(String(map[x][y]))!
+//        return tmp + dfs(x, y+1) + dfs(x, y - 1) + dfs(x + 1, y) + dfs(x - 1, y)
+//    }
+//   
+//    var result = [Int]()
+//
+//    for i in 0...x_max{
+//        for j in 0...y_max{
+//            var a = dfs(i, j)
+//            if a > 0{
+//                result.append(a)
+//            }
+//        }
+//    }
+//    
+//    return result == [] ? [-1] : result.sorted(by: <)
+//}
 
-    for i in 0...x_max{
-        for j in 0...y_max{
-            var a = dfs(i, j)
-            if a > 0{
-                result.append(a)
-            }
+
+
+// 택배 배달과 수거하기(150369)
+func solution(_ cap: Int, _ n: Int, _ deliveries: [Int], _ pickups: [Int]) -> Int64 {
+    var ans:Int64 = 0
+    var d = 0
+    var p = 0
+    
+    for i in stride(from: n-1, through: 0, by: -1) {
+        d += deliveries[i]
+        p += pickups[i]
+        
+        while d > 0 || p > 0 {
+            d -= cap
+            p -= cap
+            ans += Int64(( i + 1) * 2)
         }
     }
     
-    return result == [] ? [-1] : result.sorted(by: <)
+    return ans
 }
