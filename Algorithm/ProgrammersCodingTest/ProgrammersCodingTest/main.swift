@@ -1604,21 +1604,45 @@ import Foundation
 
 
 // 택배 배달과 수거하기(150369)
-func solution(_ cap: Int, _ n: Int, _ deliveries: [Int], _ pickups: [Int]) -> Int64 {
-    var ans:Int64 = 0
-    var d = 0
-    var p = 0
+//func solution(_ cap: Int, _ n: Int, _ deliveries: [Int], _ pickups: [Int]) -> Int64 {
+//    var ans:Int64 = 0
+//    var d = 0
+//    var p = 0
+//    
+//    for i in stride(from: n-1, through: 0, by: -1) {
+//        d += deliveries[i]
+//        p += pickups[i]
+//        
+//        while d > 0 || p > 0 {
+//            d -= cap
+//            p -= cap
+//            ans += Int64(( i + 1) * 2)
+//        }
+//    }
+//    
+//    return ans
+//}
+
+
+
+// 인사고과(152995)
+func solution(_ scores:[[Int]]) -> Int {
+    let wonhoScore = scores[0]
+    var maxScore = 0
+    var canWonhoGetIncentive = true
     
-    for i in stride(from: n-1, through: 0, by: -1) {
-        d += deliveries[i]
-        p += pickups[i]
-        
-        while d > 0 || p > 0 {
-            d -= cap
-            p -= cap
-            ans += Int64(( i + 1) * 2)
+    let wonhoRank =
+    scores.sorted { $0[0] != $1[0] ? $0[0] > $1[0] : $0[1] < $1[1] }
+        .filter { score in
+            maxScore = max(maxScore, score[1])
+            if score[0] > wonhoScore[0] && score[1] > wonhoScore[1] {
+                canWonhoGetIncentive = false
+            }
+            
+            return score[1] >= maxScore &&
+            score[0] + score[1] > wonhoScore[0] + wonhoScore[1]
         }
-    }
+        .count + 1
     
-    return ans
+    return canWonhoGetIncentive ? wonhoRank : -1
 }
