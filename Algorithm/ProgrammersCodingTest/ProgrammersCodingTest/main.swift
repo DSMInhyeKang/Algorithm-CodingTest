@@ -1650,12 +1650,41 @@ import Foundation
 
 
 // 연속 펄스 부분 수열의 합(161988)
-func solution(_ sequence:[Int]) -> Int64 {
-    var sequence = sequence.enumerated().map { $1 * ($0 % 2 == 0 ? 1 : -1) }
+//func solution(_ sequence: [Int]) -> Int64 {
+//    var sequence = sequence.enumerated().map { $1 * ($0 % 2 == 0 ? 1 : -1) }
+//
+//    for i in 1..<sequence.count {
+//        sequence[i] += sequence[i - 1]
+//    }
+//
+//    return Int64(max(abs(sequence.max()!), abs(sequence.min()!), abs(sequence.max()! - sequence.min()!)))
+//}
 
-    for i in 1..<sequence.count {
-        sequence[i] += sequence[i - 1]
+
+
+// 혼자 놀기의 달인(131130)
+func solution(_ cards: [Int]) -> Int {
+    var opened = Set<Int>()
+    
+    var group = [Int]()
+    
+    for i in 0..<cards.count {
+        if opened.contains(i) { continue }
+        
+        var now = i
+        var count = 0
+        
+        while !opened.contains(now) {
+            opened.insert(now)
+        
+            count += 1
+            now = cards[now] - 1
+        }
+        
+        group.append(count)
     }
-
-    return Int64(max(abs(sequence.max()!), abs(sequence.min()!), abs(sequence.max()! - sequence.min()!)))
+    
+    let sorted = group.sorted(by: >)
+    
+    return sorted.count > 1 ? sorted[0] * sorted[1] : 0
 }
