@@ -1022,17 +1022,70 @@ final class FileIO {
 
 
 // 타일 채우기(2133)
-let n = Int(readLine()!)!
-var dp = Array(repeating: 0 ,count: n+1)
+//let n = Int(readLine()!)!
+//var dp = Array(repeating: 0 ,count: n+1)
+//
+//dp[0] = 1
+//dp[2] = 3
+//
+//for i in stride(from: 4, through: n, by: 1){
+//    dp[i] = dp[i - 2] * 3
+//    for j in  stride(from: 4, through: i, by: 2){
+//        dp[i] += dp[i - j] * 2
+//    }
+//}
+//
+//print(dp[n])
 
-dp[0] = 1
-dp[2] = 3
 
-for i in stride(from: 4, through: n, by: 1){
-    dp[i] = dp[i - 2] * 3
-    for j in  stride(from: 4, through: i, by: 2){
-        dp[i] += dp[i - j] * 2
+
+// N과 M(1)(15649)
+//var input = readLine()!.split(separator: " ").map { Int($0)! }
+//let N = input[0], M = input[1]
+//
+//var stack = [Int]()
+//
+//private func dfs() {
+//    if stack.count == M {
+//        print(stack.map{ String($0) }.joined(separator:" "))
+//        return
+//    }
+//
+//    for i in 1...N {
+//        if !stack.contains(i) {
+//            stack.append(i)
+//            dfs()
+//            stack.removeLast()
+//        }
+//
+//    }
+//}
+//
+//dfs()
+
+
+
+// N과 M(2)(15650)
+var input = readLine()!.split(separator: " ").map { Int($0)! }
+let N = input[0], M = input[1]
+
+var stack = [Int]()
+
+private func dfs(_ start: Int) {
+    if stack.count == M {
+        print(stack.map{ String($0) }.joined(separator:" "))
+        return
+    }
+
+    for i in start..<N+1 {
+        if !stack.contains(i) {
+            stack.append(i)
+            dfs(i+1)
+            stack.removeLast()
+        }
+
     }
 }
 
-print(dp[n])
+dfs(1)
+
