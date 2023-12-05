@@ -1663,28 +1663,46 @@ import Foundation
 
 
 // 혼자 놀기의 달인(131130)
-func solution(_ cards: [Int]) -> Int {
-    var opened = Set<Int>()
+//func solution(_ cards: [Int]) -> Int {
+//    var opened = Set<Int>()
+//    
+//    var group = [Int]()
+//    
+//    for i in 0..<cards.count {
+//        if opened.contains(i) { continue }
+//        
+//        var now = i
+//        var count = 0
+//        
+//        while !opened.contains(now) {
+//            opened.insert(now)
+//        
+//            count += 1
+//            now = cards[now] - 1
+//        }
+//        
+//        group.append(count)
+//    }
+//    
+//    let sorted = group.sorted(by: >)
+//    
+//    return sorted.count > 1 ? sorted[0] * sorted[1] : 0
+//}
+
+
+
+// 연속 부분 수열 합의 개수(131701)
+func solution(_ elements: [Int]) -> Int {
+    var sequence = Set<Int>()
     
-    var group = [Int]()
-    
-    for i in 0..<cards.count {
-        if opened.contains(i) { continue }
-        
-        var now = i
-        var count = 0
-        
-        while !opened.contains(now) {
-            opened.insert(now)
-        
-            count += 1
-            now = cards[now] - 1
+    for i in 0..<elements.count {
+        var num = 0
+
+        for offset in 0..<elements.count {
+            let validIndex = (i + offset) % elements.count
+            num += elements[validIndex]
+            sequence.insert(num)
         }
-        
-        group.append(count)
     }
-    
-    let sorted = group.sorted(by: >)
-    
-    return sorted.count > 1 ? sorted[0] * sorted[1] : 0
+    return sequence.count
 }
