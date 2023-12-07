@@ -1692,17 +1692,55 @@ import Foundation
 
 
 // 연속 부분 수열 합의 개수(131701)
-func solution(_ elements: [Int]) -> Int {
-    var sequence = Set<Int>()
-    
-    for i in 0..<elements.count {
-        var num = 0
+//func solution(_ elements: [Int]) -> Int {
+//    var sequence = Set<Int>()
+//    
+//    for i in 0..<elements.count {
+//        var num = 0
+//
+//        for offset in 0..<elements.count {
+//            let validIndex = (i + offset) % elements.count
+//            num += elements[validIndex]
+//            sequence.insert(num)
+//        }
+//    }
+//    return sequence.count
+//}
 
-        for offset in 0..<elements.count {
-            let validIndex = (i + offset) % elements.count
-            num += elements[validIndex]
-            sequence.insert(num)
+
+
+// 시소 짝꿍(152996)
+func solution(_ weights: [Int]) -> Int64 {
+    func calculate(_ num: Int) -> Int {
+        var sum = 0
+        for i in 1..<num {
+            sum += i
+        }
+        return sum
+    }
+    var result: Int = 0
+    var arr: [Int] = Array(repeating: 0, count: 1000*4+1)
+    var multiplier = [2,4,3]
+    var divider = [1,3,2]
+    for weight in weights {
+        arr[weight] += 1
+    }
+    for i in 0..<arr.count {
+        if i < 100 || i > 1000 {
+            continue
+        }
+        if arr[i] == 0 {
+            continue
+        }
+        if arr[i] > 1 {
+            result += calculate(arr[i])
+        }
+        for j in 0..<3 {
+            if (i % divider[j] != 0) {
+                continue
+            }
+            result += arr[i] * arr[(i / divider[j]) * multiplier[j]]
         }
     }
-    return sequence.count
+    return Int64(result)
 }
