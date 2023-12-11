@@ -1710,37 +1710,50 @@ import Foundation
 
 
 // 시소 짝꿍(152996)
-func solution(_ weights: [Int]) -> Int64 {
-    func calculate(_ num: Int) -> Int {
-        var sum = 0
-        for i in 1..<num {
-            sum += i
-        }
-        return sum
+//func solution(_ weights: [Int]) -> Int64 {
+//    func calculate(_ num: Int) -> Int {
+//        var sum = 0
+//        for i in 1..<num {
+//            sum += i
+//        }
+//        return sum
+//    }
+//    var result: Int = 0
+//    var arr: [Int] = Array(repeating: 0, count: 1000*4+1)
+//    var multiplier = [2,4,3]
+//    var divider = [1,3,2]
+//    for weight in weights {
+//        arr[weight] += 1
+//    }
+//    for i in 0..<arr.count {
+//        if i < 100 || i > 1000 {
+//            continue
+//        }
+//        if arr[i] == 0 {
+//            continue
+//        }
+//        if arr[i] > 1 {
+//            result += calculate(arr[i])
+//        }
+//        for j in 0..<3 {
+//            if (i % divider[j] != 0) {
+//                continue
+//            }
+//            result += arr[i] * arr[(i / divider[j]) * multiplier[j]]
+//        }
+//    }
+//    return Int64(result)
+//}
+
+
+
+// 테이블 해시 함수(147354)
+func solution(_ data: [[Int]], _ col: Int, _ row_begin: Int, _ row_end: Int) -> Int {
+    var data = data.sorted{ $0[0] > $1[0] }.sorted { $0[col-1] < $1[col-1] }
+    var answer = 0
+    for i in stride(from: row_begin-1, through: row_end-1, by: 1) {
+        answer ^= data[i].reduce(0) { $0 + ($1 % (i+1)) }
     }
-    var result: Int = 0
-    var arr: [Int] = Array(repeating: 0, count: 1000*4+1)
-    var multiplier = [2,4,3]
-    var divider = [1,3,2]
-    for weight in weights {
-        arr[weight] += 1
-    }
-    for i in 0..<arr.count {
-        if i < 100 || i > 1000 {
-            continue
-        }
-        if arr[i] == 0 {
-            continue
-        }
-        if arr[i] > 1 {
-            result += calculate(arr[i])
-        }
-        for j in 0..<3 {
-            if (i % divider[j] != 0) {
-                continue
-            }
-            result += arr[i] * arr[(i / divider[j]) * multiplier[j]]
-        }
-    }
-    return Int64(result)
+    
+    return answer
 }
