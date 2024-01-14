@@ -1748,11 +1748,48 @@ import Foundation
 
 
 // 테이블 해시 함수(147354)
-func solution(_ data: [[Int]], _ col: Int, _ row_begin: Int, _ row_end: Int) -> Int {
-    var data = data.sorted{ $0[0] > $1[0] }.sorted { $0[col-1] < $1[col-1] }
+//func solution(_ data: [[Int]], _ col: Int, _ row_begin: Int, _ row_end: Int) -> Int {
+//    var data = data.sorted{ $0[0] > $1[0] }.sorted { $0[col-1] < $1[col-1] }
+//    var answer = 0
+//    for i in stride(from: row_begin-1, through: row_end-1, by: 1) {
+//        answer ^= data[i].reduce(0) { $0 + ($1 % (i+1)) }
+//    }
+//    
+//    return answer
+//}
+
+
+
+// 가장 많이 받은 선물(258712)
+func solution(_ friends: [String], _ gifts: [String]) -> Int {
     var answer = 0
-    for i in stride(from: row_begin-1, through: row_end-1, by: 1) {
-        answer ^= data[i].reduce(0) { $0 + ($1 % (i+1)) }
+    
+    var dict = [String: Int]()
+    for (index, friend) in friends.enumerated() {
+        dict[friend] = index
+    }
+    
+    
+    var intArray = [Int](repeating: 0, count: friends.count)
+    var giftArrays = [[Int]](repeating: [Int](repeating: 0, count: friends.count), count: friends.count)
+    
+    for gift in gifts {
+        let strs = gift.components(separatedBy: " ")
+        giftArrays[dict[strs[0]]!][dict[strs[1]]!] += 1
+        intArray[dict[strs[0]]!] += 1
+        intArray[dict[strs[1]]!] -= 1
+    }
+    
+    for i in 0..<intArray.count {
+        var num = 0
+        for j in 0..<intArray.count where i != j {
+            if giftArrays[i][j] > giftArrays[j][i]
+                || (giftArrays[i][j] == giftArrays[j][i] && intArray[i] > intArray[j]) {
+                num += 1
+            }
+        }
+        
+        answer = max(answer, num)
     }
     
     return answer
