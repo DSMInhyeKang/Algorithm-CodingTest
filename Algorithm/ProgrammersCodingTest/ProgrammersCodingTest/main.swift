@@ -1761,35 +1761,96 @@ import Foundation
 
 
 // 가장 많이 받은 선물(258712)
-func solution(_ friends: [String], _ gifts: [String]) -> Int {
-    var answer = 0
+//func solution(_ friends: [String], _ gifts: [String]) -> Int {
+//    var answer = 0
+//    
+//    var dict = [String: Int]()
+//    for (index, friend) in friends.enumerated() {
+//        dict[friend] = index
+//    }
+//    
+//    
+//    var intArray = [Int](repeating: 0, count: friends.count)
+//    var giftArrays = [[Int]](repeating: [Int](repeating: 0, count: friends.count), count: friends.count)
+//    
+//    for gift in gifts {
+//        let strs = gift.components(separatedBy: " ")
+//        giftArrays[dict[strs[0]]!][dict[strs[1]]!] += 1
+//        intArray[dict[strs[0]]!] += 1
+//        intArray[dict[strs[1]]!] -= 1
+//    }
+//    
+//    for i in 0..<intArray.count {
+//        var num = 0
+//        for j in 0..<intArray.count where i != j {
+//            if giftArrays[i][j] > giftArrays[j][i]
+//                || (giftArrays[i][j] == giftArrays[j][i] && intArray[i] > intArray[j]) {
+//                num += 1
+//            }
+//        }
+//        
+//        answer = max(answer, num)
+//    }
+//    
+//    return answer
+//}
+
+
+
+// 광물 캐기(172927)
+func solution(_ picks: [Int], _ minerals: [String]) -> Int {
+    var picks: [Int] = picks
+    var answer: Int = 0
+
+    if picks == [0, 0, 0] { return 0 }
+
+    var count: Int = 0
     
-    var dict = [String: Int]()
-    for (index, friend) in friends.enumerated() {
-        dict[friend] = index
+    if picks.reduce(0, +) * 5 > minerals.count {
+        count = minerals.count
+    } else {
+        count = picks.reduce(0, +) * 5
     }
+
+    var array: [[Int]] = Array(repeating: [0, 0, 0], count: 10)
     
-    
-    var intArray = [Int](repeating: 0, count: friends.count)
-    var giftArrays = [[Int]](repeating: [Int](repeating: 0, count: friends.count), count: friends.count)
-    
-    for gift in gifts {
-        let strs = gift.components(separatedBy: " ")
-        giftArrays[dict[strs[0]]!][dict[strs[1]]!] += 1
-        intArray[dict[strs[0]]!] += 1
-        intArray[dict[strs[1]]!] -= 1
-    }
-    
-    for i in 0..<intArray.count {
-        var num = 0
-        for j in 0..<intArray.count where i != j {
-            if giftArrays[i][j] > giftArrays[j][i]
-                || (giftArrays[i][j] == giftArrays[j][i] && intArray[i] > intArray[j]) {
-                num += 1
-            }
+    for i in 0..<count {
+        if minerals[i] == "diamond" {
+            array[i / 5][0] += 1
         }
+        if minerals[i] == "iron" {
+            array[i / 5][1] += 1
+        }
+        if minerals[i] == "stone" {
+            array[i / 5][2] += 1
+        }
+    }
+
+    array.sort {
+        if $0[0] == $1[0] {
+            if $0[1] == $1[1] {
+                return $0[2] > $1[2]
+            } else {
+                return $0[1] > $1[1]
+            }
+        } else {
+            return $0[0] > $1[0]
+        }
+    }
+    
+    for i in 0..<array.count {
+        let (d, i, s) = (array[i][0], array[i][1], array[i][2])
         
-        answer = max(answer, num)
+        if picks[0] > 0 {
+            picks[0] -= 1
+            answer += d + i + s
+        } else if picks[1] > 0 {
+            picks[1] -= 1
+            answer += d * 5 + i + s
+        } else if picks[2] > 0 {
+            picks[2] -= 1
+            answer += d * 25 + i * 5 + s
+        }
     }
     
     return answer
