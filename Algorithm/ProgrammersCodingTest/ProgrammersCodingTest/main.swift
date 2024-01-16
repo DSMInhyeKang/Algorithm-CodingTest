@@ -1798,60 +1798,84 @@ import Foundation
 
 
 // 광물 캐기(172927)
-func solution(_ picks: [Int], _ minerals: [String]) -> Int {
-    var picks: [Int] = picks
-    var answer: Int = 0
+//func solution(_ picks: [Int], _ minerals: [String]) -> Int {
+//    var picks: [Int] = picks
+//    var answer: Int = 0
+//
+//    if picks == [0, 0, 0] { return 0 }
+//
+//    var count: Int = 0
+//    
+//    if picks.reduce(0, +) * 5 > minerals.count {
+//        count = minerals.count
+//    } else {
+//        count = picks.reduce(0, +) * 5
+//    }
+//
+//    var array: [[Int]] = Array(repeating: [0, 0, 0], count: 10)
+//    
+//    for i in 0..<count {
+//        if minerals[i] == "diamond" {
+//            array[i / 5][0] += 1
+//        }
+//        if minerals[i] == "iron" {
+//            array[i / 5][1] += 1
+//        }
+//        if minerals[i] == "stone" {
+//            array[i / 5][2] += 1
+//        }
+//    }
+//
+//    array.sort {
+//        if $0[0] == $1[0] {
+//            if $0[1] == $1[1] {
+//                return $0[2] > $1[2]
+//            } else {
+//                return $0[1] > $1[1]
+//            }
+//        } else {
+//            return $0[0] > $1[0]
+//        }
+//    }
+//    
+//    for i in 0..<array.count {
+//        let (d, i, s) = (array[i][0], array[i][1], array[i][2])
+//        
+//        if picks[0] > 0 {
+//            picks[0] -= 1
+//            answer += d + i + s
+//        } else if picks[1] > 0 {
+//            picks[1] -= 1
+//            answer += d * 5 + i + s
+//        } else if picks[2] > 0 {
+//            picks[2] -= 1
+//            answer += d * 25 + i * 5 + s
+//        }
+//    }
+//    
+//    return answer
+//}
 
-    if picks == [0, 0, 0] { return 0 }
 
-    var count: Int = 0
-    
-    if picks.reduce(0, +) * 5 > minerals.count {
-        count = minerals.count
-    } else {
-        count = picks.reduce(0, +) * 5
-    }
 
-    var array: [[Int]] = Array(repeating: [0, 0, 0], count: 10)
-    
-    for i in 0..<count {
-        if minerals[i] == "diamond" {
-            array[i / 5][0] += 1
-        }
-        if minerals[i] == "iron" {
-            array[i / 5][1] += 1
-        }
-        if minerals[i] == "stone" {
-            array[i / 5][2] += 1
-        }
-    }
+// 예산(12982)
+//func solution(_ d: [Int], _ budget: Int) -> Int {
+//    var sum = Int()
+//    var cnt = Int()
+//
+//    for i in d.sorted() {
+//        sum += i
+//        guard sum <= budget else { break }
+//        cnt += 1
+//    }
+//
+//    return cnt
+//}
+func solution(_ d:[Int], _ budget:Int) -> Int {
+    var budget = budget
 
-    array.sort {
-        if $0[0] == $1[0] {
-            if $0[1] == $1[1] {
-                return $0[2] > $1[2]
-            } else {
-                return $0[1] > $1[1]
-            }
-        } else {
-            return $0[0] > $1[0]
-        }
-    }
-    
-    for i in 0..<array.count {
-        let (d, i, s) = (array[i][0], array[i][1], array[i][2])
-        
-        if picks[0] > 0 {
-            picks[0] -= 1
-            answer += d + i + s
-        } else if picks[1] > 0 {
-            picks[1] -= 1
-            answer += d * 5 + i + s
-        } else if picks[2] > 0 {
-            picks[2] -= 1
-            answer += d * 25 + i * 5 + s
-        }
-    }
-    
-    return answer
+    return d.sorted().filter{
+        budget = budget - $0
+        return budget >= 0
+    }.count
 }
