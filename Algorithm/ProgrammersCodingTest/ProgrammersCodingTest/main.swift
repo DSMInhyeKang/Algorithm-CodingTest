@@ -1871,11 +1871,18 @@ import Foundation
 //
 //    return cnt
 //}
-func solution(_ d:[Int], _ budget:Int) -> Int {
-    var budget = budget
+//func solution(_ d:[Int], _ budget:Int) -> Int {
+//    var budget = budget
+//
+//    return d.sorted().filter{
+//        budget = budget - $0
+//        return budget >= 0
+//    }.count
+//}
 
-    return d.sorted().filter{
-        budget = budget - $0
-        return budget >= 0
-    }.count
+
+
+// K번째수(42748)
+func solution(_ array: [Int], _ commands :[[Int]]) -> [Int] {
+    return commands.map { array[$0[0]-1...$0[1]-1].sorted(by: < )[$0[2]-1] }
 }
