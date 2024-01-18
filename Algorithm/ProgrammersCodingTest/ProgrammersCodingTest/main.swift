@@ -1883,6 +1883,45 @@ import Foundation
 
 
 // K번째수(42748)
-func solution(_ array: [Int], _ commands :[[Int]]) -> [Int] {
-    return commands.map { array[$0[0]-1...$0[1]-1].sorted(by: < )[$0[2]-1] }
+//func solution(_ array: [Int], _ commands :[[Int]]) -> [Int] {
+//    return commands.map { array[$0[0]-1...$0[1]-1].sorted(by: < )[$0[2]-1] }
+//}
+
+
+
+// [1차] 다트 게임(17682)
+func solution(_ dartResult: String) -> Int {
+    var points = [0, 0, 0]
+    var trial = 0, point = "", bonus = 0, option = 1
+
+    for c in dartResult {
+        switch c {
+        case "S": bonus = 1
+        case "D": bonus = 2
+        case "T": bonus = 3
+        case "#": option = -1
+        case "*": option = 2
+        default:
+            if bonus > 0  {
+                // calculate
+                points[trial] = Array(repeating: Int(point)!, count: bonus).reduce(1, { $0*$1 }) * option
+                
+                if (trial > 0 && option == 2) {
+                    points[trial-1] *= option
+                }
+                
+                trial += 1
+                point = ""
+                bonus = 0
+                option = 1
+            }
+            
+            point += [c]
+        }
+    }
+    
+    points[trial] = Array(repeating: Int(point)!, count: bonus).reduce(1, { $0*$1 }) * option
+    points[trial-1] *= (option == 2 ? option : 1)
+    
+    return points.reduce(0, { $0 + $1 })
 }
