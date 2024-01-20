@@ -1929,13 +1929,37 @@ import Foundation
 
 
 // [1차] 비밀지도(17681)
-func solution(_ n: Int, _ arr1: [Int], _ arr2: [Int]) -> [String] {
-//    var answer = [String]()
-//    for i in 0..<n {
-//        var line = String(arr1[i] | arr2[i], radix: 2)
-//        line = String(repeating: "0", count: n - line.count) + line
-//        answer.append(line.reduce("") { return $0 + ($1 == "0" ? " " : "#") })
-//    }
-//    return answer
-    return (0..<n).map { String(String(arr1[$0]|arr2[$0]|2<<(n - 1), radix: 2).map { $0 == "1" ? "#" : " " }[1...n]) }
+//func solution(_ n: Int, _ arr1: [Int], _ arr2: [Int]) -> [String] {
+////    var answer = [String]()
+////    for i in 0..<n {
+////        var line = String(arr1[i] | arr2[i], radix: 2)
+////        line = String(repeating: "0", count: n - line.count) + line
+////        answer.append(line.reduce("") { return $0 + ($1 == "0" ? " " : "#") })
+////    }
+////    return answer
+//    return (0..<n).map { String(String(arr1[$0]|arr2[$0]|2<<(n - 1), radix: 2).map { $0 == "1" ? "#" : " " }[1...n]) }
+//}
+
+
+
+// 소수 만들기(12977)
+func isPrime(_ num: Int) -> Bool {
+    var n = 2
+    while n < num {
+        if num % n == 0 { return false }
+        n += 1
+    }
+    return true
+}
+func solution(_ nums: [Int]) -> Int {
+    var answer = 0
+    
+    for i in 0 ..< nums.count - 2 {
+        for j in i + 1 ..< nums.count - 1 {
+            for k in j + 1 ..< nums.count {
+                if isPrime(nums[i] + nums[j] + nums[k]) { answer += 1 }
+            }
+        }
+    }
+    return answer
 }
