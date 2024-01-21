@@ -1943,23 +1943,30 @@ import Foundation
 
 
 // 소수 만들기(12977)
-func isPrime(_ num: Int) -> Bool {
-    var n = 2
-    while n < num {
-        if num % n == 0 { return false }
-        n += 1
-    }
-    return true
-}
-func solution(_ nums: [Int]) -> Int {
-    var answer = 0
-    
-    for i in 0 ..< nums.count - 2 {
-        for j in i + 1 ..< nums.count - 1 {
-            for k in j + 1 ..< nums.count {
-                if isPrime(nums[i] + nums[j] + nums[k]) { answer += 1 }
-            }
-        }
-    }
-    return answer
+//func isPrime(_ num: Int) -> Bool {
+//    var n = 2
+//    while n < num {
+//        if num % n == 0 { return false }
+//        n += 1
+//    }
+//    return true
+//}
+//func solution(_ nums: [Int]) -> Int {
+//    var answer = 0
+//    
+//    for i in 0 ..< nums.count - 2 {
+//        for j in i + 1 ..< nums.count - 1 {
+//            for k in j + 1 ..< nums.count {
+//                if isPrime(nums[i] + nums[j] + nums[k]) { answer += 1 }
+//            }
+//        }
+//    }
+//    return answer
+//}
+
+
+
+// x만큼 간격이 있는 n개의 숫자(12954)
+func solution(_ x: Int, _ n: Int) -> [Int64] {
+    return Array(1...n).map { Int64($0 * x) }
 }
