@@ -1967,6 +1967,23 @@ import Foundation
 
 
 // x만큼 간격이 있는 n개의 숫자(12954)
-func solution(_ x: Int, _ n: Int) -> [Int64] {
-    return Array(1...n).map { Int64($0 * x) }
+//func solution(_ x: Int, _ n: Int) -> [Int64] {
+//    return Array(1...n).map { Int64($0 * x) }
+//}
+
+
+
+// 영어 끝말잇기(12981)
+func solution(_ n: Int, _ words: [String]) -> [Int] {
+    var prev = words[0].last, m: Set<String> = [words[0]]
+    
+    for i in 1..<words.count{
+        if words[i].first != prev || m.contains(words[i]) {
+            return [i%n+1,i/n+1]
+        }
+        prev = words[i].last
+        m.insert(words[i])
+    }
+    
+    return [0,0]
 }
