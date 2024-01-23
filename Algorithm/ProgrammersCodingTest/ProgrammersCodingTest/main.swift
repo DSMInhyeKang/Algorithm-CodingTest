@@ -1974,16 +1974,36 @@ import Foundation
 
 
 // 영어 끝말잇기(12981)
-func solution(_ n: Int, _ words: [String]) -> [Int] {
-    var prev = words[0].last, m: Set<String> = [words[0]]
-    
-    for i in 1..<words.count{
-        if words[i].first != prev || m.contains(words[i]) {
-            return [i%n+1,i/n+1]
+//func solution(_ n: Int, _ words: [String]) -> [Int] {
+//    var prev = words[0].last, m: Set<String> = [words[0]]
+//    
+//    for i in 1..<words.count{
+//        if words[i].first != prev || m.contains(words[i]) {
+//            return [i%n+1,i/n+1]
+//        }
+//        prev = words[i].last
+//        m.insert(words[i])
+//    }
+//    
+//    return [0,0]
+//}
+
+
+
+// 하노이의 탑(12946)
+func solution(_ n: Int) -> [[Int]] {
+    func hanoi(n: Int, start: Int, mid: Int, dest: Int) {
+        if n == 1 {
+            answer.append([start, dest])
+            return
         }
-        prev = words[i].last
-        m.insert(words[i])
+        hanoi(n: n - 1, start: start, mid: dest, dest: mid)
+        answer.append([start, dest])
+        hanoi(n: n - 1, start: mid, mid: start, dest: dest)
     }
     
-    return [0,0]
+    var answer: [[Int]] = []
+    hanoi(n: n, start: 1, mid: 2, dest: 3)
+    
+    return answer
 }
