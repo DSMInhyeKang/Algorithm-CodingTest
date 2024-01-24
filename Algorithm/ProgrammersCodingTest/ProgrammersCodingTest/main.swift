@@ -1991,19 +1991,26 @@ import Foundation
 
 
 // 하노이의 탑(12946)
-func solution(_ n: Int) -> [[Int]] {
-    func hanoi(n: Int, start: Int, mid: Int, dest: Int) {
-        if n == 1 {
-            answer.append([start, dest])
-            return
-        }
-        hanoi(n: n - 1, start: start, mid: dest, dest: mid)
-        answer.append([start, dest])
-        hanoi(n: n - 1, start: mid, mid: start, dest: dest)
-    }
-    
-    var answer: [[Int]] = []
-    hanoi(n: n, start: 1, mid: 2, dest: 3)
-    
-    return answer
+//func solution(_ n: Int) -> [[Int]] {
+//    func hanoi(n: Int, start: Int, mid: Int, dest: Int) {
+//        if n == 1 {
+//            answer.append([start, dest])
+//            return
+//        }
+//        hanoi(n: n - 1, start: start, mid: dest, dest: mid)
+//        answer.append([start, dest])
+//        hanoi(n: n - 1, start: mid, mid: start, dest: dest)
+//    }
+//    
+//    var answer: [[Int]] = []
+//    hanoi(n: n, start: 1, mid: 2, dest: 3)
+//    
+//    return answer
+//}
+
+
+
+// 예상 대진표(12985)
+func solution(_ n: Int, _ a: Int, _ b: Int) -> Int {
+    return String(((a-1) ^ (b-1)), radix: 2).count
 }
