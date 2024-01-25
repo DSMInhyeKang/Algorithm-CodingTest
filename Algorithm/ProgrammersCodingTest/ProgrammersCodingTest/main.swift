@@ -2011,6 +2011,15 @@ import Foundation
 
 
 // 예상 대진표(12985)
-func solution(_ n: Int, _ a: Int, _ b: Int) -> Int {
-    return String(((a-1) ^ (b-1)), radix: 2).count
+//func solution(_ n: Int, _ a: Int, _ b: Int) -> Int {
+//    return String(((a-1) ^ (b-1)), radix: 2).count
+//}
+
+
+
+// 점프와 순간 이동(12980)
+func solution(_ n: Int) -> Int {
+    if n == 1 { return 1 }
+    if n % 2 == 0 { return solution(n/2) }
+    return solution(n/2) + 1
 }
