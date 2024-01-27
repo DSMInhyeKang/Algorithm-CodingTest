@@ -2027,16 +2027,29 @@ import Foundation
 
 
 // 행렬의 곱셈(12949)
-func solution(_ arr1: [[Int]], _ arr2: [[Int]]) -> [[Int]] {
-    var answer = Array(repeating: Array(repeating: 0, count: arr2[0].count), count: arr1.count)
+//func solution(_ arr1: [[Int]], _ arr2: [[Int]]) -> [[Int]] {
+//    var answer = Array(repeating: Array(repeating: 0, count: arr2[0].count), count: arr1.count)
+//
+//    for i in 0..<answer.count {
+//        for j in 0..<answer[i].count {
+//            for k in 0..<arr1[0].count {
+//                answer[i][j] += arr1[i][k] * arr2[k][j]
+//            }
+//        }
+//    }
+//
+//    return answer
+//}
 
-    for i in 0..<answer.count {
-        for j in 0..<answer[i].count {
-            for k in 0..<arr1[0].count {
-                answer[i][j] += arr1[i][k] * arr2[k][j]
-            }
-        }
+
+
+// 피보나치 수(12945)
+func solution(_ n: Int) -> Int {
+    var fibonacci: [Int] = [0, 1]
+    
+    for i in 2...n {
+        fibonacci.append((fibonacci[i-2] + fibonacci[i-1]) % 1234567)
     }
-
-    return answer
+    
+    return fibonacci[n]
 }
