@@ -2044,12 +2044,31 @@ import Foundation
 
 
 // 피보나치 수(12945)
-func solution(_ n: Int) -> Int {
-    var fibonacci: [Int] = [0, 1]
+//func solution(_ n: Int) -> Int {
+//    var fibonacci: [Int] = [0, 1]
+//    
+//    for i in 2...n {
+//        fibonacci.append((fibonacci[i-2] + fibonacci[i-1]) % 1234567)
+//    }
+//    
+//    return fibonacci[n]
+//}
+
+
+
+// 짝지어 제거하기(12973)
+func solution(_ s: String) -> Int {
+    var str = Array(s)
+    var result: [Character] = []
+    let len = str.count
     
-    for i in 2...n {
-        fibonacci.append((fibonacci[i-2] + fibonacci[i-1]) % 1234567)
+    for i in 0..<len {
+        if !result.isEmpty && result.last == str[i] {
+            result.removeLast()
+        } else {
+            result.append(str[i])
+        }
     }
     
-    return fibonacci[n]
+    return result.isEmpty ? 1 : 0
 }
