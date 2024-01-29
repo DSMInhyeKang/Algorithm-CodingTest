@@ -2057,18 +2057,33 @@ import Foundation
 
 
 // 짝지어 제거하기(12973)
-func solution(_ s: String) -> Int {
-    var str = Array(s)
-    var result: [Character] = []
-    let len = str.count
-    
-    for i in 0..<len {
-        if !result.isEmpty && result.last == str[i] {
-            result.removeLast()
-        } else {
-            result.append(str[i])
+//func solution(_ s: String) -> Int {
+//    var str = Array(s)
+//    var result: [Character] = []
+//    let len = str.count
+//    
+//    for i in 0..<len {
+//        if !result.isEmpty && result.last == str[i] {
+//            result.removeLast()
+//        } else {
+//            result.append(str[i])
+//        }
+//    }
+//    
+//    return result.isEmpty ? 1 : 0
+//}
+
+
+
+// JadenCase 문자열 만들기(12951)
+func solution(_ s: String) -> String {
+    return Array(s).enumerated().map {
+        if $0.offset == 0 {
+            return String($0.element).uppercased()
         }
-    }
-    
-    return result.isEmpty ? 1 : 0
+        if Array(s)[$0.offset-1] == " " {
+            return String($0.element).uppercased()
+        }
+        return String($0.element).lowercased()
+    }.joined()
 }
