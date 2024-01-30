@@ -2076,14 +2076,51 @@ import Foundation
 
 
 // JadenCase 문자열 만들기(12951)
-func solution(_ s: String) -> String {
-    return Array(s).enumerated().map {
-        if $0.offset == 0 {
-            return String($0.element).uppercased()
+//func solution(_ s: String) -> String {
+//    return Array(s).enumerated().map {
+//        if $0.offset == 0 {
+//            return String($0.element).uppercased()
+//        }
+//        if Array(s)[$0.offset-1] == " " {
+//            return String($0.element).uppercased()
+//        }
+//        return String($0.element).lowercased()
+//    }.joined()
+//}
+
+
+
+// N-Queen(12952)
+func solution(_ n: Int) -> Int {
+    var chess = Array(repeating: -1, count: n)
+    var answer = 0
+    
+    func checkArrangeQueen(row: Int) -> Bool {
+        for i in 0..<row {
+            if chess[i] == chess[row] || abs(chess[row] - chess[i]) == abs(row - i) {
+                return false
+            }
         }
-        if Array(s)[$0.offset-1] == " " {
-            return String($0.element).uppercased()
+        
+        return true
+    }
+    
+    func dfs(row: Int) {
+        if row == n {
+            answer += 1
+            return
         }
-        return String($0.element).lowercased()
-    }.joined()
+        
+        for i in 0..<n {
+            chess[row] = i
+            
+            if checkArrangeQueen(row: row) {
+                dfs(row: row + 1)
+            }
+        }
+    }
+    
+    dfs(row: 0)
+    
+    return answer
 }
