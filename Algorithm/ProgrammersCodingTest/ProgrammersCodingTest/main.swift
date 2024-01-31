@@ -2091,36 +2091,84 @@ import Foundation
 
 
 // N-Queen(12952)
-func solution(_ n: Int) -> Int {
-    var chess = Array(repeating: -1, count: n)
-    var answer = 0
+//func solution(_ n: Int) -> Int {
+//    var chess = Array(repeating: -1, count: n)
+//    var answer = 0
+//    
+//    func checkArrangeQueen(row: Int) -> Bool {
+//        for i in 0..<row {
+//            if chess[i] == chess[row] || abs(chess[row] - chess[i]) == abs(row - i) {
+//                return false
+//            }
+//        }
+//        
+//        return true
+//    }
+//    
+//    func dfs(row: Int) {
+//        if row == n {
+//            answer += 1
+//            return
+//        }
+//        
+//        for i in 0..<n {
+//            chess[row] = i
+//            
+//            if checkArrangeQueen(row: row) {
+//                dfs(row: row + 1)
+//            }
+//        }
+//    }
+//    
+//    dfs(row: 0)
+//    
+//    return answer
+//}
+
+
+
+// 배달(12978)
+func solution(_ N: Int, _ road: [[Int]], _ k: Int) -> Int {
+    var distsFromFirstVillage = [Int](repeating: Int.max, count: N + 1)
+    var graph = [[Int]](repeating: [Int](repeating: 0, count: N + 1), count: N + 1)
     
-    func checkArrangeQueen(row: Int) -> Bool {
-        for i in 0..<row {
-            if chess[i] == chess[row] || abs(chess[row] - chess[i]) == abs(row - i) {
-                return false
+    for data in road {
+        let from = data[0]
+        let to = data[1]
+        let cost = data[2]
+        
+        if graph[from][to] == 0 {
+            graph[from][to] = cost
+            graph[to][from] = cost
+        } else {
+            if cost < graph[from][to] {
+                graph[from][to] = cost
+                graph[to][from] = cost
             }
         }
         
-        return true
     }
     
-    func dfs(row: Int) {
-        if row == n {
-            answer += 1
-            return
-        }
+    func dijkstara(start: Int) {
+        var queue = [(Int, Int)]()
+        distsFromFirstVillage[start] = 0
         
-        for i in 0..<n {
-            chess[row] = i
-            
-            if checkArrangeQueen(row: row) {
-                dfs(row: row + 1)
+        queue.append((1,distsFromFirstVillage[1]))
+        
+        while !queue.isEmpty {
+            let cur = queue.first!.0
+            let cost = queue.first!.1
+            queue.removeFirst()
+            for next in 1...N {
+                if graph[cur][next] != 0 && cost + graph[cur][next]  < distsFromFirstVillage[next] {
+                    distsFromFirstVillage[next] = cost + graph[cur][next]
+                    queue.append((next, distsFromFirstVillage[next]))
+                }
             }
         }
     }
     
-    dfs(row: 0)
+    dijkstara(start: 1)
     
-    return answer
+    return distsFromFirstVillage.filter{ $0 <= k }.count
 }
