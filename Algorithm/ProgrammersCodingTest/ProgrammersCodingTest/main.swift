@@ -2128,47 +2128,66 @@ import Foundation
 
 
 // 배달(12978)
-func solution(_ N: Int, _ road: [[Int]], _ k: Int) -> Int {
-    var distsFromFirstVillage = [Int](repeating: Int.max, count: N + 1)
-    var graph = [[Int]](repeating: [Int](repeating: 0, count: N + 1), count: N + 1)
-    
-    for data in road {
-        let from = data[0]
-        let to = data[1]
-        let cost = data[2]
-        
-        if graph[from][to] == 0 {
-            graph[from][to] = cost
-            graph[to][from] = cost
-        } else {
-            if cost < graph[from][to] {
-                graph[from][to] = cost
-                graph[to][from] = cost
-            }
-        }
-        
+//func solution(_ N: Int, _ road: [[Int]], _ k: Int) -> Int {
+//    var distsFromFirstVillage = [Int](repeating: Int.max, count: N + 1)
+//    var graph = [[Int]](repeating: [Int](repeating: 0, count: N + 1), count: N + 1)
+//    
+//    for data in road {
+//        let from = data[0]
+//        let to = data[1]
+//        let cost = data[2]
+//        
+//        if graph[from][to] == 0 {
+//            graph[from][to] = cost
+//            graph[to][from] = cost
+//        } else {
+//            if cost < graph[from][to] {
+//                graph[from][to] = cost
+//                graph[to][from] = cost
+//            }
+//        }
+//        
+//    }
+//    
+//    func dijkstara(start: Int) {
+//        var queue = [(Int, Int)]()
+//        distsFromFirstVillage[start] = 0
+//        
+//        queue.append((1,distsFromFirstVillage[1]))
+//        
+//        while !queue.isEmpty {
+//            let cur = queue.first!.0
+//            let cost = queue.first!.1
+//            queue.removeFirst()
+//            for next in 1...N {
+//                if graph[cur][next] != 0 && cost + graph[cur][next]  < distsFromFirstVillage[next] {
+//                    distsFromFirstVillage[next] = cost + graph[cur][next]
+//                    queue.append((next, distsFromFirstVillage[next]))
+//                }
+//            }
+//        }
+//    }
+//    
+//    dijkstara(start: 1)
+//    
+//    return distsFromFirstVillage.filter{ $0 <= k }.count
+//}
+
+
+
+// N개의 최소공배수(12953)
+func gcd(_ a: Int, _ b: Int) -> Int {
+    if b == 0 {
+        return a
+    } else {
+        return gcd(b, a % b)
     }
-    
-    func dijkstara(start: Int) {
-        var queue = [(Int, Int)]()
-        distsFromFirstVillage[start] = 0
-        
-        queue.append((1,distsFromFirstVillage[1]))
-        
-        while !queue.isEmpty {
-            let cur = queue.first!.0
-            let cost = queue.first!.1
-            queue.removeFirst()
-            for next in 1...N {
-                if graph[cur][next] != 0 && cost + graph[cur][next]  < distsFromFirstVillage[next] {
-                    distsFromFirstVillage[next] = cost + graph[cur][next]
-                    queue.append((next, distsFromFirstVillage[next]))
-                }
-            }
-        }
-    }
-    
-    dijkstara(start: 1)
-    
-    return distsFromFirstVillage.filter{ $0 <= k }.count
+}
+
+func lcm(_ a: Int, _ b: Int) -> Int {
+    a * b / gcd(a, b)
+}
+
+func solution(_ arr: [Int]) -> Int {
+    return arr.reduce(1) { lcm($0, $1) }
 }
