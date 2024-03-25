@@ -87,24 +87,23 @@ print(princes)
 
 
 # 괄호 (알실)
-T = int(input())
-
-for i in range(T):
-    val = input()
+for i in range(int(input())):
     stack = []
+    ans = "YES"
 
-    for c in list(val):
+    for c in input():
         if c == '(':
             stack.append(c)
         else:
             if stack:
                 stack.pop()
             else:
-                print("NO")
-                break
+                ans = "NO"
 
-    if stack: print("NO")
-    else: print("YES")
+    if stack: 
+        ans = "NO"
+    
+    print(ans)
 
 
 
@@ -197,3 +196,7 @@ def dfs(v):
 
 dfs(0)
 print(cnt)
+
+
+
+# 카드(알실)
