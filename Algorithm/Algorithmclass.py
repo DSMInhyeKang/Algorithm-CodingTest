@@ -129,8 +129,6 @@ dfs(1)
 
 
 # 합이 같은 부분집합(DFS : 아마존 인터뷰)
-import sys
-
 N = int(input())
 num = list(map(int, input().split()))
 totalSum = sum(num)
@@ -157,21 +155,23 @@ C, N = map(int, input().split())
 weight = [int(input()) for _ in range(N)]
 max = 0
 
-def dfs(v, sum):
+def dfs(v, sum, tsum):  # sum = 사용할 지 안 할 지 결정해서 더한 값, tsum = 무작정 더한 값
     global max
 
-    if sum > C:
+    if sum + (sum(weight) - tsum) < max:
         return
 
-    if v == N:
-        if sum <= C and sum > max:
-            max = sum
-            return
-    else:
-        dfs(v+1, sum+weight[v])
-        dfs(v+1, sum)
+    if sum > C: # 바운더리 넘어간 순간 종료
+        return
 
-dfs(0, 0)
+    if v == N: # 제일 아래 레벨에 도달했을 때
+        if max < sum:
+            max = sum
+    else:
+        dfs(v+1, sum+weight[v], tsum+weight[i])
+        dfs(v+1, sum, tsum+weight[v])
+
+dfs(0, 0, 0)
 print(max)
 
 
@@ -189,6 +189,7 @@ def dfs(v):
             print(h[i], end=" ")
         print()
         cnt += 1
+        return
     else:
         for j in range(1, N+1):
             h[v] = j
@@ -200,3 +201,58 @@ print(cnt)
 
 
 # 카드(알실)
+
+
+
+# 동전교환
+N = int(input())
+coins = list(map(int, input().split()))
+coins.sort(reverse=True)
+M = int(input())
+res = 0
+
+def dfs(l, sum):
+    global res
+    if l < res:
+        return
+
+    if sum > M:
+        return
+    
+    if sum == M:
+        if l < res:
+            res = l
+    else:
+        for i in range(N):
+            dfs(l+1, sum+coins[i])
+
+dfs(0, 0)
+print(res)
+
+
+
+# 순열 구하기
+N, M = map(int, input().split())
+result = [0] * N
+visited= [False for _ in range(N+1)]
+cnt = 0
+
+def dfs(v):
+    global cnt
+
+    if v == M:
+        for i in range(M):
+            print(result[i], end=' ')
+        print()
+        cnt += 1
+        return
+    else:
+        for i in range(1, N+1):
+            if not visited[i]:
+                visited[i] = True
+                result[v] = i
+                dfs(v+1)
+                visited[i] = False
+
+dfs(0)
+print(cnt)
