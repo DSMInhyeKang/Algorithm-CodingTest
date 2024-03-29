@@ -2195,52 +2195,89 @@ import Foundation
 
 
 // 미로 탈출(159993)
-func solution(_ maps: [String]) -> Int {
+//func solution(_ maps: [String]) -> Int {
+//    
+//    let dx = [0, 0, -1, 1]
+//    let dy = [-1, 1, 0, 0]
+//    var start: (Int, Int) = (0, 0)
+//    var lever: (Int, Int) = (0, 0)
+//    var mapArr: [[Character]] = []
+//    
+//    
+//    for (i, low) in maps.enumerated() {
+//        if let j = Array(low).firstIndex(of: "S") {
+//            start = (j, i)
+//        }
+//        if let j = Array(low).firstIndex(of: "L") {
+//            lever = (j, i)
+//        }
+//        mapArr.append(Array(low))
+//    }
+//    
+//    func bfs(start: (Int, Int), end: String) -> Int? {
+//        var distance: [[Int]] = Array(repeating: [Int](repeating: -1, count: maps[0].count),
+//                                      count: maps.count)
+//        var queue: [(Int, Int)] = []
+//        distance[start.1][start.0] = 0
+//        queue.append(start)
+//        
+//        while !queue.isEmpty {
+//            let (qx, qy) = queue.removeFirst()
+//            for i in 0..<4 {
+//                let nx = qx + dx[i]
+//                let ny = qy + dy[i]
+//                if 0..<maps[0].count ~= nx && 0..<maps.count ~= ny &&
+//                    mapArr[ny][nx] != "X" && distance[ny][nx] == -1 {
+//                    if mapArr[ny][nx] == Character(end) {
+//                        return distance[qy][qx] + 1
+//                    }
+//                    distance[ny][nx] = distance[qy][qx] + 1
+//                    queue.append((nx, ny))
+//                }
+//            }
+//        }
+//        return nil
+//    }
+//    
+//    guard let time1 = bfs(start: start, end: "L") else { return -1 }
+//    guard let time2 = bfs(start: lever, end: "E") else { return -1 }
+//    
+//    return time1 + time2
+//}
+
+
+
+// 이모티콘 할인행사(150368)
+func solution(_ users: [[Int]], _ emoticons: [Int]) -> [Int] {
+    var sale = [Int](repeating: 0, count: emoticons.count)
+    let percent = [10, 20, 30, 40]
+    var answer = [0, 0]
     
-    let dx = [0, 0, -1, 1]
-    let dy = [-1, 1, 0, 0]
-    var start: (Int, Int) = (0, 0)
-    var lever: (Int, Int) = (0, 0)
-    var mapArr: [[Character]] = []
-    
-    
-    for (i, low) in maps.enumerated() {
-        if let j = Array(low).firstIndex(of: "S") {
-            start = (j, i)
-        }
-        if let j = Array(low).firstIndex(of: "L") {
-            lever = (j, i)
-        }
-        mapArr.append(Array(low))
-    }
-    
-    func bfs(start: (Int, Int), end: String) -> Int? {
-        var distance: [[Int]] = Array(repeating: [Int](repeating: -1, count: maps[0].count),
-                                      count: maps.count)
-        var queue: [(Int, Int)] = []
-        distance[start.1][start.0] = 0
-        queue.append(start)
-        
-        while !queue.isEmpty {
-            let (qx, qy) = queue.removeFirst()
-            for i in 0..<4 {
-                let nx = qx + dx[i]
-                let ny = qy + dy[i]
-                if 0..<maps[0].count ~= nx && 0..<maps.count ~= ny &&
-                    mapArr[ny][nx] != "X" && distance[ny][nx] == -1 {
-                    if mapArr[ny][nx] == Character(end) {
-                        return distance[qy][qx] + 1
-                    }
-                    distance[ny][nx] = distance[qy][qx] + 1
-                    queue.append((nx, ny))
+    func dfs(_ depth: Int) {
+        if depth == sale.count {
+            var plus = 0, money = 0
+            users.forEach { user in
+                var total = 0
+                zip(sale, emoticons).forEach {
+                    if user[0] <= $0.0 { total += ($0.1 * (100 - $0.0) / 100) }
                 }
+                if total >= user[1] { plus += 1; total = 0 }
+                money += total
             }
+            
+            if plus > answer[0] { answer[0] = plus; answer[1] = money }
+            else if plus == answer[0] && money > answer[1] { answer[1] = money }
+            
+            return
         }
-        return nil
+        
+        percent.forEach {
+            sale[depth] = $0
+            dfs(depth+1)
+        }
     }
     
-    guard let time1 = bfs(start: start, end: "L") else { return -1 }
-    guard let time2 = bfs(start: lever, end: "E") else { return -1 }
+    dfs(0)
     
-    return time1 + time2
+    return answer
 }
