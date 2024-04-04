@@ -28,3 +28,16 @@ def solution(bandage, health, attacks):
                         hp = health    
             
     return hp if hp > 0 else -1
+
+
+
+# [PCCE 기출문제] 10번 / 데이터 분석(250121) - Lv.1
+def solution(data, ext, val_ext, sort_by):
+    answer = []
+    by = [ "code", "date", "maximum", "remain" ]
+
+    for item in data:
+        if item[by.index(ext)] < val_ext:
+            answer.append(item)
+
+    return sorted(answer, key=lambda x: x[by.index(sort_by)])
