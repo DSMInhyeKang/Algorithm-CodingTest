@@ -41,3 +41,38 @@ def solution(data, ext, val_ext, sort_by):
             answer.append(item)
 
     return sorted(answer, key=lambda x: x[by.index(sort_by)])
+
+
+
+# BOJ - DFS와 BFS(1360)
+N, M, V = map(int,input().split())
+
+graph = [[False]*(N+1) for _ in range(N+1)]
+for i in range (M):
+    a,b = map(int,input().split())
+    graph[a][b] = graph[b][a] = True
+
+dfs_visited = [False]*(N+1)
+bfs_visited = [False]*(N+1)
+
+def dfs(V):
+    dfs_visited[V] = True
+    print(V, end=' ')
+    for i in range(1, N+1):
+        if graph[V][i] == True and dfs_visited[i] == False:
+            dfs(i)
+
+def bfs(V):
+    queue = [V]
+    bfs_visited[V] = True
+    while queue:
+        V = queue.pop(0)
+        print(V, end = ' ')
+        for i in range(1, N+1):
+            if(bfs_visited[i] == False and graph[V][i] == True):
+                queue.append(i)
+                bfs_visited[i] = True
+
+dfs(V)
+print()
+bfs(V)
