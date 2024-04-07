@@ -81,7 +81,7 @@ bfs(V)
 
 # BOJ - 연결 요소의 개수(11724)
 import sys
-sys.setrecursionlimit(10**7)
+sys.setrecursionlimit(10**7)  # 백준에서 이거 안 돌리면 런타임 에러
 input = sys.stdin.readline
 
 N, M = map(int, input().split())
