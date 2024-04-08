@@ -108,3 +108,31 @@ for i in range(1, N+1):
         cnt += 1
 
 print(cnt)
+
+
+
+# BOJ - 결혼식(5567)
+import sys 
+from collections import deque
+
+n=int(input())
+m=int(input())
+relation=[[] for _ in range(n+1)]
+
+for _ in range(m):
+    a,b=map(int, input().split())
+    relation[a].append(b)
+    relation[b].append(a)
+
+res=[]
+
+for friend in relation[1]:
+    res.append(friend)
+    res += relation[friend]
+
+ans = list(set(res))
+    
+if len(ans)==0:
+    print(len(ans))
+else:
+    print(len(ans)-1)
