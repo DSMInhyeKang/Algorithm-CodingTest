@@ -136,3 +136,173 @@ if len(ans)==0:
     print(len(ans))
 else:
     print(len(ans)-1)
+
+
+
+# BOJ - 퇴사(14501)
+n = int(input())
+t = []
+p = []
+max = 0
+
+for _ in range(n):
+    a, b = map(int, input().split())
+    t.append(a)
+    p.append(b)
+
+def dfs(l, sum):
+    global max
+
+    if l > n:
+        return
+    
+    if l == n:
+        if sum > max:
+            max = sum
+    else:
+        dfs(l+t[l], sum+p[l])
+        dfs(l+1, sum)
+
+dfs(0, 0)
+print(max)
+
+
+
+# BOJ - 양팔저울(17610)
+n = int(input())
+weights = list(map(int, input().split()))
+weightSum = sum(weights)
+res = set()
+
+def dfs(l, sum):
+    global res
+
+    if l == n:
+        if 0 < sum <= weightSum:  # 음수가 나와도 어차피 다른 가지에서 똑같이 양수 나옴
+            res.add(sum)
+    else:
+        dfs(l+1, sum+weights[l])
+        dfs(l+1, sum-weights[l])
+        dfs(l+1, sum)
+
+dfs(0,0)
+print(weightSum - len(res))  # 전체 중에서 저울로 판별 가능한 수 뺌
+
+
+
+# 동전 바꿔주기(DFS)
+T = int(input())
+k = int(input())
+p = []
+n = []
+cnt = 0
+
+for _ in range(k):
+    pi, ni = map(int, input().split())
+    p.append(pi)
+    n.append(ni)
+
+def dfs(l, sum):
+    global cnt
+
+    if sum > T or l > k:
+        return
+    
+    if l == k:
+        if sum == T:
+            cnt += 1
+    else:
+        for i in range(n[l]+1):
+            dfs(l+1, sum+(p[l]*i))
+
+dfs(0, 0)
+print(cnt)
+
+
+
+# 동전 분배하기(DFS)
+N = int(input())
+coins = [int(input()) for _ in range(N)]
+money = [0, 0, 0]
+res = 2147000000
+
+def dfs(l):
+    global res
+
+    if l == N:
+        dif = (max(money) - min(money))
+
+        if dif < res:
+            temp = set()
+
+            for i in money:
+                temp.add(i)
+
+            if len(temp) == 3:
+                res = (max(money) - min(money))
+    else:
+        for i in range(3):
+            money[i] += coins[l]
+            dfs(l+1)
+            money[i] -= coins[l]
+
+dfs(0)
+print(res)
+
+
+
+# 알파코드(DFS)
+code = list(map(int, input().split()))
+n = len(code)
+res = [0] * (n+3)
+
+
+
+# 미로 탐색(DFS)
+
+
+
+# 등산 경로(DFS)
+
+
+
+# 단지 번호 붙이기(DFS)
+
+
+
+# 안전영역(DFS)
+
+
+
+# 사다리 타기(DFS)
+
+
+
+# 피자배달거리(DFS)
+
+
+
+# 조합 구하기(DFS)
+N, M = map(int, input().split())
+res = [0] * M
+cnt = 0
+
+def dfs(l, start):
+    global cnt 
+    if l == M:
+        for i in res:
+            print(i, end=' ')
+        print()
+        cnt += 1
+        return
+    else:
+        for i in range(start, N+1):
+            res[l] = i
+            dfs(l+1, i+1)
+
+dfs(0, 1) # 1부터 N까지 중에 M개
+print(cnt)
+
+
+
+# 타겟 넘버(43165)
