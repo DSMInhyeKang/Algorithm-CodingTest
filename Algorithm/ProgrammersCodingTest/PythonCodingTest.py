@@ -305,4 +305,22 @@ print(cnt)
 
 
 
-# 타겟 넘버(43165)
+# 타겟 넘버(43165) - Lv.2
+def solution(numbers, target):
+    leaves = [0]    
+    count = 0 
+
+    for n in numbers : 
+        temp = []
+	
+        for l in leaves : 
+            temp.append(l + n)
+            temp.append(l - n)
+        
+        leaves = temp 
+
+    for l in leaves : 
+        if l == target :
+            count += 1
+    
+    return count
