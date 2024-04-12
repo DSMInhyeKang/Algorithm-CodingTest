@@ -266,8 +266,36 @@ res = [0] * (n+3)
 
 
 
-# 단지 번호 붙이기(DFS)
+# BOJ - 단지 번호 붙이기(2667)
+N = int(input())
+map = [list(map(int, input())) for _ in range(N)]
+res = []
+dx = [-1, 0, 1, 0]
+dy = [0, 1, 0, -1]
 
+def dfs(x, y):
+    global cnt
+    cnt += 1
+    map[x][y] = 0
+
+    for i in range(4):
+        xx = x + dx[i]
+        yy = y + dy[i]
+
+        if 0 <= xx < N and 0 <= yy < N and map[xx][yy] == 1:
+            dfs(xx, yy)
+
+for i in range(N):
+    for j in range(N):
+        if map[i][j] == 1:
+            cnt=0
+            dfs(i, j)
+            res.append(cnt)
+
+print(len(res))
+res.sort()
+for x in res:
+    print(x)
 
 
 # 안전영역(DFS)
