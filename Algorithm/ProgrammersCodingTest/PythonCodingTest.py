@@ -352,3 +352,31 @@ def solution(numbers, target):
             count += 1
     
     return count
+
+
+
+# 도넛과 막대 그래프(258711) - Lv.2
+from collections import defaultdict
+
+def solution(edges):
+    answer = [0, 0, 0, 0]
+    dic = defaultdict(lambda: [0, 0])
+
+    for o, i in edges:
+        dic[o][0] += 1  # 나간 간선
+        dic[i][1] += 1  # 들어온 간선
+        
+    for v, item in dic.items():
+        outEdge = item[0]
+        inEdge = item[1]
+        
+        if outEdge >= 2 and inEdge == 0:  # 생성한 정점
+            answer[0] = v
+        elif outEdge == 0 and inEdge >= 1:  # 막대 모양
+            answer[2] += 1
+        elif outEdge >= 2 and inEdge >= 2:  # 8자 모양
+            answer[3] += 1
+
+    answer[1] = dic[answer[0]][0] - answer[2] - answer[3]
+    
+    return answer
