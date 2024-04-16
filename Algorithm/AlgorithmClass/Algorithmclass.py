@@ -168,7 +168,7 @@ def dfs(v, sum, tsum):  # sum = 사용할 지 안 할 지 결정해서 더한 �
         if max < sum:
             max = sum
     else:
-        dfs(v+1, sum+weight[v], tsum+weight[i])
+        dfs(v+1, sum+weight[v], tsum+weight[v])
         dfs(v+1, sum, tsum+weight[v])
 
 dfs(0, 0, 0)
@@ -209,7 +209,7 @@ N = int(input())
 coins = list(map(int, input().split()))
 coins.sort(reverse=True)
 M = int(input())
-res = 0
+res = 214700000
 
 def dfs(l, sum):
     global res
@@ -256,3 +256,175 @@ def dfs(v):
 
 dfs(0)
 print(cnt)
+
+
+
+
+
+# 최대 점수 구하기(DFS)
+N, M = map(int, input().split())
+scores = []
+times = []
+max = 0
+
+for _ in range(N):
+    s, t = map(int, input().split())
+    scores.append(s)
+    times.append(t)
+
+def dfs(l, scoreSum, timeSum):
+    global max
+
+    if timeSum > M:
+        return
+
+    if l == N:
+        if max < scoreSum:
+            max = scoreSum
+    else:
+        dfs(l+1, scoreSum+scores[l], timeSum+times[l])
+        dfs(l+1, scoreSum, timeSum)
+
+
+dfs(0, 0, 0)
+print("\n" + str(max))
+
+
+
+# 후위 표기식
+
+
+
+# 백설 공주와 일곱 난쟁이
+
+
+
+# 휴가(DFS)
+N = int(input())
+t = []
+p = []
+max = 0
+
+for _ in range(N):
+    a, b = map(int, input().split())
+    t.append(a)
+    p.append(b)
+
+def dfs(l, sum):
+    global max
+
+    if l > N:
+        return
+
+    if l == N:
+        if max < sum:
+            max = sum
+    else:
+        dfs(l+t[l], sum+p[l])
+        dfs(l+1, sum)
+
+dfs(0, 0)
+print(max)
+
+
+
+# 양팔저울(DFS)
+K = int(input())
+weights = list(map(int, input().split()))
+visited = [False] * (sum(weights) + 1)
+cnt = 0
+
+def dfs(l, s):
+    if l > K or s > sum(weights):
+        return
+
+    if l == K:
+        if s > 0:
+            visited[s] = True
+    else:
+        dfs(l+1, s+weights[l])
+        dfs(l+1, s-weights[l])
+        dfs(l+1, s)
+
+dfs(0, 1)
+
+for i in visited[1:]:
+    if i == False:
+        cnt += 1
+
+print(cnt)
+
+
+
+# 송아지 찾기(BFS : 상태트리탐색)
+from collections import deque
+
+S, E = map(int, input().split())
+visited = [False] * 10001
+distance = [0] * 10001
+
+visited[S] = True
+deq = deque()
+deq.append(S)
+
+while deq:
+    n = deq.popleft()
+    
+    if n >= 10001:
+        break
+
+    for next in (n+1, n-1, n+5):
+        if 0 <= next < 10001:
+            if not visited[next]:
+                deq.append(next)
+                visited[next] = True
+                distance[next] = distance[n] + 1
+
+print(distance[E])
+
+
+
+# 사과나무(BFS)
+from collections import deque
+
+N = int(input())
+farm = [list(map(int, input().split())) for _ in range(N)]
+dx, dy = [-1, 0, 1, 0], [0, 1, 0, -1]
+visited = [[False] * N for _ in range(N)]
+sum = 0
+
+visited[N//2][N//2] = True
+sum += farm[N//2][N//2]
+deq = deque()
+deq.append((N//2, N//2))
+level = 0
+
+while True:
+    if level == N//2:
+        break
+
+    for i in range(len(deq)):
+        ctr = deq.popleft()
+
+        for j in range(4):
+            x = ctr[0] + dx[j]
+            y = ctr[1] + dy[j]
+
+            if not visited[x][y]:
+                visited[x][y] = True
+                sum += farm[x][y]
+                deq.append((x, y))
+        
+    level += 1
+
+print(sum)
+
+
+
+# 미로의 최단 거리 통로(BFS 활용)
+from collections import deque
+
+maze = [list(map(int, input().split())) for _ in range(7)]
+dx, dy = [-1, 0, 1, 0], [0, 1, 0, -1]
+visited = [[False] * 7 for _ in range(7)]
+
