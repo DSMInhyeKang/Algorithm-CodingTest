@@ -270,8 +270,7 @@ res = [0] * (n+3)
 N = int(input())
 map = [list(map(int, input())) for _ in range(N)]
 res = []
-dx = [-1, 0, 1, 0]
-dy = [0, 1, 0, -1]
+dx, dy = [-1, 0, 1, 0], [0, 1, 0, -1]
 
 def dfs(x, y):
     global cnt
@@ -385,40 +384,15 @@ def solution(edges):
 
 # 과제 진행하기(176962) - Lv.2
 def solution(plans):
-    stack = []
-    answer = []
-    
-    for i,v in enumerate(plans):
-        job, t1, t2 = v
-        hh,mm = t1.split(":")
-        plans[i][1],plans[i][2] = int(hh) * 60 + int(mm), int(t2)
+    plans = sorted(map(lambda x: [x[0], int(x[1][:2]) * 60 + int(x[1][3:]), int(x[2])], plans), key=lambda x: -x[1])
 
-    plans.sort(key=lambda x:x[1])
-    stack.append(plans[0])
-    time = plans[0][1]
-    
-    for i in range(1, len(plans)):
-        next_time = plans[i][1]
+    lst = []
+    while plans:
+        x = plans.pop()
+        for i, v in enumerate(lst):
+            if v[0] > x[1]:
+                lst[i][0] += x[2]
+        lst.append([x[1] + x[2], x[0]])
+    lst.sort()
 
-        while len(stack):
-            job, time_start, time_spend = stack.pop()
-            
-            if time < time_start:
-                time = time_start
-                
-            time_finish = time + time_spend
-
-            if next_time < time_finish:
-                stack.append([job, time_start, time_finish - next_time])
-                time = next_time
-                break
-            else:
-                answer.append(job)
-                time += time_spend
-
-        stack.append(plans[i])
-
-    while len(stack):
-        answer.append(stack.pop()[0])
-
-    return answer
+    return list(map(lambda x: x[1], lst))
