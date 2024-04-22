@@ -409,3 +409,17 @@ def solution(n):
         dp[i] = (dp[i-1] + dp[i-2]) % 1000000007
 
     return dp[n-1]
+
+
+
+# 124 나라의 숫자(12899) - Lv.2
+def solution(n):
+    arr = ['1','2','4']
+    ans = ""
+
+    while n > 0 :
+        n = n-1
+        ans = arr[n%3] + ans
+        n //= 3
+
+    return ans
