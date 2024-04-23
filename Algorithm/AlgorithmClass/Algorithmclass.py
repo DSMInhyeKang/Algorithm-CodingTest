@@ -426,5 +426,92 @@ from collections import deque
 
 maze = [list(map(int, input().split())) for _ in range(7)]
 dx, dy = [-1, 0, 1, 0], [0, 1, 0, -1]
-visited = [[False] * 7 for _ in range(7)]
+visited = [[0] * 7 for _ in range(7)]
 
+deq = deque()
+deq.append((0, 0))
+maze[0][0] = 1
+
+while deq:
+    ctr = deq.popleft()
+
+    for i in range(4):
+        x = ctr[0] + dx[i]
+        y = ctr[1] + dy[i]
+
+        if 0 <= x <= 6 and 0 <= y <= 6 and maze[x][y] == 0:
+            maze[x][y] = 1
+            visited[x][y] = visited[ctr[0]][ctr[1]] + 1
+            deq.append((x, y))
+
+if visited[6][6] == 0:
+    print(-1)
+else:
+    print(visited[6][6])
+
+
+
+# 단지 번호 붙이기(BFS)
+from collections import deque
+
+N = int(input())
+map = [list(map(int, input())) for _ in range(N)]
+dx, dy = [-1, 0, 1, 0], [0, 1, 0, -1]
+result, deq = [], deque()
+cnt = 0
+
+for i in range(N):
+    for j in range(N):
+        if map[i][j] == 1:
+            map[i][j] = 0
+            deq.append((i, j))
+            cnt = 1
+
+            while deq:
+                ctr = deq.popleft()
+
+                for k in range(4):
+                    x = ctr[0] + dx[k]
+                    y = ctr[1] + dy[k]
+
+                    if 0 <= x < N and 0 <= y < N and map[x][y] == 1:
+                        map[x][y] = 0
+                        deq.append((x, y))
+                        cnt += 1
+            
+            result.append(cnt)
+
+print(len(result))
+print(*sorted(result), sep='\n')
+
+
+
+# 섬나라 아일랜드(BFS 활용)
+from collections import deque
+
+N = int(input())
+map = [list(map(int, input().split())) for _ in range(N)]
+dx, dy = [-1, -1, 0, 1, 1, 1, 0, -1], [0, 1, 1, 1, 0, -1, -1, -1]
+deq = deque()
+cnt = 0
+
+for i in range(N):
+    for j in range(N):
+        if map[i][j] == 1:
+            map[i][j] = 0
+            deq.append((i, j))
+
+            while deq:
+                ctr = deq.popleft()
+
+                for k in range(8):
+                    x = ctr[0] + dx[k]
+                    y = ctr[1] + dy[k]
+
+                    if 0 <= x < N and 0 <= y < N and map[x][y] == 1:
+                        map[x][y] = 0
+                        deq.append((x, y))
+
+            cnt += 1
+
+print(cnt)
