@@ -515,3 +515,31 @@ for i in range(N):
             cnt += 1
 
 print(cnt)
+
+
+
+# 토마토(BFS 활용) - BOJ(7576)
+from collections import deque
+M, N = map(int, input().split())
+box = [list(map(int, input().split())) for _ in range(N)]
+dx, dy = [-1, 0, 1, 0], [0, 1, 0, -1]
+period = 0
+deq = deque()
+
+for i in range(N) :
+    for j in range(M) :
+        if box[i][j]==1:
+            deq.append((i,j,0))
+
+while deq:
+    ctr = deq.popleft()
+
+    for k in range(4):
+        x = ctr[0] + dx[i]
+        y = ctr[1] + dy[i]
+
+        if 0 <= x < n and 0 <= y < m and map[x][y]==0:
+            map[x][y] = 1
+            day = ctr[2] + 1
+            deq.append((x,y,day))
+print(day)
