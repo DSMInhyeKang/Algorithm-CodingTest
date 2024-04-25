@@ -255,6 +255,30 @@ print(res)
 code = list(map(int, input().split()))
 n = len(code)
 res = [0] * (n+3)
+cnt = 0
+
+def dfs(l, p):
+    global cnt
+
+    if l == n:
+        cnt += 1
+
+        for j in range(p):
+            print(chr(res[j]+64), end='')
+        print()
+    else:
+        for i in range(1, 27):
+            if code[l] == i:
+                res[p] = i
+                dfs(l+1, p+1)
+            elif i >= 10 and code[l] == (i//10) and code[l+1] == (i%10):
+                res[p] = i
+                dfs(l+2, p+1)
+
+
+code.insert(n, -1)
+dfs(0, 0)
+print(cnt)
 
 
 
@@ -269,8 +293,8 @@ res = [0] * (n+3)
 # BOJ - 단지 번호 붙이기(2667)
 N = int(input())
 map = [list(map(int, input())) for _ in range(N)]
-res = []
 dx, dy = [-1, 0, 1, 0], [0, 1, 0, -1]
+res = []
 
 def dfs(x, y):
     global cnt
@@ -287,7 +311,7 @@ def dfs(x, y):
 for i in range(N):
     for j in range(N):
         if map[i][j] == 1:
-            cnt=0
+            cnt = 0
             dfs(i, j)
             res.append(cnt)
 
