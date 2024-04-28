@@ -462,3 +462,38 @@ def solution(n):
             dp.append((dp[i-1] * 4 - dp[i-2]) % 1000000007)
             
     return dp[-1]
+
+
+
+# [PCCP 기출문제] 2번 / 석유 시추(250136) - Lv.2
+from collections import deque
+
+def solution(land):
+    reclamed = [0] * len(land[0])
+    dx, dy = [0, 1, 0, -1], [1, 0, -1, 0]
+
+    for i in range(len(land)):
+        for j in range(len(land[0])):
+            if land[i][j] == 1:
+                ground = set([j])
+                oil = 1
+                land[i][j] = 0
+                deq = deque([[i, j]])
+
+                while deq:
+                    a, b = deq.popleft()
+
+                    for k in range(4):
+                        x = a + dx[k]
+                        y = b + dy[k]
+
+                        if 0 <= x < len(land) and 0 <= y < len(land[0]) and land[x][y] == 1:
+                            ground.add(y)
+                            oil += 1
+                            land[x][y] = 0
+                            deq.append([x, y])
+
+                for l in ground:
+                    reclamed[l] += oil
+
+    return max(reclamed)
