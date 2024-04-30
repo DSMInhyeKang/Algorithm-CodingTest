@@ -511,3 +511,34 @@ def solution(n):
         dp[i] = dp[i-2] + dp[i-1]
 	
     return dp[n-1] % 1234567
+
+
+
+# [PCCP 기출문제] 3번 / 아날로그 시계(250135) - Lv.2
+def solution(h1, m1, s1, h2, m2, s2):
+    answer = 0
+    start = h1 * 3600 + m1 * 60 + s1
+    end = h2 * 3600 + m2 * 60 + s2  
+
+    if start == 0 * 3600 or start == 12 * 3600:
+        answer += 1
+
+    while start < end:
+        currentH = start / 120 % 360
+        currentM = start / 10 % 360
+        currentS = start * 6 % 360
+
+        nextH = 360 if (start + 1) / 120 % 360 == 0 else (start + 1) / 120 % 360
+        nextM = 360 if (start + 1) / 10 % 360 == 0 else (start + 1) / 10 % 360
+        nextS = 360 if (start + 1) * 6 % 360 == 0 else (start + 1) * 6 % 360
+
+        if currentS < currentH and nextS >= nextH:
+            answer += 1
+        if currentS < currentM and nextS >= nextM:
+            answer += 1
+        if nextS == nextH and nextH == nextM:
+            answer -= 1
+
+        start += 1
+    
+    return answer
