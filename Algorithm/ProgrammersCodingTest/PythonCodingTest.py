@@ -542,3 +542,14 @@ def solution(h1, m1, s1, h2, m2, s2):
         start += 1
     
     return answer
+
+
+
+# 귤 고르기(138476) - Lv.2
+from collections import Counter
+
+def solution(k, tangerine):
+    counter = Counter(tangerine)
+    tangerine.sort(key = lambda t: (-counter[t], t))
+    
+    return len(set(tangerine[:k]))
