@@ -553,3 +553,14 @@ def solution(k, tangerine):
     tangerine.sort(key = lambda t: (-counter[t], t))
     
     return len(set(tangerine[:k]))
+
+
+
+# n^2 배열 자르기(87390) - Lv.2
+def solution(n, left, right):
+    answer = []
+    
+    for i in range(left, right + 1):
+        answer.append(max(i//n, i%n) + 1)
+        
+    return answer
