@@ -564,3 +564,30 @@ def solution(n, left, right):
         answer.append(max(i//n, i%n) + 1)
         
     return answer
+
+
+
+# 2개 이하로 다른 비트(77885) - Lv.2
+def solution(numbers):
+    answer = []
+
+    for number in numbers:
+        bin_number = list('0' + bin(number)[2:])
+        idx = ''.join(bin_number).rfind('0')
+        bin_number[idx] = '1'
+        
+        if number % 2 == 1:
+            bin_number[idx+1] = '0'
+        
+        answer.append(int(''.join(bin_number), 2))
+
+    return answer
+
+    # 생각지도 못한 풀이
+    def solution(numbers):
+        answer = []
+        
+        for idx, val in enumerate(numbers):
+          answer.append(((val ^ (val+1)) >> 2) +val +1)
+
+        return answer
