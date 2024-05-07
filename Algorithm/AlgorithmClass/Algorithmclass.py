@@ -520,6 +520,7 @@ print(cnt)
 
 # 토마토(BFS 활용) - BOJ(7576)
 from collections import deque
+
 M, N = map(int, input().split())
 box = [list(map(int, input().split())) for _ in range(N)]
 dx, dy = [-1, 0, 1, 0], [0, 1, 0, -1]
@@ -543,3 +544,48 @@ while deq:
             day = ctr[2] + 1
             deq.append((x,y,day))
 print(day)
+
+
+
+# 이분검색
+N, M = map(int, input().split())
+nums = list(map(int, input().split()))
+nums.sort()
+
+start, end = 0, N - 1
+res = 0
+
+while start <= end:
+    mid = (start + end) // 2
+
+    if nums[mid] == M:
+        res = mid + 1
+        break
+    elif nums[mid] > M:
+        end = mid - 1
+    else:
+        start = mid + 1
+
+print(res)
+
+
+
+# 랜선자르기(결정알고리즘) - BOJ 랜선 자르기(1654)
+K, N = map(int, input().split())
+cables = [int(input()) for _ in range(K)]
+
+start, end = 1, max(cables)
+
+while start <= end:
+    mid = (start + end) // 2
+    lines = 0
+
+    for i in cables:
+        lines += i // mid
+
+    if lines >= N:
+        start = mid + 1
+    else:
+        end =  mid - 1
+
+print(end)
