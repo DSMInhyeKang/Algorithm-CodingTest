@@ -589,3 +589,32 @@ while start <= end:
         end =  mid - 1
 
 print(end)
+
+
+
+# 뮤직비디오(결정알고리즘)
+N, M = map(int, input().split())
+songs = list(map(int, input().split()))
+
+start, end = 1, sum(songs)
+storage = 0
+
+while start <= end:
+    mid = (start + end) // 2
+
+    cnt, s = 1, 0
+
+    for i in songs:
+        if s + i > mid:
+            cnt += 1
+            s = i
+        else:
+            s += i
+        
+    if cnt <= M:
+        storage = mid
+        end = mid - 1
+    else:
+        start = mid + 1
+
+print(storage)
