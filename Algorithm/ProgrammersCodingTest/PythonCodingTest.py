@@ -659,3 +659,23 @@ def solution(info, query):
         answer.append(len(scores)-l)
         
     return answer
+
+
+
+# [PCCP 기출문제] 1번 / 붕대 감기(242258) - Lv.1
+def solution(bandage, health, attacks):
+    t, x, y = bandage
+    hp = health
+    time = 0
+
+    for sec, damage in attacks:
+        gap = sec - time - 1
+        hp = min(hp + y * (gap // t) + x * gap, health)
+        hp -= damage
+
+        if hp < 1:
+            return -1
+        
+        time = sec
+
+    return hp
