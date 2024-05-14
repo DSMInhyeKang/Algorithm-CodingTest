@@ -618,3 +618,65 @@ while start <= end:
         start = mid + 1
 
 print(storage)
+
+
+
+# 회의실 배정(그리디) - BOJ 회의실 배정(1931)
+n = int(input())
+meetings = sorted([tuple(map(int, input().split())) for _ in range(n)], key=lambda x: (x[1], x[0]))
+cnt = end = 0
+
+for s, e in meetings:
+    if s >= end:
+        cnt += 1
+        end = e
+
+print(cnt)
+
+
+
+# 씨름 선수(그리디)
+N = int(input())
+physical = sorted([tuple(map(int, input().split())) for _ in range(N)], key=lambda x: (x[1], x[0]))
+print(physical)
+cnt = N
+
+for i in physical:
+    for j in physical[physical.index(i)+1:]:
+        if i[0] < j[0] and i[1] < j[1]:
+            cnt -= 1
+            break
+
+print(cnt)
+
+
+
+# 창고 정리
+L = int(input())
+heights = sorted(list(map(int, input().split())), key=lambda x: -x)
+M = int(input())
+
+for _ in range(M):
+    heights[heights.index(max(heights))] -= 1
+    heights[heights.index(min(heights))] += 1
+
+print(max(heights) - min(heights))
+
+
+
+# 역수열(그리디)
+N = int(input())
+inversed = list(map(int, input().split()))
+origin = [0] * N
+
+for i, v in enumerate(inversed):
+    cnt = 0
+
+    for j in range(N):
+        if cnt == v and origin[j] == 0:
+            origin[j] = i + 1
+            break
+        elif origin[j] == 0:
+            cnt += 1
+
+print(*origin)
