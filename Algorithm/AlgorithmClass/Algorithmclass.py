@@ -109,7 +109,7 @@ for i in range(int(input())):
 
 # 부분집합 구하기(DFS)
 N = int(input())
-visited= [False for _ in range(N+1)]
+visited = [False for _ in range(N+1)]
 
 def dfs(n):
     if n == N+1:
@@ -256,8 +256,6 @@ def dfs(v):
 
 dfs(0)
 print(cnt)
-
-
 
 
 
@@ -680,3 +678,93 @@ for i, v in enumerate(inversed):
             cnt += 1
 
 print(*origin)
+
+
+
+# 마구간 정하기(결정 알고리즘)
+import sys
+
+N, C = map(int, sys.stdin.readline().split())
+xi = sorted([int(input()) for _ in range(N)])
+s, e = 1, xi[-1]
+res = 0
+
+while s <= e:
+    mid = (s + e) // 2
+
+    cnt = 1
+    l = xi[0]
+
+    for i in range(1, N):
+    	if xi[i] - l >= mid:
+            cnt += 1
+            l = xi[i]
+    
+    if cnt >= C:
+        res = mid
+        s = mid + 1
+    else:
+        e = mid - 1
+
+print(res)
+
+
+
+# 침몰하는 타이타닉(그리디)
+import sys
+from collections import deque
+
+N, M = map(int, sys.stdin.readline().split())
+passengers = list(map(int, sys.stdin.readline().split()))
+passengers = deque(sorted(passengers))
+cnt = 0
+
+while passengers:
+    if len(passengers) == 1:
+        cnt += 1
+        break
+
+    if passengers[0] + passengers[-1] > M:
+        passengers.pop()
+        cnt += 1
+    else :
+        passengers.popleft()
+        passengers.pop()
+        cnt += 1
+
+print(cnt)
+
+
+
+# 증가수열 만들기(그리디)
+import sys
+
+N = int(input())
+seq = list(map(int, sys.stdin.readline().split()))
+l, r = 0, N-1
+tmp = []
+last, order = 0, ''
+
+while l <= r:
+    if seq[l] > last:
+        tmp.append((seq[l], 'L'))
+    if seq[r] > last:
+        tmp.append((seq[r], 'R'))
+
+    tmp.sort()
+
+    if len(tmp) == 0:
+        break
+    else:
+        order += tmp[0][1]
+        last = tmp[0][0]
+
+        if tmp[0][1] == 'L':
+            l += 1
+        else:
+            r -= 1
+
+    tmp.clear()
+
+print(len(order))
+print(order)

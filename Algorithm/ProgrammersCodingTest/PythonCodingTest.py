@@ -729,3 +729,29 @@ def solution(x, y, n):
                 queue.append((k, j+1))    
                 
     return -1
+
+
+
+# 침몰하는 타이타닉
+from collections import deque
+
+n, m = map(int, input().split())
+people = list(map(int, input().split()))
+people.sort()
+people = deque(people)
+cnt = 0
+
+while p :
+    if len(people) == 1:
+        cnt += 1
+        break
+
+    if people[0] + people[-1] > m:
+        people.pop()
+        cnt += 1
+    else :
+        people.popleft()
+        people.pop()
+        cnt += 1
+
+print(cnt)
