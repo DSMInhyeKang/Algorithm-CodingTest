@@ -768,3 +768,111 @@ while l <= r:
 
 print(len(order))
 print(order)
+
+
+
+
+# 큰 수 만들기
+def solution(number, k):
+    stack = []
+    
+    for n in number:
+        # 스택이 비어있지 않고 k가 0보다 클 때(아직 다 제거하지 않았을 때) 마지막으로 들어간 값이 현재 숫자보다 작다면 
+        while stack and k > 0 and stack[-1] < n:
+            # 그 값을 pop
+            stack.pop()
+            # pop하면 수 하나를 제거한 것이므로 k 감소
+            k -= 1
+        # while문 조건에 해당 안 될 때 스택에 값 추가
+        stack.append(n)
+        
+    # stack에 들어간 값 출력
+    return ''.join(stack[:len(number)-k])
+
+
+# 네트워크
+def solution(n, computers):            
+    def dfs(i):
+        visited[i] = 1  # 방문 처리
+
+        for a in range(n): 
+            if computers[i][a] and not visited[a]: # i번 컴퓨터와 a번 컴퓨터가 연결되어 있고(1), a를 방문하지 않았을 때
+                dfs(a)                             # a 노드 탐색
+
+
+    answer = 0
+    visited = [0 for i in range(len(n))]
+
+    for i in range(n):
+        if not visited[i]:  # 아직 i번째 노드를 방문하지 않았다면
+            dfs(i)          # 탐색
+            answer += 1
+        
+    return answer
+
+
+
+# 카펫
+import math
+def solution(brown, yellow):
+    w = ((brown+4)/2 + math.sqrt(((brown+4)/2)**2-4*(brown+yellow)))/2
+    h = ((brown+4)/2 - math.sqrt(((brown+4)/2)**2-4*(brown+yellow)))/2
+    return [w,h]
+
+def solution(brown, yellow):
+    answer = []
+    total = brown + yellow                  # a * b = total
+    for b in range(1,total+1):
+        if (total / b) % 1 == 0:            # total / b = a
+            a = total / b
+            if a >= b:                      # a >= b
+                if 2*a + 2*b == brown + 4:  # 2*a + 2*b = brown + 4 
+                    return [a,b]
+            
+    return answer
+
+
+
+# 입국 심사
+def solution(n, times):
+    answer = 0
+    # right는 가장 비효율적으로 심사했을 때 걸리는 시간
+    # 가장 긴 심사시간이 소요되는 심사관에게 n 명 모두 심사받는 경우이다.
+    left, right = 1, max(times) * n
+    while left <= right:
+        mid = (left+ right) // 2
+        people = 0
+        for time in times:
+            # people 은 모든 심사관들이 mid분 동안 심사한 사람의 수
+            people += mid // time
+            # 모든 심사관을 거치지 않아도 mid분 동안 n명 이상의 심사를 할 수 있다면 반복문을 나간다.
+            if people >= n:
+                break
+        
+        # 심사한 사람의 수가 심사 받아야할 사람의 수(n)보다 많거나 같은 경우
+        if people >= n:
+            answer = mid
+            right = mid - 1
+        # 심사한 사람의 수가 심사 받아야할 사람의 수(n)보다 적은 경우
+        elif people < n:
+            left = mid + 1
+            
+    return answer
+
+
+# 소수 찾기(완전 탐색)
+from itertools import permutations
+
+def solution(n):
+    a = set()  # 빈 집합 생성(중복 제거를 위해 집합 사용)
+    
+    for i in range(len(n)):  # n을 한 자리씩 나누었을 때
+        a |= set(map(int, map("".join, permutations(list(n), i + 1))))  # 가능한 모든 순열을 원소로 갖는 집합과 a를 합집합(|) 한 결과를 a에 저장
+
+    a -= set(range(0, 2))  # 집합 내부의 0, 1을 제거(소수가 아니므로)
+
+    # 어떤 자연수의 약수끼리의 곱셉은 그 수의 제곱근을 기준으로 대칭으로 이루어짐. 따라서 max(a) + 1이 아닌 제곱근 max(a) + 1까지만 확인 
+    for i in range(2, int(max(a) ** 0.5) + 1):  
+        a -= set(range(i * 2, max(a) + 1, i))  # i의 배수들을 원소로 갖는 집합과 a를 차집합 연산(중복 제거)
+
+    return len(a)
