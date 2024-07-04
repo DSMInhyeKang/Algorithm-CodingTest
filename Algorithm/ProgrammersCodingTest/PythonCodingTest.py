@@ -755,3 +755,36 @@ while p :
         cnt += 1
 
 print(cnt)
+
+
+
+# 혼자서 하는 틱택토(160585) - Lv.2
+def solution(board):
+    strboard = ''.join(board)
+    valid = strboard.count('O') - strboard.count('X')
+    colboard = list(zip(*board))
+    oCnt, xCnt = 0, 0
+    
+    if valid not in [0, 1]:
+        return 0
+    
+    for i in range(3):
+        if colboard[i].count('O') == 3 or board[i].count('O') == 3:
+            oCnt += 1
+        if colboard[i].count('X') == 3 or board[i].count('X') == 3:
+            xCnt += 1
+    
+    for i in range(0, 3, 2):
+        if (board[0][i] == board[1][1] == board[2][2-i] == 'O'):
+            oCnt += 1
+        if (board[0][i] == board[1][1] == board[2][2-i] == 'X'):
+            xCnt += 1
+    
+    if oCnt and xCnt:
+        return 0
+    if oCnt == 1 and valid == 0:
+        return 0
+    if xCnt == 1 and valid >= 1:
+        return 0
+    
+    return 1
