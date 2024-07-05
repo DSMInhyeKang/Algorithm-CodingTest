@@ -788,3 +788,47 @@ def solution(board):
         return 0
     
     return 1
+
+
+
+# n + 1 카드게임(258707) - Lv.3
+import heapq
+
+def solution(coin, cards):
+    assert isinstance(cards, list)
+    n = len(cards)
+    used, q = [], []
+    step, idx = 0,  int(n / 3)
+
+    for i in range(int(n / 3)):
+        used.append(cards[i])
+
+        if n + 1 - cards[i] in used and cards.index(n - cards[i] + 1) < int(n / 3):
+            heapq.heappush(q, [0, cards[i], n - cards[i] + 1])
+
+    while True:
+        step += 1
+
+        if idx >= n:
+            break
+
+        for _ in range(2):
+            used.append(cards[idx])
+            if n - cards[idx] + 1 in used:
+                if cards.index(n - cards[idx] + 1) < int(n / 3):
+                    heapq.heappush(q, [1, cards[idx], n - cards[idx] + 1])
+                else:
+                    heapq.heappush(q, [2, cards[idx], n - cards[idx] + 1])
+            idx += 1
+
+        if not q:
+            break
+
+        c, card1, card2 = heapq.heappop(q)
+
+        if coin >= c:
+            coin -= c
+        else:
+            break
+
+    return step
