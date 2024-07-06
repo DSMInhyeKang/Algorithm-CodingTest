@@ -832,3 +832,29 @@ def solution(coin, cards):
             break
 
     return step
+
+
+
+# 주사위 고르기(258709) - Lv.3
+from itertools import combinations, product
+from bisect import bisect_left
+
+def solution(dices):
+    dic = {}
+    L = len(dices)
+    
+    for a in combinations(range(L), L//2):
+        b = [i for i in range(L) if i not in a]
+        A, B = [], []
+        
+        for order in product(range(6), repeat=L//2):
+            A.append(sum(dices[i][j] for i, j in zip(a, order)))
+            B.append(sum(dices[i][j] for i, j in zip(b, order)))
+        B.sort()
+
+        wins = sum(bisect_left(B, num) for num in A)
+        dic[wins] = list(a)
+
+    maxKey = max(dic.keys())
+
+    return [x+1 for x in dic[maxKey]]
