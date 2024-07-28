@@ -937,3 +937,103 @@ def solution(temperature, t1, t2, a, b, onboard):
     answer = min(dp[len(onboard)-1])
     
     return answer
+
+
+
+# [PCCP 기출문제] 4번 / 수레 움직이기(250134) - Lv.3
+import heapq
+
+def solution(maze):
+    answer = 0
+
+    redX, redY = 0, 0
+    blueX, blueY = 0, 0
+    redEndX, redEndY = 0, 0
+    blueEndX, blueEndY = 0, 0
+    redVisited , blueVisited = [], []
+
+    for row in range(len(maze)):
+        for col in range(len(maze[0])):
+            if maze[row][col] == 1:
+                redX, redY = row, col
+                redVisited.append((row, col))
+            elif maze[row][col] == 2:
+                blueX, blueY = row, col
+                blueVisited.append((row, col))
+            elif maze[row][col] == 3:
+                redEndX, redEndY = row, col
+            elif maze[row][col] == 4:
+                blueEndX, blueEndY = row, col
+            elif maze[row][col] == 5:
+                redVisited.append((row, col))
+                blueVisited.append((row, col))
+            else:
+                continue
+    
+    answer = bfs(redX, redY, blueX, blueY, redEndX, redEndY, blueEndX, blueEndY, maze, redVisited, blueVisited)
+    return answer
+
+def bfs(rx, ry, bx, by, rex, rey, bex, bey, maze, redVisited, blueVisited):
+    q = []
+    direction = [(-1, 0), (1, 0), (0, -1), (0, 1)]
+    heapq.heappush(q, (0, rx, ry, bx, by, redVisited, blueVisited))
+
+    while q:
+        cnt, crx, cry, cbx, cby, _redVisited, _blueVisited = heapq.heappop(q)
+        redArrive = False
+        blueArrive = False
+
+        if (crx, cry) == (cbx, cby):
+            continue
+        if not redArrive and (crx, cry) == (rex, rey):
+            redArrive = True
+        if not blueArrive and (cbx, cby) == (bex, bey):
+            blueArrive = True
+            
+        if redArrive and blueArrive:
+            return cnt
+        elif redArrive:
+            for dx, dy in direction:
+                nbx, nby = cbx + dx, cby + dy
+
+                if not (0 <= nbx < len(maze) and 0 <= nby < len(maze[0])):
+                    continue
+                if not (nbx, nby) in _blueVisited:
+                    _blueVisited.append((nbx, nby))
+                    heapq.heappush(q, (cnt + 1, crx, cry, nbx, nby, _redVisited[:], _blueVisited[:]))
+                    _blueVisited.pop()
+        elif blueArrive:
+            for dx, dy in direction:
+                nrx, nry = crx + dx, cry + dy
+
+                if not (0 <= nrx < len(maze) and 0 <= nry < len(maze[0])):
+                    continue
+                if not (nrx, nry) in _redVisited:
+                    _redVisited.append((nrx, nry))
+                    heapq.heappush(q, (cnt + 1, nrx, nry, cbx, cby, _redVisited[:], _blueVisited[:]))
+                    _redVisited.pop()
+        else:
+            for dbx, dby in direction:
+                nbx, nby = cbx + dbx, cby + dby
+
+                if not (0 <= nbx < len(maze) and 0 <= nby < len(maze[0])):
+                    continue
+                if (nbx, nby) in _blueVisited:
+                    continue
+                _blueVisited.append((nbx, nby))
+
+                for drx, dry in direction:
+                    nrx, nry = crx + drx, cry + dry
+                    
+                    if (nrx, nry) == (cbx, cby) and (nbx, nby) == (crx, cry):
+                        continue
+                    if not (0 <= nrx < len(maze) and 0 <= nry < len(maze[0])):
+                        continue
+                    if not (nrx, nry) in _redVisited:
+                        _redVisited.append((nrx, nry))
+                        heapq.heappush(q, (cnt + 1, nrx, nry, nbx, nby, _redVisited[:], _blueVisited[:]))
+                        _redVisited.pop()
+
+                _blueVisited.pop()
+
+    return 0
