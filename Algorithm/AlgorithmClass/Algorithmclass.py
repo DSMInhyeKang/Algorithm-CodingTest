@@ -876,3 +876,25 @@ def solution(n):
         a -= set(range(i * 2, max(a) + 1, i))  # i의 배수들을 원소로 갖는 집합과 a를 차집합 연산(중복 제거)
 
     return len(a)
+
+
+
+# 연속된 부분 수열의 합(178870) - Lv.2
+def solution(sequence, k):
+    l = r = 0
+    bag = []
+    prefixSum = [0] + [sum(sequence[:i + 1]) for i in range(len(sequence))] # prefix[r] - prefix[l] == (sequence[r] - sequence[l]) - 1
+
+    while r < len(prefixSum):
+        currentSum = prefixSum[r] - prefixSum[l]
+        if currentSum == k:
+            bag.append([l, r-1])  # prefix -> (0 ~ r-1) 합, 따라서 r-1
+            l += 1
+        elif currentSum < k:
+            r += 1
+        else:
+            l += 1
+
+    sortedArr = sorted(bag, key=lambda x: x[1] - x[0])
+
+    return sortedArr[0]
