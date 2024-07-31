@@ -1122,3 +1122,32 @@ def solution(n, k, enemy):
             return idx
         
     return len(enemy)
+
+
+
+# 의상(42578) - Lv.2
+def solution(clothes):
+    closet = {} 
+    
+    for name, kind in clothes:
+        if kind in closet.keys():
+            closet[kind] += [name]
+        else:
+            closet[kind] = [name]
+    
+    answer = 1
+    
+    for _, value in closet.items():
+        answer *= (len(value) + 1)
+        
+    return answer -1
+
+
+# Counter 활용 풀이
+from collections import Counter
+from functools import reduce
+
+def solution(clothes):
+    cnt = Counter([kind for name, kind in clothes])
+    answer = reduce(lambda x, y: x*(y+1), cnt.values(), 1) - 1
+    return answer
