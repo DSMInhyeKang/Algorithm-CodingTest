@@ -1151,3 +1151,20 @@ def solution(clothes):
     cnt = Counter([kind for name, kind in clothes])
     answer = reduce(lambda x, y: x*(y+1), cnt.values(), 1) - 1
     return answer
+
+
+
+# 정수 삼각형(43105) - Lv.2
+def solution(triangle):
+    dp = triangle
+    
+    for i in range(1, len(triangle)):
+        for j in range(i+1):
+            if j == 0:
+                dp[i][j] += dp[i-1][j]
+            elif i == j:
+                dp[i][j] += dp[i-1][j-1]
+            else:
+                dp[i][j] += max(dp[i-1][j], dp[i-1][j-1])
+                
+    return max(dp[len(triangle)-1])
