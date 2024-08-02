@@ -1168,3 +1168,35 @@ def solution(triangle):
                 dp[i][j] += max(dp[i-1][j], dp[i-1][j-1])
                 
     return max(dp[len(triangle)-1])
+
+
+
+# BOJ - 치킨 배달(15686): G5
+from itertools import combinations
+
+N, M = map(int, input().split())
+city = [list(map(int, input().split())) for _ in range(N)]
+house, chicken = [], []
+total = 250000
+
+for i in range(N):
+    for j in range(N):
+        if city[i][j] == 1:
+            house.append((i, j))
+        elif city[i][j] == 2:
+            chicken.append((i, j))
+
+for c in combinations(chicken, M):
+    cityDis = 0
+
+    for h in house:
+        d = 2500
+
+        for r in range(M):
+            d = min(d, abs(h[0]-c[r][0]) + abs(h[1]-c[r][1]))
+        
+        cityDis += d
+
+    total = min(total, cityDis)
+
+print(total)
