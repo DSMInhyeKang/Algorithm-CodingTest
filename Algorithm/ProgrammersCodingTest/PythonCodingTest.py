@@ -1200,3 +1200,121 @@ for c in combinations(chicken, M):
     total = min(total, cityDis)
 
 print(total)
+
+
+
+### [Toyota Programming Contest 2024#8（AtCoder Beginner Contest 365）]
+
+# A - Leap Year :: AC(100)
+Y = int(input())
+
+if (Y % 4 == 0 and Y % 100 != 0) or (Y % 400 == 0):
+    print(366)
+else:
+    print(365)
+
+
+
+# B - Second Best :: AC(200)
+N = int(input())
+seq = list(map(int, input().split()))
+second = sorted(seq, reverse=True)[1]
+print(seq.index(second)+1)
+
+
+
+# C - Transportation Expenses
+## 앞으로 CPython과 PyPy 중에 무조건 PyPy로 돌려야겠다..^^ 
+## CPython에서는 TLE(시간 초과)  PyPy에서는 AC(정답) ㅠㅠ
+import sys
+
+N, M = map(int, sys.stdin.readline().split())
+people = list(map(int, sys.stdin.readline().split()))
+s, e = 1, M
+x = 0
+
+if sum(people) <= M:
+    print('infinite')
+    sys.exit()
+
+while s <= e:
+    mid = (s + e) // 2
+    total = 0
+    if mid < x: break
+
+    for p in people:
+        total += min(mid, p)
+
+        if total > M: break
+    
+    if total <= M:
+        x = mid
+        s = mid + 1
+    else:
+        e = mid - 1
+
+print(x)
+
+
+## Accepted Correctly
+import sys
+
+N, M = map(int, sys.stdin.readline().split())
+people = list(map(int, sys.stdin.readline().split()))
+s, res, cum = sum(people), 0, 0
+x = 0
+
+if sum(people) <= M:
+    print('infinite')
+    sys.exit()
+
+for i, a in enumerate(sorted(people)):
+    if cum + a * (N - i) > M:
+        x = (M - cum) // (N - i)
+        break
+
+    cum += a
+
+print(x)
+
+
+
+# E - Xor Sigma Problem :: TLE
+def combine_arrays(A):
+    N = len(A)
+    result = 0
+
+    cumulative_xor = [0] * (N + 1)
+
+    for i in range(N):
+        cumulative_xor[i + 1] = cumulative_xor[i] ^ A[i]
+
+    for i in range(N):
+        for j in range(i + 1, N):
+            combined = cumulative_xor[j + 1] ^ cumulative_xor[i]  # A[i]부터 A[j]까지의 XOR
+            result += combined
+
+    return result
+
+N = int(input())
+A = list(map(int, input().split()))
+print(combine_arrays(A))
+
+
+## Accepted Correctly
+N = int(input())
+A = list(map(int, input().split()))
+l = 30  # the length of bit
+ans = -sum(A)
+
+for p in range(l):  # current bit position
+    x = 0  # xor result
+    c = [1, 0]  # cnt. c[0]: p == 0, c[1]: p == 1
+
+    for a in A:
+        x ^= (a >> p) & 1
+        c[x] += 1
+
+    ans += c[0] * c[1] << p
+
+print(ans)
