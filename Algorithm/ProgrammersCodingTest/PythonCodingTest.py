@@ -1318,3 +1318,24 @@ for p in range(l):  # current bit position
     ans += c[0] * c[1] << p
 
 print(ans)
+
+
+
+# D - AtCoder Janken 3
+N = int(input())
+S = input()
+
+dp = [0] * 3
+s = "RSP"
+
+for i in range(N):
+    u = s.index(S[i])
+    v = (u - 1) % 3
+    ndp = [0] * 3
+
+    ndp[u] = max(dp[(u+1)%3], dp[(u+2)%3])
+    ndp[v] = max(dp[(v+1)%3], dp[(v+2)%3]) + 1
+
+    dp = list(ndp)
+
+print(max(dp))
