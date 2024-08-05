@@ -1088,8 +1088,10 @@ class Parking:
 
     def update(self, t, inout):
         self.in_flag = True if inout=='IN' else False
-        if self.in_flag:  self.in_time = str2int(t)
-        else:             self.total  += (str2int(t)-self.in_time)
+        if self.in_flag:
+            self.in_time = str2int(t)
+        else:
+            self.total  += (str2int(t)-self.in_time)
 
     def calc_fee(self):
         if self.in_flag: self.update('23:59', 'out')
@@ -1339,3 +1341,22 @@ for i in range(N):
     dp = list(ndp)
 
 print(max(dp))
+
+
+
+# 도둑질(42897) - Lv.4
+def solution(money):
+    dp1 = [0] * len(money)
+    dp2 = [0] * len(money)
+    
+    dp1[0] = money[0]
+    
+    for i in range(1, len(money) - 1):
+        dp1[i] = max(dp1[i - 1], dp1[i - 2] + money[i])
+
+    dp1[0] = 0
+    
+    for i in range(1, len(money)):
+        dp2[i] = max(dp2[i - 1], dp2[i - 2] + money[i])
+
+    return max(dp1[-2], dp2[-1])
