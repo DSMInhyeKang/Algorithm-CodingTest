@@ -1205,6 +1205,35 @@ print(total)
 
 
 
+# BOJ - 연산자 끼워넣기(14888): S1
+N = int(input())
+A = list(map(int, input().split()))
+op = list(map(int, input().split()))  # +, -, *, //
+maximum, minimum = -1e9, 1e9
+
+def dfs(l, t, a, s, m, d):
+    global maximum, minimum
+
+    if l == N:
+        maximum = max(t, maximum)
+        minimum = min(t, minimum)
+        return
+
+    if a:
+        dfs(l+1, t+A[l], a-1, s, m, d)
+    if s:
+        dfs(l+1, t-A[l], a, s-1, m, d)
+    if m:
+        dfs(l+1, t*A[l], a, s, m-1, d)
+    if d:
+        dfs(l+1, int(t/A[l]), a, s, m, d-1)
+
+dfs(1, A[0], op[0], op[1], op[2], op[3])
+print(maximum)
+print(minimum)
+
+
+
 ### [Toyota Programming Contest 2024#8（AtCoder Beginner Contest 365）]
 
 # A - Leap Year :: AC(100)
