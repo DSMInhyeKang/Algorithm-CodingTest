@@ -898,3 +898,38 @@ def solution(sequence, k):
     sortedArr = sorted(bag, key=lambda x: x[1] - x[0])
 
     return sortedArr[0]
+
+
+
+# 무인도 여행(154540) - Lv.2
+from collections import deque
+
+def solution(maps):
+    dx, dy = [-1, 0, 1, 0], [0, 1, 0, -1]
+    visited = [[False] * len(maps[0]) for _ in range(len(maps))]
+    answer, deq = [], deque()
+    
+
+    for i in range(len(maps)):
+        for j in range(len(maps[0])):
+            if maps[i][j] != 'X' and visited[i][j] == False:
+                deq.append((i, j))
+                visited[i][j] = True
+                days = int(maps[i][j])
+
+                while deq:
+                    x, y = deq.popleft()
+                    
+                    for k in range(4):
+                        nx = x + dx[k]
+                        ny = y + dy[k]
+                        
+                        if 0 <= nx < len(maps) and 0 <= ny < len(maps[0]):
+                            if maps[nx][ny] != 'X' and visited[nx][ny] == False:
+                                deq.append((nx, ny))
+                                visited[nx][ny] = True
+                                days += int(maps[nx][ny])
+
+                answer.append(days)
+
+    return sorted(answer) if answer else [-1]
