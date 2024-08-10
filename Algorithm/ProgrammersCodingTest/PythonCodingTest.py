@@ -1389,3 +1389,127 @@ def solution(money):
         dp2[i] = max(dp2[i - 1], dp2[i - 2] + money[i])
 
     return max(dp1[-2], dp2[-1])
+
+
+
+### AtCoder Beginner Contest 366
+
+# A - Election 2 :: AC(100)
+N, T, A = map(int, input().split())
+Takahashi, Aoki = N-A,  N-T
+print('Yes') if Aoki < T or Takahashi < A else print('No')
+
+# 이렇게도 풀 수 있음
+print('Yes') if T > N / 2 or A > N / 2 else print('No')
+
+
+
+# B - Vertical Writing :: X
+# 어떻게 풀 지 생각하다가 포기하고 다른 문제로 넘어감
+def vertical_text_conversion(strings):
+    max_length = max(len(s) for s in strings)
+    N = len(strings)
+
+    result = [''] * max_length
+
+    for j in range(max_length):
+        for i in range(N):
+            if j < len(strings[i]):
+                result[j] += strings[i][j]
+            else:
+                result[j] += '*'
+
+    return result
+
+N = int(input())
+S = [list(input()) for _ in range(N)][::-1]
+
+converted_strings = vertical_text_conversion(S)
+for line in converted_strings:
+    print(line)
+
+
+## Accepted Correctly
+n = int(input())
+sss = [input() + '*' * 100 for _ in range(n)]
+sss = list(''.join(reversed(s)) for s in zip(*sss))
+ng = '*' * n
+for row in sss:
+    if row == ng:
+        break
+    print(row.rstrip('*'))
+
+
+
+# C - Balls and Bag Query :: AC(300)\
+from collections import defaultdict
+
+Q = int(input())
+queries = [list(map(int, input().split())) for _ in range(Q)]
+bag = defaultdict(int)
+
+for q in queries:
+    if q[0] == 1:
+        bag[q[1]] += 1
+    elif q[0] == 2:
+        bag[q[1]] -= 1
+        if bag[q[1]] == 0:
+            del bag[q[1]]
+    else:
+        print(len(bag))
+
+
+
+# E - Manhattan Multifocal Ellipse :: X
+N, D = map(int, input().split())
+points = [list(map(int, input().split())) for _ in range(N)]
+points.sort(key=lambda x: x[0])
+
+s, e = sorted(points)[0] - D, sorted(points)[-1]
+
+print(s, e)
+
+def manhattan_distance(A, B):
+  distance = 0
+  for i in range(len(A)):
+    distance += abs(A[i] - B[i])
+  return distance
+
+print(manhattan_distance(A=[1, 5, 7, 9], B=[2, 3, 6, 15]))
+
+
+## Accepted Correctly
+def solve(lst):
+    res = [0] * (D+1)
+    cnt, idx = 0, 0
+    lst.sort()
+    x, d = -M, sum(abs(x-i) for i in lst)
+
+    while x <= M:
+        if d <= D: res[d] += 1
+
+        x += 1
+        d -= (n-2*cnt)
+
+        while idx < n and lst[idx] == x:
+            cnt += 1
+            idx += 1
+
+    return res
+
+M = 2*10**6
+n,D = map(int, input().split())
+x = [0]*n
+y = [0]*n
+for i in range(n):
+    x[i],y[i] = map(int, input().split())
+
+rx = solve(x)
+ry = solve(y)
+for i in range(1,len(rx)):
+    rx[i] += rx[i-1]
+
+ans = 0
+for i in range(D+1):
+    ans += ry[i]*rx[D-i]
+print(ans)
