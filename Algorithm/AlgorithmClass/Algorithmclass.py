@@ -933,3 +933,27 @@ def solution(maps):
                 answer.append(days)
 
     return sorted(answer) if answer else [-1]
+
+
+
+# 호텔 대실(155651) - Lv.2
+from heapq import heappush, heappop
+
+def solution(book_time):
+    answer = 0
+    heap = []
+    booked = [(int(s[:2]) * 60 + int(s[3:]), int(e[:2]) * 60 + int(e[3:])) for s, e in book_time]
+    
+    for s, e in booked:
+        if not heap:
+            heappush(heap, e+10)
+            continue
+
+        if heap[0] <= s:
+            heappop(heap)
+        else:
+            answer += 1
+
+        heappush(heap, e+10)
+    
+    return answer
