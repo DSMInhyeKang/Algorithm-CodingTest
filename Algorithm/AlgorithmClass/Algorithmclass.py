@@ -957,3 +957,29 @@ def solution(book_time):
         heappush(heap, e+10)
     
     return answer
+
+
+
+# 이중우선순위큐(42628) - Lv.3
+from heapq import heapify, heappush, heappop
+
+def solution(operations):
+    heap = []
+    
+    for o in operations:
+        alp, num = o.split()
+        num = int(num)
+
+        if alp == 'I':
+            heappush(heap, num)    
+        else:
+            if heap:
+                if num == -1:
+                    heappop(heap)
+                else:
+                    heap.sort()
+                    heap.pop()
+                    
+    heap.sort()
+        
+    return [heap[-1], heap[0]] if heap else [0, 0]
