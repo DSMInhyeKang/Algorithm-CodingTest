@@ -1392,6 +1392,25 @@ def solution(money):
 
 
 
+# BOJ - 구간 합 구하기 4(11659): S3
+import sys
+input = sys.stdin.readline
+
+N, M = map(int, input().spliat())
+numbers = list(map(int, input().split()))
+prefixSum = [0]
+tmp = 0
+
+for i in numbers:
+    tmp += i
+    prefixSum.append(tmp)
+
+for _ in range(M):
+    i, j = map(int, input().split())
+    print(prefixSum[j] - prefixSum[i-1])
+
+
+
 ### AtCoder Beginner Contest 366
 
 # A - Election 2 :: AC(100)
@@ -1441,7 +1460,7 @@ for row in sss:
 
 
 
-# C - Balls and Bag Query :: AC(300)\
+# C - Balls and Bag Query :: AC(300)
 from collections import defaultdict
 
 Q = int(input())
