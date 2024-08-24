@@ -1532,3 +1532,37 @@ ans = 0
 for i in range(D+1):
     ans += ry[i]*rx[D-i]
 print(ans)
+
+
+
+# BOJ - 스타트와 링크(14889): S1
+N = int(input())
+S = [list(map(int, input().split())) for _ in range(N)]
+visited = [False for _ in range(N)]
+res = float('inf')
+
+def dfs(d, l):
+    global res
+    
+    if d == N // 2:
+        start, link = 0, 0
+        
+        for i in range(N):
+            for j in range(N):
+                if visited[i] and visited[j]:
+                    start += S[i][j]
+                elif not visited[i] and not visited[j]:
+                    link += S[i][j]
+                    
+        res = min(res, abs(start-link))
+        
+        return
+    else:
+        for k in range(l, N):
+            if not visited[k]:
+                visited[k] = True
+                dfs(d+1, k+1)
+                visited[k] = False
+                
+dfs(0, 0)
+print(res)
