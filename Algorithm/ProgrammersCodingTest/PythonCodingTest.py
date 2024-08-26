@@ -1611,3 +1611,60 @@ for direction in directions:
                     graph[x][y] -= 2
 
 print(sum([sum(_) for _ in graph]))
+
+
+
+# BOJ - 상어 초등학교(21608): G5
+from collections import defaultdict
+
+rx, ry = [0, 0, 1, -1], [1, -1, 0, 0]
+N = int(input())
+seats = [[0] * N for _ in range(N)]
+students = [list(map(int, input().split())) for _ in range(N**2)]
+friends = defaultdict(set)
+
+for student in students:
+    me = student[0]
+    friends[me] = set(student[1:])
+    possible = []
+    
+    for x in range(N):
+        for y in range(N):
+            if not seats[x][y]:
+                empty = 0
+                friend = 0
+                
+                for _ in range(4):
+                    nx = rx[_] + x
+                    ny = ry[_] + y
+                    
+                    if 0 <= nx < N and 0 <= ny < N:
+                        if not seats[nx][ny]:
+                            empty += 1
+                        if seats[nx][ny] in friends[me]:
+                            friend += 1
+                            
+                possible.append((friend, empty, x, y))
+                
+    possible.sort(key=lambda k: (-k[0], -k[1], k[2], k[3]))
+    _, _, x, y = possible[0]
+    seats[x][y] = me
+    
+answer = 0
+
+for x in range(N):
+    for y in range(N):
+        me = seats[x][y]
+        friend = 0
+        
+        for _ in range(4):
+            nx = rx[_] + x
+            ny = ry[_] + y
+            
+            if 0 <= nx < N and 0 <= ny < N:
+                if seats[nx][ny] in friends[me]:
+                    friend += 1
+        if friend:
+            answer += 10 ** (friend - 1)
+
+print(answer)
