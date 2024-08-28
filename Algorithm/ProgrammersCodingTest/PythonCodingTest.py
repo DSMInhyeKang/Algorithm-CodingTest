@@ -1708,3 +1708,52 @@ for i in range(4):
         score += 2 ** i
 
 print(score)
+
+
+
+# BOJ - 뱀(3190): G4
+from collections import deque
+
+N = int(input())
+K = int(input())
+board = [[0] * N for _ in range(N)]
+
+for _ in range(K):
+    ax, ay = map(int, input().split())
+    board[ax-1][ay-1] = 1
+
+L = int(input())
+turn = []
+
+for _ in range(L):
+    X, C = map(str, input().split())
+    turn.append((int(X), C))
+    
+dx, dy = [0, 1, 0, -1], [1, 0, -1, 0]
+nd, hx, hy, t, i = 0, 0, 0, 0, 0
+deq = deque()
+deq.append((hx, hy))
+
+while 1:
+    hx = hx + dx[nd]
+    hy = hy + dy[nd]
+    t += 1
+
+    if hx < 0 or hx >= N or hy < 0 or hy >= N or (hx, hy) in deq: break
+
+    deq.append((hx, hy))
+
+    if board[hx][hy] == 0:
+        deq.popleft()
+    else:
+        board[hx][hy] = 0
+
+    if t == turn[i][0]:
+        if turn[i][1] == 'L':
+            nd = (nd - 1) % 4
+        else:
+            nd = (nd + 1) % 4
+
+        if i + 1 < len(turn): i += 1
+
+print(t)
