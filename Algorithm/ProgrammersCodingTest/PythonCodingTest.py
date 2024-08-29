@@ -1757,3 +1757,31 @@ while 1:
         if i + 1 < len(turn): i += 1
 
 print(t)
+
+
+
+# 상담원 인원(214288) - Lv.3
+from heapq import *
+from itertools import *
+
+def solution(k, n, reqs):
+    answer = 10**9
+    
+    for com in combinations(range(1, n), k-1):
+        com, heapq = [0, *com, n], [[] for _ in range(k+1)]
+        S = 0
+        
+        for a, b, c in reqs:
+            while heapq[c] and heapq[c][0] <= a:
+                heappop(heapq[c])
+                
+            if len(heapq[c]) == com[c] - com[c-1]:
+                d = heappop(heapq[c]) - a
+                S += d
+                b += d
+                
+            heappush(heapq[c], a+b)
+            
+        answer = min(answer, S)
+        
+    return answer
