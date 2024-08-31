@@ -1799,3 +1799,55 @@ def solution(n, tops):
         dp2[i] = ((dp1[i - 1] * (1 + tops[i])) + (dp2[i - 1] * (2 + tops[i]))) % MOD
         
     return (dp1[-1] + dp2[-1]) % MOD
+
+
+
+# 표현 가능한 이진트리(150367) - Lv.3
+from collections import deque
+ 
+def solution(numbers):
+    answer = []
+    
+    for num in numbers:
+        num = bin(num)[2:]
+        n = 0
+        
+        for i in range(10000):
+            if len(num) < 2 ** i:
+                n = i
+                break
+
+        while len(num) != 2 ** n - 1:
+            num = "0"+num
+
+        root = len(num) // 2
+        deq = deque([root])
+        flag = True
+        
+        while n != 0 and flag:
+            gap = 2 ** (n - 2)
+            nextDeq = deque()
+            
+            if n == 1: break
+            
+            while deq:
+                a = deq.popleft()
+                left = a - gap
+                right = a + gap
+                
+                if num[a] == "0":
+                    if num[left] == "1" or num[right] == "1":
+                        answer.append(0)
+                        flag = False
+                        break
+
+                nextDeq.append(left)
+                nextDeq.append(right)
+
+            deq = nextDeq
+            n -= 1
+
+        if flag == True:
+            answer.append(1)
+            
+    return answer
