@@ -1975,3 +1975,27 @@ def solution(queue1, queue2):
             return -1
         
     return answer
+
+
+
+# 파괴되지 않은 건물(92344) - Lv.3
+def solution(board, skill):
+    N, M = len(board), len(board[0])
+    prefixSum = [[0] * (M+1)  for _ in range(N+1)]
+    
+    for t, r1, c1, r2, c2, d in skill:
+        v = -d if t == 1 else d
+        prefixSum[r1][c1] += v
+        prefixSum[r2+1][c2+1] += v
+        prefixSum[r1][c2+1] -= v
+        prefixSum[r2+1][c1] -= v
+        
+    for i in range(N+1):
+        for j in range(M):
+            prefixSum[i][j+1] += prefixSum[i][j]
+            
+    for j in range(M+1):
+        for i in range(N):
+            prefixSum[i+1][j] += prefixSum[i][j]
+            
+    return sum([1 for i in range(N) for j in range(M) if board[i][j] + prefixSum[i][j] > 0])
