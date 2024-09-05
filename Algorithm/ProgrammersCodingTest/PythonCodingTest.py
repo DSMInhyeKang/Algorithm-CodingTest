@@ -1999,3 +1999,29 @@ def solution(board, skill):
             prefixSum[i+1][j] += prefixSum[i][j]
             
     return sum([1 for i in range(N) for j in range(M) if board[i][j] + prefixSum[i][j] > 0])
+
+
+
+# 금과 은 운반하기(86053) - Lv.3
+def solution(a, b, g, s, w, t):
+    left, right = 0, 10e15
+    result = right 
+    
+    while left <= right:
+        mid = (left + right) // 2
+        gold, silver, total = 0, 0, 0
+
+        for i in range(len(t)):
+            cnt = (mid // (t[i] * 2))
+            cnt += 1 if mid % (t[i] * 2) >= t[i] else 0
+            gold += min(g[i], cnt * w[i])
+            silver += min(s[i], cnt * w[i])
+            total += min(g[i] + s[i], cnt * w[i])
+
+        if gold >= a and silver >= b and total >= a + b:
+            right = mid - 1
+            result = min(mid, result)
+        else:
+            left = mid + 1
+
+    return result
