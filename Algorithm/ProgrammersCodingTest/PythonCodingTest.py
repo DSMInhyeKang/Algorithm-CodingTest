@@ -2306,3 +2306,36 @@ def solution(input_board, sr, sc):
         answer = min(answer, cnt)
         
     return answer
+
+
+
+# 외벽 점검(60062) - Lv.3
+from collections import deque
+
+def solution(n, weak, dist):
+    dist.sort(reverse=True)
+    q = deque([weak])
+    visited = set()
+    visited.add(tuple(weak))
+    
+    for i in range(len(dist)):
+        d = dist[i]
+        
+        for _ in range(len(q)):
+            current = q.popleft()
+            
+            for p in current:
+                l, r = p, (p + d) % n
+                
+                if l < r:
+                    temp = tuple(filter(lambda x: x < l or x > r, current))
+                else:
+                    temp = tuple(filter(lambda x: x < l and x > r, current))
+
+                if len(temp) == 0:
+                    return (i + 1)
+                elif temp not in visited:
+                    visited.add(temp)
+                    q.append(list(temp))
+                    
+    return -1
