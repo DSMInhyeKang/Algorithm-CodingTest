@@ -983,3 +983,29 @@ def solution(operations):
     heap.sort()
         
     return [heap[-1], heap[0]] if heap else [0, 0]
+
+
+
+# 스타 수열(70130) - Lv.3
+from collections import Counter
+
+def solution(a):
+    counter = Counter(a)
+    answer = -1
+    
+    for e in counter:
+        if counter[e] <= answer: continue
+        
+        cnt, idx = 0, 0
+        
+        while idx < len(a)-1:
+            if (a[idx] == a[idx+1]) or (a[idx] != e and a[idx+1] != e): 
+                idx += 1
+                continue
+            
+            cnt += 1
+            idx += 2
+            
+        answer = max(answer, cnt)
+        
+    return answer * 2
