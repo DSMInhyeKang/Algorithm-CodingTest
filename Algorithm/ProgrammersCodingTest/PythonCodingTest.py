@@ -2381,3 +2381,14 @@ def solution(rows, columns, queries):
         answer.append(mini)
         
     return answer
+
+
+
+# 모음 사전(84512) - Lv.2
+def solution(word):
+    answer = 0
+    
+    for i, n in enumerate(word):
+        answer += (5 ** (5 - i) - 1) / (5 - 1) * "AEIOU".index(n) + 1  # 등비수열의 합
+        
+    return answer
