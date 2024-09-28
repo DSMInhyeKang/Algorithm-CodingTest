@@ -2392,3 +2392,11 @@ def solution(word):
         answer += (5 ** (5 - i) - 1) / (5 - 1) * "AEIOU".index(n) + 1  # 등비수열의 합
         
     return answer
+
+
+
+# 멀쩡한 사각형(62048) - Lv.2
+import math
+
+def solution(w,h):
+    return w * h - (w + h - math.gcd(w, h))
