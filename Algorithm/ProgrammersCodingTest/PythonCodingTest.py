@@ -2400,3 +2400,40 @@ import math
 
 def solution(w,h):
     return w * h - (w + h - math.gcd(w, h))
+
+
+
+# 불량 사용자(64064) - Lv.3
+from itertools import product
+
+def solution(user_id, banned_id):
+    banned, result = [], []
+    
+    for ban in banned_id:
+        temp = []
+        
+        for user in user_id:
+            if len(user) == len(ban):
+                flag = True
+                
+                for i in range(len(ban)):
+                    if ban[i] != user[i] and ban[i] != '*':
+                        flag = False
+                        break
+                        
+                if flag: temp.append(user)
+                
+        banned.append(temp)
+        
+    for p in product(*banned):
+        if len(set(p)) == len(banned_id):
+            flag = True
+            
+            for s in result:
+                if len(s - set(p)) == 0:
+                    flag = False
+                    break
+                    
+            if flag: result.append(set(p))
+    
+    return len(result)
