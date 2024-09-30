@@ -1009,3 +1009,28 @@ def solution(a):
         answer = max(answer, cnt)
         
     return answer * 2
+
+
+
+# 게임 맵 최단거리(1844) - Lv.2
+from collections import deque
+
+def solution(maps):
+    N, M = len(maps), len(maps[0])
+    dx, dy = [-1, 0, 1, 0], [0, 1, 0, -1]
+    deq = deque()
+    
+    deq.append((0,0))
+
+    while deq:
+        x, y = deq.popleft()
+        
+        for i in range(4):
+            nx = x + dx[i]
+            ny = y + dy[i]
+            
+            if 0 <= nx < N and 0 <= ny < M and maps[nx][ny] == 1:
+                maps[nx][ny] = maps[x][y] + 1
+                deq.append((nx,ny))
+                
+    return -1 if maps[N-1][M-1] == 1 else maps[N-1][M-1]
