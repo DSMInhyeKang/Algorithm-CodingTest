@@ -1020,7 +1020,7 @@ def solution(maps):
     dx, dy = [-1, 0, 1, 0], [0, 1, 0, -1]
     deq = deque()
     
-    deq.append((0,0))
+    deq.append((0, 0))
 
     while deq:
         x, y = deq.popleft()
@@ -1034,3 +1034,23 @@ def solution(maps):
                 deq.append((nx,ny))
                 
     return -1 if maps[N-1][M-1] == 1 else maps[N-1][M-1]
+
+
+
+# 방문 길이(49994) - Lv.2
+def solution(dirs):
+    com = {'U': (0, 1), 'D': (0, -1), 'R': (1, 0), 'L': (-1, 0)}
+    history = set()
+    x, y = 0, 0
+    
+    for d in dirs:
+        dx, dy = com[d]
+        nx, ny = x + dx, y + dy
+        
+        if abs(nx) <= 5 and abs(ny) <= 5:
+            history.add((x, y, nx, ny))
+            history.add((nx, ny, x, y))
+            x = nx 
+            y = ny
+            
+    return len(history) // 2
