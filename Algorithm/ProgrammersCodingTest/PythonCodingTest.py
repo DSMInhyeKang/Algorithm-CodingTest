@@ -2437,3 +2437,21 @@ def solution(user_id, banned_id):
             if flag: result.append(set(p))
     
     return len(result)
+
+
+
+# 유사 칸토어 비트열(148652) - Lv.2
+def solution(n, l, r):
+    answer = r - l + 1
+    
+    for num in range(l-1, r):
+        while num >= 1:
+            a, b = divmod(num, 5)
+            
+            if b == 2 or a == 2:
+                answer -= 1
+                break
+                
+            num = a
+
+    return answer
