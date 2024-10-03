@@ -2455,3 +2455,22 @@ def solution(n, l, r):
             num = a
 
     return answer
+
+
+
+# 할인 행사(131127) - Lv.2
+from collections import Counter
+
+def solution(want, number, discount):
+    d = 0
+    check = {}
+    
+    for w, n in zip(want, number):
+        check[w] = n
+    
+    for i in range(len(discount) - 9):
+        c = Counter(discount[i:i+10])
+        
+        if c == check: d += 1
+
+    return d
