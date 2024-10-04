@@ -2474,3 +2474,42 @@ def solution(want, number, discount):
         if c == check: d += 1
 
     return d
+
+
+
+# 교점에 별 만들기(87377) - Lv.2
+def solution(line):
+    answer = []    
+    points = set()
+    
+    for i in range(len(line)):
+        for j in range(i + 1, len(line)):
+            a, b, e = line[i]
+            c, d, f = line[j]
+            
+            if (a * d) - (b * c) != 0:
+                x = (b * f - e * d) / (a * d - b * c)
+                y = (e * c - a * f) / (a * d - b * c)
+            
+            if int(x) == x and int(y) == y:
+                x = int(x)
+                y = int(y)
+                points.add((x, y))
+                
+    minX = min(point[0] for point in points)
+    minY = min(point[1] for point in points)
+    maxX = max(point[0] for point in points)
+    maxY = max(point[1] for point in points)
+    
+    for y in range(maxY, minY - 1, -1):
+        row = ""
+        
+        for x in range(minX, maxX + 1):
+            if (x, y) in points:
+                row += "*"
+            else:
+                row += "."
+                
+        answer.append(row)
+                    
+    return answer
