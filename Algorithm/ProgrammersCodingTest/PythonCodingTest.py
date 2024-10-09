@@ -2615,3 +2615,43 @@ def solution(play, adv, logs):
         if s > mv: mv, mi = s, i + 1
 
     return f"{mi//3600:02d}:{mi%3600//60:02d}:{mi%60:02d}"
+
+
+
+# BOJ - 로봇 청소기(14503): G5
+from collections import deque
+
+N, M = map(int, input().split())
+r, c, d = map(int, input().split())
+room = [list(map(int, input().split())) for _ in range(N)]
+visited = [[False for _ in range(M)] for _ in range(N)]
+dx, dy = [-1, 0, 1, 0], [0, 1, 0, -1]
+
+deq = deque()
+deq.append((r, c))
+visited[r][c] = True
+cnt = 1
+
+while deq:
+    x, y = deq.popleft()
+    flag = 0
+
+    for _ in range(4):
+        d = (d + 3) % 4
+        nx = x + dx[d]
+        ny = y + dy[d]
+
+        if 0 <= nx < N and 0 <= ny < M and not room[nx][ny]: 
+            if not visited[nx][ny]:
+                visited[nx][ny] = 1  
+                deq.append((nx, ny))
+                cnt += 1
+                flag = 1
+                break
+
+    if flag == 0:
+        if room[x-dx[d]][y-dy[d]] != 1:
+            deq.append((x-dx[d], y-dy[d]))
+        else:
+            print(cnt)
+            break
