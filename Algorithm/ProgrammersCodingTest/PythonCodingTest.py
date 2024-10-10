@@ -2655,3 +2655,34 @@ while deq:
         else:
             print(cnt)
             break
+
+
+
+# BOJ - 컨베이어 벨트 위의 로봇(20055): G5
+from collections import deque
+
+N, K = map(int,input().split())
+A = deque(list(map(int, input().split())))
+answer = 0
+belt = deque([False] * N)
+
+while True:
+    answer += 1
+    A.rotate(1)
+    belt.rotate(1)
+    belt[N-1] = False
+
+    for i in range(N-2, -1, -1):
+        if belt[i] and not belt[i+1] and A[i+1] > 0:
+            belt[i], belt[i+1] = False, True
+            A[i+1] -= 1
+    
+    belt[N-1] = False
+        
+    if A[0] > 0:
+        belt[0] = True
+        A[0] -= 1
+        
+    if A.count(0) >= K: break
+
+print(answer)
