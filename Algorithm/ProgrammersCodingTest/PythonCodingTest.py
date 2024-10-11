@@ -2686,3 +2686,43 @@ while True:
     if A.count(0) >= K: break
 
 print(answer)
+
+
+
+# BOJ - 테트로미노(14500): G4
+N, M = map(int, input().split())
+paper = [list(map(int, input().split())) for _ in range(N)]
+visited = [([False] * M) for _ in range(N)]
+dr, dc = [-1, 0, 1, 0], [0, 1, 0, -1]
+MAX = max(map(max, paper))
+sum = 0
+
+def dfs(r, c, l, t):
+    global sum
+    
+    if sum >= t + MAX * (3-l): return
+    
+    if l == 3:
+        sum = max(sum, t)
+        return
+    else:
+        for i in range(4):
+            nr = r + dr[i]
+            nc = c + dc[i]
+            
+            if 0 <= nr < N and 0 <= nc < M and visited[nr][nc] == False:
+                if l == 1:
+                    visited[nr][nc] = True
+                    dfs(r, c, l+1, t+paper[nr][nc])
+                    visited[nr][nc] = False
+                visited[nr][nc] = True
+                dfs(nr, nc, l+1, t+paper[nr][nc])
+                visited[nr][nc] = False
+
+for r in range(N):
+    for c in range(M):
+        visited[r][c] = True
+        dfs(r, c, 0, paper[r][c])
+        visited[r][c] = False
+
+print(sum)
