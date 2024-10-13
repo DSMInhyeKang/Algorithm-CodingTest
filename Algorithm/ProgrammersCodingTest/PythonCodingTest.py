@@ -2747,3 +2747,59 @@ def f(x):
 
 def solution(s):
     return [f(x) for x in s]
+
+
+
+# BOJ - 인구 이동(16234): G4
+from collections import deque
+
+N, L, R = map(int, input().split())
+board = []
+dx, dy = [-1, 0, 1, 0], [0, 1, 0, -1]
+day = 0
+
+def bfs(i, j):
+    group = []
+    q = deque()
+    q.append([i, j])
+    group.append([i, j])
+
+    while q:
+        x, y = q.popleft()
+
+        for k in range(4):
+            nx, ny = x+dx[k], y+dy[k]
+
+            if 0 <= nx < N and 0 <= ny < N and visited[nx][ny] == 0:
+                if L <= abs(board[nx][ny]-board[x][y]) <= R:
+                    group.append([nx, ny])
+                    q.append([nx, ny])
+                    visited[nx][ny] = 1
+
+    return group
+
+for _ in range(N):
+    board.append(list(map(int, input().split())))
+
+while True:
+    visited = [[0] * N for _ in range(N)]
+    finalflag = False
+
+    for i in range(N):
+        for j in range(N):
+            if visited[i][j] == 0:
+                visited[i][j] = 1
+                
+                group = bfs(i, j)
+
+                if len(group) > 1:
+                    finalflag = True
+                    change_value = sum([board[x][y] for x, y in group]) // len(group)
+                    
+                    for x, y in group: board[x][y] = change_value
+                        
+    if not finalflag: break
+        
+    day+=1
+
+print(day)
