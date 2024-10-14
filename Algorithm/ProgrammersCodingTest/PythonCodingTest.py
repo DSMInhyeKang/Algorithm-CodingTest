@@ -2803,3 +2803,24 @@ while True:
     day+=1
 
 print(day)
+
+
+
+# 숫자 카드 나누기(135807) - Lv.2
+from math import gcd
+
+def solution(arrayA, arrayB):
+    a = arrayA[0]
+    b = arrayB[0]
+
+    for i in range(len(arrayA)):
+        a = gcd(a, arrayA[i])
+        b = gcd(b, arrayB[i])
+        
+    cA, cB = 1, 1
+    
+    for i in range(len(arrayA)):
+        if arrayA[i] % b == 0: cA = 0
+        if arrayB[i] % a == 0: cB = 0
+
+    return cA if cA == 0 and cB == 0 else max(a, b)
