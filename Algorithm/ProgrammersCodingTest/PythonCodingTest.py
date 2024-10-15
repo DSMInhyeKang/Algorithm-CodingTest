@@ -2824,3 +2824,28 @@ def solution(arrayA, arrayB):
         if arrayB[i] % a == 0: cB = 0
 
     return cA if cA == 0 and cB == 0 else max(a, b)
+
+
+
+# 양과 늑대(92343) - Lv.3
+def solution(info, edges):
+    answer = []
+    visited = [False] * len(info)
+    
+    def dfs(sheeps, wolves):
+        if sheeps > wolves: answer.append(sheeps)
+        else: return
+        
+        for p, c in edges:
+            if visited[p] and not visited[c]:
+                visited[c] = True
+                
+                if info[c] == 0: dfs(sheeps + 1, wolves)
+                else: dfs(sheeps, wolves + 1)
+                
+                visited[c] = False
+                
+    visited[0] = True
+    dfs(1, 0)
+    
+    return max(answer)
