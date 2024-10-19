@@ -2900,3 +2900,33 @@ def solution(n, build_frame):
     answer.sort()
     
     return answer
+
+
+
+# 길 찾기 게임(42892) - Lv.3
+import sys; sys.setrecursionlimit(10001)
+
+pre, post = list(), list()
+
+def solution(nodeinfo):
+    l = sorted(list({x[1] for x in nodeinfo}), reverse=True)
+    n = sorted(list(zip(range(1, len(nodeinfo)+1), nodeinfo)), key=lambda x:(-x[1][1], x[1][0]))
+    order(n, l, 0)
+    
+    return [pre, post]
+
+def order(nodes, levels, curlevel):
+    n = nodes[:]
+    cur = n.pop(0)
+    pre.append(cur[0])
+    
+    if n: 
+        for i in range(len(n)):
+            if n[i][1][1] == levels[curlevel+1]:
+                if n[i][1][0] < cur[1][0]:
+                    order([x for x in n if x[1][0] < cur[1][0]], levels, curlevel+1)
+                else:
+                    order([x for x in n if x[1][0] > cur[1][0]], levels, curlevel+1)
+                    break
+
+    post.append(cur[0])
