@@ -2950,3 +2950,23 @@ def solution(str1, str2):
     hap_sum = sum([max(str1.count(hh), str2.count(hh)) for hh in hap])
 
     return math.floor((gyo_sum/hap_sum)*65536)
+
+
+
+# 스티커 모으기(2)(12971) - Lv.3
+def solution(sticker):
+    size = len(sticker)
+    
+    if len(sticker) == 1: return sticker.pop()
+
+    dp1 = [0] + sticker[:-1]
+    
+    for i in range(2, size):
+        dp1[i] = max(dp1[i-1], dp1[i-2] + dp1[i])
+    
+    dp2 = [0] + sticker[1:]
+    
+    for i in range(2, size):
+        dp2[i] = max(dp2[i-1], dp2[i-2] + dp2[i])
+    
+    return max(dp1[-1], dp2[-1])
