@@ -3018,3 +3018,40 @@ def solution(m, musicinfos):
         answer = '(None)'
     
     return answer
+
+
+
+# BOJ - 연구소(14502): G4
+from collections import deque
+from copy import deepcopy
+from itertools import combinations
+
+N, M = map(int, input().split())
+graph = [list(map(int, input().split())) for _ in range(N)]
+point = [(x, y) for x in range(M) for y in range(N) if not graph[y][x]]
+answer = 0
+
+def bfs(graph):
+    global answer
+    deq = deque([(j, i) for i in range(N) for j in range(M) if graph[i][j] == 2])
+
+    while deq:
+        x, y = deq.popleft()
+
+        for nx, ny in zip([x+1, x-1, x, x], [y, y, y+1, y-1]):
+            if 0 <= nx < M and 0 <= ny < N and not graph[ny][nx]:
+                graph[ny][nx] = 2
+                deq.append((nx, ny))
+    
+    count = sum([i.count(0) for i in graph])
+    answer = max(answer, count)
+
+for c in combinations(point, 3):
+    tmp = deepcopy(graph)
+
+    for x, y in c: 
+        tmp[y][x] = 1
+
+    bfs(tmp)
+
+print(answer)
