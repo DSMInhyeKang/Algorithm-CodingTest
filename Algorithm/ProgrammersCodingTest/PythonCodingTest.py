@@ -3085,3 +3085,29 @@ def solution(board):
                 heappush(heap, (newCost,nx,ny,dd))
                 
     return min(costBoard[0][N-1][N-1], costBoard[1][N-1][N-1], costBoard[2][N-1][N-1], costBoard[3][N-1][N-1])
+
+
+
+# 부대복귀(132266) - Lv.3
+from collections import deque
+
+def solution(n, roads, sources, destination):
+    path = [[] for _ in range(n+1)]
+    visited = [-1] * (n+1)
+    
+    for a, b in roads:
+        path[a].append(b)
+        path[b].append(a)
+
+    deq = deque([destination])
+    visited[destination] = 0
+    
+    while deq:
+        now = deq.popleft()
+
+        for n in path[now]:
+            if visited[n] == -1:
+                visited[n] = visited[now] + 1
+                deq.append(n)
+
+    return [visited[i] for i in sources]
