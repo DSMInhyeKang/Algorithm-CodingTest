@@ -3111,3 +3111,31 @@ def solution(n, roads, sources, destination):
                 deq.append(n)
 
     return [visited[i] for i in sources]
+
+
+
+# k진수에서 소수 개수 구하기(92335) - Lv.2
+def solution(n, k):
+    word = ""
+    
+    while n:
+        word = str(n % k) + word
+        n = n // k
+        
+    word = word.split("0")
+    count = 0
+    
+    for w in word:
+        if len(w) == 0: continue
+        if int(w) < 2: continue
+        
+        prime = True
+        
+        for i in range(2, int(int(w) ** 0.5) + 1):
+            if int(w) % i == 0:
+                prime = False
+                break
+                
+        if prime: count += 1
+            
+    return count
