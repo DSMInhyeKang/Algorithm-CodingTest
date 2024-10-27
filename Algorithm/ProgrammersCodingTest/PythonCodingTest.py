@@ -3139,3 +3139,27 @@ def solution(n, k):
         if prime: count += 1
             
     return count
+
+
+
+# 다리를 지나는 트럭(42583) - Lv.2
+from collections import deque
+
+def solution(bridge_length, weight, truck_weights):
+    time, current = 0, 0
+    bridge = deque([0] * bridge_length)
+    truck_weights = deque(truck_weights)
+    
+    while len(truck_weights) > 0:
+        time = time + 1
+        current = current - bridge.popleft()
+
+        if current + truck_weights[0] <= weight:
+            current = current + truck_weights[0]
+            bridge.append(truck_weights.popleft())
+        else: 
+            bridge.append(0)
+            
+    time = time + bridge_length
+    
+    return time
