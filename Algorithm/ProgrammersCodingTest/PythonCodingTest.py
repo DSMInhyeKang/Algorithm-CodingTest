@@ -3163,3 +3163,23 @@ def solution(bridge_length, weight, truck_weights):
     time = time + bridge_length
     
     return time
+
+
+
+# 조이스틱(42860) - Lv.2
+def solution(name):
+    answer = 0
+    least = len(name) - 1
+    
+    for i, c in enumerate(name):
+        answer += min(ord(c) - ord('A'), ord('Z') - ord(c) + 1)
+        next = i + 1
+        
+        while next < len(name) and name[next] == 'A':
+            next += 1
+        
+        least = min([least, 2*i+len(name)-next, i+2*(len(name)-next)])
+        
+    answer += least
+    
+    return answer
