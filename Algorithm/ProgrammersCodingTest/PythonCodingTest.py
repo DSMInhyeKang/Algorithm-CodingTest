@@ -3183,3 +3183,20 @@ def solution(name):
     answer += least
     
     return answer
+
+
+
+# 구명보트(42885) - Lv.2
+def solution(people, limit) :
+    answer = 0
+    a, b = 0, len(people) - 1
+    people.sort()
+    
+    while a < b:
+        if people[b] + people[a] <= limit :
+            a += 1
+            answer += 1
+            
+        b -= 1
+        
+    return len(people) - answer
