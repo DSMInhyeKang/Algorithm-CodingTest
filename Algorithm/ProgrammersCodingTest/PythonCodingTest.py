@@ -3200,3 +3200,21 @@ def solution(people, limit) :
         b -= 1
         
     return len(people) - answer
+
+
+
+# [3차] n진수 게임(17687) - Lv.2
+def solution(n, t, m, p):
+    data = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F"]
+    numbers = "0"
+    
+    for num in range(1, t*m):
+        temp = ''
+        
+        while num > 0:
+            temp = data[num % n] + temp
+            num //= n
+            
+        numbers += temp
+
+    return numbers[p-1:t*m:m]
