@@ -3218,3 +3218,25 @@ def solution(n, t, m, p):
         numbers += temp
 
     return numbers[p-1:t*m:m]
+
+
+
+# [1차] 캐시(17680) - Lv.2
+from collections import deque
+
+def solution(cacheSize, cities):
+    cache = deque(maxlen=cacheSize)
+    time = 0
+    
+    for i in cities:
+        s = i.lower()
+        
+        if s in cache:
+            cache.remove(s)
+            cache.append(s)
+            time += 1
+        else:
+            cache.append(s)
+            time += 5
+            
+    return time
