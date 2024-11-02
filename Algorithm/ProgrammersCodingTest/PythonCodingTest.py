@@ -3267,3 +3267,25 @@ def solution(lines):
         answer = max(answer, throughput(log, x[0], x[0] + 1000), throughput(log, x[1], x[1] + 1000))
 
     return answer
+
+
+
+# [3차] 압축(17684) - Lv.2
+def solution(msg):
+    answer = []
+    dic = {chr(i+64): i for i in range(1, 27)}
+    w = c = 0
+    
+    while True:
+        c += 1	
+        
+        if c == len(msg):	
+            answer.append((dic[msg[w:c]]))
+            break
+        
+        if msg[w:c+1] not in dic:
+            dic[msg[w:c+1]] = len(dic) + 1
+            answer.append(dic[msg[w:c]])
+            w = c
+            
+    return answer
