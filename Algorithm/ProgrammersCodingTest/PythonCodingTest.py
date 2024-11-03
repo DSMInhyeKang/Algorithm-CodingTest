@@ -3289,3 +3289,21 @@ def solution(msg):
             w = c
             
     return answer
+
+
+
+# 줄 서는 방법(12936) - Lv.2
+from math import factorial
+
+def solution(n, k):
+    answer = []
+    number = [i for i in range(1, n + 1)]
+
+    while number:
+        perm = factorial(n - 1)
+        idx = (k - 1) // perm 
+        answer.append(number.pop(idx))
+        k %= perm 
+        n -= 1
+
+    return answer
