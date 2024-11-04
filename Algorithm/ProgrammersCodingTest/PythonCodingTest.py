@@ -3307,3 +3307,19 @@ def solution(n, k):
         n -= 1
 
     return answer
+
+
+
+# 최적의 행렬 곱셈(12942) - Lv.3
+def solution(matrix_sizes):
+    dp = [[0] * L for _ in range(L)]
+    L = len(matrix_sizes)
+    size = [s for s, _ in matrix_sizes]
+    size.append(matrix_sizes[-1][-1])
+    
+    for i in range(1, L):
+        for j in range(i):
+            x, y = i-j-1, i
+            dp[x][y] = min(size[x] * size[k+1] * size[y+1] + dp[x][k] + dp[k+1][y] for k in range(x, y))
+            
+    return dp[0][-1]
