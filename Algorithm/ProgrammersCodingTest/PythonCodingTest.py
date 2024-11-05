@@ -3323,3 +3323,12 @@ def solution(matrix_sizes):
             dp[x][y] = min(size[x] * size[k+1] * size[y+1] + dp[x][k] + dp[k+1][y] for k in range(x, y))
             
     return dp[0][-1]
+
+
+
+# H-Index(42747) - Lv.2
+def solution(citations):
+    citations.sort(reverse=True)
+    answer = max(map(min, enumerate(citations, start=1)))
+    
+    return answer
