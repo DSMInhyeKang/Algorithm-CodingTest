@@ -3332,3 +3332,21 @@ def solution(citations):
     answer = max(map(min, enumerate(citations, start=1)))
     
     return answer
+
+
+
+# 야근 지수(12927) - Lv.3
+import heapq
+
+def solution(n, works):
+    if n >= sum(works): return 0
+    
+    works = [-w for w in works]
+    heapq.heapify(works)
+    
+    for _ in range(n):
+        i = heapq.heappop(works)
+        i += 1
+        heapq.heappush(works, i)
+    
+    return sum([w ** 2 for w in works])
