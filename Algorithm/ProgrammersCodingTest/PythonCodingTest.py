@@ -3350,3 +3350,45 @@ def solution(n, works):
         heapq.heappush(works, i)
     
     return sum([w ** 2 for w in works])
+
+
+
+# 표 편집(81303) - Lv.3
+def solution(n, k, cmd):
+    cur = k 
+    deleted = [] 
+    table = {i: [i - 1, i + 1] for i in range(n)}
+    answer = ['O'] * n 
+    
+    for c in cmd:
+        if c[0] == "C": 
+            deleted.append([cur, answer[cur]])  
+            answer[cur] = 'X'  
+            prev, nxt = table[cur] 
+            
+            if prev != -1: table[prev][1] = nxt 
+            if nxt != n: table[nxt][0] = prev 
+            
+            if nxt == n:
+                cur = prev 
+            else:
+                cur = nxt 
+        elif c[0] == "Z":
+            restore, status = deleted.pop()
+            answer[restore] = status
+            prev, nxt = table[restore] 
+            
+            if prev != -1: table[prev][1] = restore
+            if nxt != n: table[nxt][0] = restore
+        else:
+            direction, count = c.split(' ')
+            count = int(count)
+            
+            if direction == 'D':  
+                for _ in range(count):
+                    cur = table[cur][1]
+            else: 
+                for _ in range(count):
+                    cur = table[cur][0]
+
+    return ''.join(answer) 
