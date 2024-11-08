@@ -3392,3 +3392,24 @@ def solution(n, k, cmd):
                     cur = table[cur][0]
 
     return ''.join(answer) 
+
+
+
+# 네트워크(43162) - Lv.3
+def DFS(n, computers, c, visited):
+    visited[c] = True 
+    
+    for connect in range(n):
+        if connect != c and computers[c][connect] == 1 and visited[connect] == False: 
+            DFS(n, computers, connect, visited)
+
+def solution(n, computers):  
+    answer = 0
+    visited = [False for _ in range(n)]
+    
+    for c in range(n):                        
+        if visited[c] == False:            
+            DFS(n, computers, c, visited) 
+            answer += 1                     
+            
+    return answer
