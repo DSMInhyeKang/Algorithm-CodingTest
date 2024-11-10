@@ -3432,3 +3432,15 @@ def solution(m, n, puddles):
                 dp[i][j] = (dp[i-1][j] + dp[i][j-1]) % 1000000007
                 
     return dp[n][m]
+
+
+
+# 가장 긴 팰린드롬(12904) - Lv.3
+def solution(s):
+    answer = 0
+    
+    for i in range(len(s)):
+        for j in range(i+1, len(s)+1):
+            if s[i:j] == s[i:j][::-1]: answer = max(answer, len(s[i:j]))
+            
+    return answer
