@@ -3476,3 +3476,20 @@ def solution(target):
             dp[i] = temp_arr[0]
             
     return dp[target]
+
+
+
+# 스킬트리(49993) - Lv.2
+def solution(skill, skill_trees):
+    answer = 0
+
+    for tree in skill_trees:
+        s = ""
+        
+        for character in tree:
+            if character in skill:
+                s += character
+
+        if skill[:len(s)] == s: answer += 1
+
+    return answer
