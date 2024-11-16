@@ -3493,3 +3493,35 @@ def solution(skill, skill_trees):
         if skill[:len(s)] == s: answer += 1
 
     return answer
+
+
+
+# 등대(133500) - Lv.3
+from collections import defaultdict, deque
+
+def solution(n, lighthouse):
+    graph = defaultdict(list)
+    onoff = [0 for _ in range(n + 1)]
+    q = deque()
+
+    for a, b in lighthouse:
+        graph[a].append(b)
+        graph[b].append(a)
+
+    
+    for i in range(1, n+1):
+        if len(graph[i]) == 1: q.append(i)
+
+    while q:
+        now_leaf = q.popleft()
+        if graph[now_leaf] == []: break
+        parent = graph[now_leaf][0]
+
+        del graph[now_leaf]
+        graph[parent].remove(now_leaf)
+        
+        if len(graph[parent]) == 1: q.append(parent)
+        if onoff[now_leaf] == 1: continue
+        onoff[parent] = 1
+    
+    return sum(onoff) 
