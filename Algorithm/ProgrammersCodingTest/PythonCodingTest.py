@@ -3525,3 +3525,13 @@ def solution(n, lighthouse):
         onoff[parent] = 1
     
     return sum(onoff) 
+
+
+
+# 카펫(42842) - Lv.2
+def solution(brown, yellow):    
+    for bh in range(1, brown//2 + 1):
+        bw = (brown - 2 * bh + 4) // 2
+        yw, yh = bw - 2, bh - 2
+        
+        if yellow == yw * yh and yellow + brown == bw * bh: return [bw, bh]
