@@ -3535,3 +3535,29 @@ def solution(brown, yellow):
         yw, yh = bw - 2, bh - 2
         
         if yellow == yw * yh and yellow + brown == bw * bh: return [bw, bh]
+
+
+
+# 미로 탈출 명령어(150365) - Lv.3
+def solution(n, m, x, y, r, c, k):
+    answer = ''
+    diff = abs(x-r) + abs(y-c)
+    
+    if diff%2 != k%2 or diff > k: return 'impossible'
+
+    rest = k-diff
+    lc, rc, dc, uc = 0, 0, 0, 0
+    
+    if x < r: dc = r - x
+    else: uc = x - r
+    
+    if y < c: rc = c - y
+    else: lc = y - c
+
+    dplus = min(n-max(x, r), rest // 2)
+    rest -= dplus * 2
+    lplus = min(min(y, c)-1, rest // 2)
+    rest -= lplus * 2
+    answer = 'd' * (dc+dplus) + 'l' * (lc+lplus) + 'rl' * (rest//2) + 'r' * (rc+lplus) + 'u'*(dplus+uc)
+
+    return answer
