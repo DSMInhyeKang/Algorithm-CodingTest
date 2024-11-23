@@ -3578,3 +3578,16 @@ def solution(n, s):
         answer.sort()
         
     return answer
+
+
+
+# 거스름돈(12907) - Lv.3
+def solution(n, money):
+    dp = [0 for i in range(n + 1)]
+    dp[0] = 1
+    
+    for c in money:
+        for p in range(c, n+1):
+            if p >= c: dp[p] += dp[p-c]
+
+    return dp[n]
