@@ -3607,3 +3607,24 @@ def solution(priorities, location):
         else:
             answer += 1
             if cur[0] == location: return answer
+
+
+
+# 더 맵게(42626) - Lv.2
+import heapq as hq
+
+def solution(scoville, K):
+    cnt = 0
+    hq.heapify(scoville)
+    
+    while len(scoville) > 1:
+        st = hq.heappop(scoville)
+        
+        if st < K:
+            cnt += 1                                 
+            nd = hq.heappop(scoville)         
+            hq.heappush(scoville, (st+(nd*2)))
+        else:
+            break
+        
+    return -1 if scoville[0] < K else cnt
