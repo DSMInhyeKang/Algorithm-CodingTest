@@ -3690,3 +3690,28 @@ def solution(n, paths, gates, summits):
         stack = list(target)
 
     return min([[summit, intensity[summit]] for summit in summits], key=lambda x: (x[1], x[0]))
+
+
+
+# 코딩 테스트 공부(118668) - Lv.3
+from heapq import heappush, heappop
+
+def solution(alp, cop, problems):
+    max_alp, max_cop = max(x[0] for x in problems), max(x[1] for x in problems)
+    t = [[int(1e9) for _ in range(151)] for _ in range(151)]
+    problems += [[0, 0, 1, 0, 1], [0, 0, 0, 1, 1]]
+    h = [(0, alp, cop)]
+    t[alp][cop] = 0
+
+    while h:
+        curr_cost, ca, cc = heappop(h)
+
+        if ca >= max_alp and cc >= max_cop: return curr_cost
+
+        if t[ca][cc] <= curr_cost:
+            for ra, rc, aa, ac, cost in problems:
+                na, nc = min(150, ca+aa), min(150, cc+ac)
+
+                if ca >= ra and cc >= rc and curr_cost + cost < t[na][nc]:
+                    t[na][nc] = curr_cost + cost
+                    heappush(h, (curr_cost + cost, na, nc))
