@@ -3739,3 +3739,27 @@ def solution(a, m=1000000001, n=1000000001):
     r = [(n := min(n, v)) for v in reversed(a[2:])]
     
     return sum((x > y or z > y for x, y, z in zip(l, a[1:-1], reversed(r)))) + 2
+
+
+
+# 징검다리 건너기(64062) - Lv.3
+def solution(stones, k):
+    l, r = 1, max(stones) + 1
+    
+    while l < r-1:
+        mid = (l+r) // 2
+        now = 0
+        f = True
+        
+        for s in stones:
+            if s < mid: now += 1
+            else: now = 0
+            
+            if now == k:
+                f = False
+                break
+                
+        if f: l = mid
+        else: r = mid
+        
+    return l
