@@ -3763,3 +3763,50 @@ def solution(stones, k):
         else: r = mid
         
     return l
+
+
+
+# 블록 이동하기(60063) - Lv.3
+from collections import deque
+
+def solution(board):
+    dx, dy = [-1, 0, 1, 0], [0, 1, 0, -1]
+    lenb = len(board)
+    nboard = [[1] * (lenb+2) for _ in range(lenb+2)]
+    
+    for i in range(lenb):
+        for j in range(lenb):
+            nboard[i+1][j+1] = board[i][j]
+            
+    deq = deque([((1, 1), (1, 2), 0)])
+    check = set([((1, 1), (1, 2))])
+    
+    while deq:
+        tmp = []
+        s1, s2, dis = deq.popleft()
+        
+        if s1 == (lenb, lenb) or s2 == (lenb, lenb): return dis
+    
+        for i in range(4):
+            s1_i = s1[0] + dx[i]
+            s1_j = s1[1] + dy[i]
+            s2_i = s2[0] + dx[i]
+            s2_j = s2[1] + dy[i]
+            
+            if nboard[s1_i][s1_j] == 0 and nboard[s2_i][s2_j] == 0: tmp.append(((s1_i, s1_j), (s2_i, s2_j)))  
+            
+        if s1[0] == s2[0]:
+            for i in [1, -1]:
+                if nboard[s1[0] + i][s1[1]] == 0 and nboard[s2[0] + i][s2[1]] == 0:
+                    tmp.append((s1, (s1[0] + i, s1[1])))
+                    tmp.append((s2, (s2[0] + i, s2[1])))
+        else:
+            for i in [1, -1]:
+                if nboard[s1[0]][s1[1] + i] == 0 and nboard[s2[0]][s2[1] + i] == 0:
+                    tmp.append(((s1[0], s1[1] + i), s1))
+                    tmp.append(((s2[0], s2[1] + i), s2))   
+                    
+        for pset in tmp:
+            if pset not in check:
+                deq.append((*pset, dis + 1))
+                check.add(pset)
