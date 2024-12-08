@@ -3855,3 +3855,14 @@ def solution(beginning, target):
     answer = min(cnt+sum(table[0]), m-cnt+n-sum(table[0]))
 
     return answer
+
+
+
+# [3차] 파일명 정렬(17686) - Lv.2
+import re
+
+def solution(files):
+    a = sorted(files, key=lambda file: int(re.findall('\d+', file)[0]))
+    b = sorted(a, key=lambda file: re.split('\d+', file.lower())[0])
+
+    return b
