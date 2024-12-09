@@ -3866,3 +3866,22 @@ def solution(files):
     b = sorted(a, key=lambda file: re.split('\d+', file.lower())[0])
 
     return b
+
+
+
+# 억억단을 외우자(138475) - Lv.3
+def solution(e, starts):
+    cnt = [1] * (e+1)
+    
+    for num in range(1, e+1):
+        for increment in range(num*2, e+1, num):
+            cnt[increment] += 1
+            
+    dp = [0] * (e+1)
+    dp[e] = e
+    
+    for i in reversed(range(1, e)):
+        if cnt[i] >= cnt[dp[i+1]]: dp[i] = i
+        else: dp[i] = dp[i+1]
+        
+    return [dp[s] for s in starts]
