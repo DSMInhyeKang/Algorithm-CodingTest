@@ -3885,3 +3885,14 @@ def solution(e, starts):
         else: dp[i] = dp[i+1]
         
     return [dp[s] for s in starts]
+
+
+
+# 전화번호 목록(42577) - Lv.2
+def solution(phoneBook):
+    phoneBook.sort()
+
+    for p1, p2 in zip(phoneBook, phoneBook[1:]):
+        if p2.startswith(p1): return False
+    
+    return True
