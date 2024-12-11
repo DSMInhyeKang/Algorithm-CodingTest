@@ -3896,3 +3896,21 @@ def solution(phoneBook):
         if p2.startswith(p1): return False
     
     return True
+
+
+
+# 베스트앨범(42579) - Lv.3
+def solution(genres, plays):
+    ans, t, g = [], {}, {}
+
+    for i in range(len(genres)):
+        t[genres[i]] = t.get(genres[i], 0) + plays[i]
+        g[genres[i]] = g.get(genres[i], []) + [(plays[i], i)]
+
+    genSort = sorted(t.items(), key=lambda x: x[1], reverse=True)
+
+    for (gen, play) in genSort:
+        g[gen] = sorted(g[gen], key=lambda x: (-x[0], x[1]))
+        ans += [i for (play, i) in g[gen][:2]]
+
+    return ans
