@@ -3914,3 +3914,35 @@ def solution(genres, plays):
         ans += [i for (play, i) in g[gen][:2]]
 
     return ans
+
+
+
+# BOJ - 경사로(14890): G3
+def find(ways):
+    visited = [False] * N
+    
+    for i in range(1,N):
+        if abs(ways[i]-ways[i-1]) > 1: return False
+        
+        if ways[i-1] > ways[i]:
+            for j in range(L): 
+                if i + j >= N or ways[i] != ways[i+j] or visited[i+j]: return False
+                if ways[i] == ways[i+j]: visited[i+j] = True        
+        elif ways[i-1] < ways[i] :
+            for j in range(L):
+                if i-j-1 < 0 or ways[i-1] != ways[i-j-1] or visited[i-j-1]: return False
+                if ways[i-1] == ways[i-j-1]: visited[i-j-1] = True
+                    
+    return True
+
+
+N, L = map(int, input().split())
+way = [list(map(int, input().split())) for _ in range(N)]
+cross = list(zip(*way)) 
+result = 0
+
+for i in range(N) :
+    if find(way[i]): result += 1
+    if find(cross[i]): result += 1
+        
+print(result)
