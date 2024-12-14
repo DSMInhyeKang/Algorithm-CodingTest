@@ -3946,3 +3946,70 @@ for i in range(N) :
     if find(cross[i]): result += 1
         
 print(result)
+
+
+
+# BOJ - 감시(15683): G3
+import copy
+
+dx, dy = [0, 1, 0, -1], [1, 0, -1, 0]
+n, m = map(int, input().split())
+office, cctvs = [], []
+min_blind_spot = float('inf')
+
+cctv_directions = [
+    [],
+    [[0], [1], [2], [3]],
+    [[0, 2], [1, 3]],
+    [[0, 1], [1, 2], [2, 3], [3, 0]],
+    [[0, 1, 2], [1, 2, 3], [2, 3, 0], [3, 0, 1]],
+    [[0, 1, 2, 3]]
+]
+
+def watch(x, y, directions, office):
+    n, m = len(office), len(office[0])
+    
+    for d in directions:
+        nx, ny = x, y
+        
+        while True:
+            nx += dx[d]
+            ny += dy[d]
+            
+            if not (0 <= nx < n and 0 <= ny < m): break
+            if office[nx][ny] == 6: break
+            if office[nx][ny] == 0: office[nx][ny] = '#'
+
+                
+def calculate_blind_spot(office):
+    count = 0
+    
+    for r in office: count += r.count(0)
+        
+    return count
+
+
+def dfs(d, office):
+    global min_blind_spot
+    
+    if d == len(cctvs):
+        min_blind_spot = min(min_blind_spot, calculate_blind_spot(office))
+        return
+    
+    x, y, cctv_type = cctvs[d]
+    
+    for dir in cctv_directions[cctv_type]:
+        new = copy.deepcopy(office)
+        watch(x, y, dir, new)
+        dfs(d+1, new)
+
+for i in range(n):
+    row = list(map(int, input().split()))
+    office.append(row)
+    
+    for j in range(m):
+        if 1 <= row[j] <= 5: cctvs.append((i, j, row[j]))
+
+dfs(0, office)
+
+print(min_blind_spot)
