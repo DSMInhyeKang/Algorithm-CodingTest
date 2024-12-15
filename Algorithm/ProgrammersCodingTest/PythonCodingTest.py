@@ -4013,3 +4013,20 @@ for i in range(n):
 dfs(0, office)
 
 print(min_blind_spot)
+
+
+
+# 주식가격(42584) - Lv.2
+def solution(prices):
+    length = len(prices)
+    result = [i for i in range (length - 1, -1, -1)]
+    stack = [0]
+    
+    for i in range (1, length, 1):
+        while stack and prices[stack[-1]] > prices[i]:
+            j = stack.pop()
+            result[j] = i - j
+            
+        stack.append(i)
+        
+    return result
